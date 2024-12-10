@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/triojmvc/gemx.triondev.com/
+    - /bin/cp * $DEPLOYPATH
