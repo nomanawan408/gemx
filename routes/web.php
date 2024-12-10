@@ -10,6 +10,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TransportDepController;
 use App\Http\Controllers\HospitalityDepController;
 use App\Http\Controllers\FlightController;
+use App\Http\Controllers\WebsiteFormController;
+
 
 
 
@@ -56,6 +58,9 @@ Route::get('/logout', function () {
     request()->session()->regenerateToken();
     return redirect('/');
 })->middleware('auth')->name('logout');
+
+
+Route::post('/buyer-submit-form', [WebsiteFormController::class, 'submitBuyerForm']);
 
 
 require __DIR__.'/auth.php';
