@@ -17,10 +17,10 @@ jobs:
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4
         with:
-          server: ftp.yourdomain.com          # Replace with your FTP server hostname
-          username: your_username             # FTP username
+          server: ftp.triondev.com          # Replace with your FTP server hostname
+          username: triojmvc_gemx@gemx.triondev.com            # FTP username
           password: ${{ secrets.FTP_PASSWORD }} # FTP password stored as a GitHub secret
-          server-dir: /public_html/your_project/ # FTP root directory where your project is hosted
+          server-dir: /gemx.triondev.com/ # FTP root directory where your project is hosted
           exclude: |
             **/.git*
             **/node_modules/**
