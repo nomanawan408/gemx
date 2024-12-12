@@ -60,7 +60,9 @@ Route::get('/logout', function () {
 })->middleware('auth')->name('logout');
 
 
-Route::post('/buyer-submit-form', [WebsiteFormController::class, 'submitBuyerForm']);
+Route::post('/api/submit-buyer-form', [WebsiteFormController::class, 'submitBuyerForm']);
+Route::post('/api/submit-visitor-form', [WebsiteFormController::class, 'submitVisitorForm']);
+Route::post('/api/submit-exhibitor-form', [WebsiteFormController::class, 'submitExhibitorForm']);
 
 
 require __DIR__.'/auth.php';
