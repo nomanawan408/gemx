@@ -60,7 +60,6 @@ Route::get('/logout', function () {
 })->middleware('auth')->name('logout');
 
 Route::post('/submit-elementor-form', [WebsiteFormController::class, 'store'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
-
 Route::post('/api/submit-visitor-form', [WebsiteFormController::class, 'submitVisitorForm']);
 Route::post('/api/submit-exhibitor-form', [WebsiteFormController::class, 'submitExhibitorForm']);
 
