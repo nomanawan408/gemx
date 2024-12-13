@@ -93,7 +93,7 @@
                                           </div>
                                           <div class="row">
                                             <h3>Bussiness Details</h3>
-                                            <p><strong>Business Name:</strong> {{ $visitor->bussiness->company_name}}</p>
+                                            <p><strong>Business Name:</strong> {{ $visitor->business_name }}</p>
                                             <p><strong>Business Type:</strong> {{ $visitor->business_type }}</p>
                                             <p><strong>Business Address:</strong> {{ $visitor->business_address }}</p>
                                           </div>
