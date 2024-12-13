@@ -59,7 +59,8 @@ Route::get('/logout', function () {
     return redirect('/');
 })->middleware('auth')->name('logout');
 
-Route::post('/submit-elementor-form', [WebsiteFormController::class, 'store'])->name('api.submit-form');
+Route::post('/submit-elementor-form', [WebsiteFormController::class, 'store'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+
 Route::post('/api/submit-visitor-form', [WebsiteFormController::class, 'submitVisitorForm']);
 Route::post('/api/submit-exhibitor-form', [WebsiteFormController::class, 'submitExhibitorForm']);
 
