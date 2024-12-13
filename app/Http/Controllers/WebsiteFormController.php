@@ -39,7 +39,7 @@ class WebsiteFormController extends Controller
             'father_firstname' => 'nullable|string|max:255',
             'father_lastname' => 'nullable|string|max:255',
             'gender' => 'required|in:Male,Female,Other',
-            'address' => 'required|string|max:255',
+            
             'profession' => 'nullable|string|max:255',
             'email' => 'required|email|unique:users,email',
             'phone' => 'nullable|string|max:20',
@@ -81,7 +81,7 @@ class WebsiteFormController extends Controller
             'gender' => $validated['gender'],
             // 'country' => $data['country'],
             // 'city' => $data['city'],
-            'address' => $validated['address'], // Added address to users table
+            'address' => $data['address'], // Added address to users table
             'profession' => $validated['profession'],
             'phone' => $validated['phone'],
             'mobile' => $validated['mobile'],
