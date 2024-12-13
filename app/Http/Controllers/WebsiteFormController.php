@@ -11,8 +11,25 @@ class WebsiteFormController extends Controller
 {
     //
 
-    public function submitBuyerForm(Request $request){
-        \Log::info($request->all());
+    public function store(Request $request)
+    {
+        try {
+            // Log the incoming request for debugging
+            \Log::info($request->all());
+
+            // Validate the incoming data
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email',
+                'message' => 'nullable|string',
+            ]);
+
+            // Perform any operation (e.g., save to database)
+            return response()->json(['success' => true, 'message' => 'Form submitted successfully in laravel'], 200);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Internal Server Error'], 500);
+        }
     }
 
 // public function submitBuyerForm(Request $request){

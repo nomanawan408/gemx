@@ -59,8 +59,7 @@ Route::get('/logout', function () {
     return redirect('/');
 })->middleware('auth')->name('logout');
 
-
-Route::post('/api/submit-buyer-form', [WebsiteFormController::class, 'submitBuyerForm']);
+Route::post('/submit-elementor-form', [WebsiteFormController::class, 'store'])->name('api.submit-form');
 Route::post('/api/submit-visitor-form', [WebsiteFormController::class, 'submitVisitorForm']);
 Route::post('/api/submit-exhibitor-form', [WebsiteFormController::class, 'submitExhibitorForm']);
 
