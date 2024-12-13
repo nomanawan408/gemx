@@ -59,9 +59,9 @@ Route::get('/logout', function () {
     return redirect('/');
 })->middleware('auth')->name('logout');
 
-Route::post('/submit-elementor-form', [WebsiteFormController::class, 'store'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
-Route::post('/api/submit-visitor-form', [WebsiteFormController::class, 'submitVisitorForm']);
-Route::post('/api/submit-exhibitor-form', [WebsiteFormController::class, 'submitExhibitorForm']);
-
+Route::post('/submit-national-visitor-form', [WebsiteFormController::class, 'submit_national_visitor_form'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+Route::post('/submit-international-visitor-form', [WebsiteFormController::class, 'submit_international_visitor_form'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+Route::post('/submit-exhibitor-form', [WebsiteFormController::class, 'submit_exhibitor_form'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+Route::post('/submit-buyer-form', [WebsiteFormController::class, 'submit_buyer_form'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 
 require __DIR__.'/auth.php';

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->string('father_last_name')->nullable();
             $table->enum('gender', ['Male', 'Female', 'Other']);
             $table->string('country')->nullable();
+            $table->text('address')->nullable();
             $table->string('city')->nullable();
             $table->string('nationality')->nullable();
             $table->string('profession')->nullable();
@@ -46,6 +48,8 @@ return new class extends Migration
             // $table->foreignId('role_id')->constrained('roles');
             $table->string('personal_photo')->nullable();
             $table->boolean('declaration')->default(false);
+            $table->enum('status', ['approved', 'pending', 'rejected'])->default('pending');
+            
             $table->timestamps();
         });
 

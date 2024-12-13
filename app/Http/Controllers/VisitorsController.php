@@ -12,8 +12,8 @@ class VisitorsController extends Controller
      */
     public function index()
     {
-        $visitor = User::role('visitor')->get(); // Fetch users with 'buyer' role
-        return view('visitors.index', compact('visitor'));
+        $visitors = User::role('visitor')->get();
+                return view('visitors.index', compact('visitors'));
     }
 
     public function create()

@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Sanctum\HasApiTokens;
+use App\Models\Role;
+
 
 class User extends Authenticatable
 {
@@ -19,10 +22,36 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'username',
         'name',
         'email',
         'password',
-    ];
+        'first_name',
+        'last_name',
+        'father_first_name',
+        'father_last_name',
+        'gender',
+        'country',
+        'address',
+        'city',
+        'nationality',
+        'profession',
+        'mobile',
+        'phone',
+        'whatsapp',
+        'linkedin',
+        'telegram',
+        'instagram',
+        'wechat',
+        'imo',
+        'cnic_passport_no',
+        'date_of_issue',
+        'date_of_expiry',
+        'declaration',
+        'provider_id',
+        'provider',
+        'access_token',
+        'avatar'    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,4 +75,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+         * Get the business associated with the user.
+         */
+
+    
 }

@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
                 'name' => 'Super Admin', // Add this line
                 'first_name' => 'Super',
                 'last_name' => 'Admin',
+                'username' => 'superadmin',
                 'password' => bcrypt('password'), // Set a secure password
             ]
         );
@@ -38,6 +39,7 @@ class UserSeeder extends Seeder
                 'name' => 'Hospitality User',
                 'first_name' => 'Hospitality',
                 'last_name' => 'User',
+                'username' => 'hospitality',
                 'password' => bcrypt('password'),
             ]
         );
@@ -49,6 +51,7 @@ class UserSeeder extends Seeder
                 'name' => 'Transport User',
                 'first_name' => 'Transport',
                 'last_name' => 'User',
+                'username' => 'transport',
                 'password' => bcrypt('password'),
             ]
         );
