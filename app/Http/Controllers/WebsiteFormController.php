@@ -79,8 +79,8 @@ class WebsiteFormController extends Controller
             'father_first_name' => $validated['father_firstname'],
             'father_last_name' => $validated['father_lastname'],
             'gender' => $validated['gender'],
-            'country' => $data['country'],
-            'city' => $data['city'],
+            // 'country' => $data['country'],
+            // 'city' => $data['city'],
             'address' => $data['address'], // Added address to users table
             'profession' => $validated['profession'],
             'phone' => $validated['phone'],
