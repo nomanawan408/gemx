@@ -32,6 +32,7 @@ return new class extends Migration
             $table->text('main_export_countries')->nullable();
             $table->decimal('annual_turnover', 15, 2)->nullable();
             $table->decimal('annual_import_export', 15, 2)->nullable();
+            $table->decimal('national_sale', 15, 2)->nullable();
             $table->decimal('annual_import_from_pak', 15, 2)->nullable();
             $table->string('ntn')->nullable();
             $table->string('gst')->nullable();

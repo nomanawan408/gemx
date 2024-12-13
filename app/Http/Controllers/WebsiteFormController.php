@@ -66,6 +66,7 @@ class WebsiteFormController extends Controller
             'export_country' => 'nullable|string',
             'annual_turnover' => 'nullable|numeric',
             'annual_export' => 'nullable|numeric',
+            'url' => 'nullable|url',
         ]);
 
         // Step 2: Create User
@@ -110,10 +111,12 @@ class WebsiteFormController extends Controller
                 'company_phone' => $validated['company_phone'],
                 'company_mobile' => $validated['business_mobile'],
                 'position' => $validated['position'],
+                'website_url' => $validated['url'],
                 'main_export_items' => $validated['export_items'],
                 'main_import_countries' => $validated['Import_countries'],
                 'main_export_countries' => $validated['export_country'],
                 'annual_turnover' => $validated['annual_turnover'],
+                'national_sale' => $validated['national_sale'],
                 'annual_import_export' => $validated['annual_export'],
             ]);
         }
