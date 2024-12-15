@@ -16,11 +16,13 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('business_card')->nullable();
             $table->string('company_logo')->nullable();
-            $table->string('company_registration_copy')->nullable();
-            $table->string('chamber_association_certificate')->nullable();
             $table->string('company_catalogue')->nullable();
+            $table->string('company_certificate')->nullable();
+            $table->string('chamber_association_certificate')->nullable();
+            $table->string('personal_photo')->nullable();
             $table->string('passport_cnic_file')->nullable();
             $table->string('bank_statement')->nullable();
+            $table->string('company_registration_number')->nullable();
             $table->string('pay_order_draft_no')->nullable();
             $table->decimal('pay_order_amount', 15, 2)->nullable();
             $table->date('pay_order_date')->nullable();

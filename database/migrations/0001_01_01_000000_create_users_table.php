@@ -43,14 +43,12 @@ return new class extends Migration
             $table->enum('type_of_passport', ['Official', 'Ordinary'])->nullable();
             $table->date('date_of_issue')->nullable();
             $table->date('date_of_expiry')->nullable();
-            $table->string('passport_cnic_file')->nullable();
             $table->boolean('trip_to_pak')->default(false);
             // $table->foreignId('role_id')->constrained('roles');
-            $table->string('personal_photo')->nullable();
             $table->boolean('declaration')->default(false);
             $table->enum('status', ['approved', 'pending', 'rejected'])->default('pending');
             
-            $table->timestamps();
+            $table->timestamps(); 
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
