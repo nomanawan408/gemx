@@ -397,61 +397,61 @@ class WebsiteFormController extends Controller
         $user->assignRole('buyer');
 
 
-        if ($request->filled('paid_participant_firstname')) {
-            UserParticipant::create([
-                'user_id' => $user->id, // ID of the main user
-                'firstname' => $request->input('paid_participant_firstname'),
-                'lastname' => $request->input('paid_participant_lastname'),
-                'father_firstname' => $request->input('paid_participant_father_firstname'),
-                'father_lastname' => $request->input('paid_participant_father_lastname'),
-                'gender' => $request->input('paid_participant_gender'),
-                'phone' => $request->input('paid_participant_phone'),
-                'mobile' => $request->input('paid_participant_mobile'),
-                'whatsapp' => $request->input('paid_participant_whatsapp'),
-                'email' => $request->input('paid_participant_email'),
-                'facebook' => $request->input('paid_participant_facebook'),
-                'linkedin' => $request->input('paid_participant_linkedin'),
-                'instagram' => $request->input('paid_participant_instagram'),
-                'telegram' => $request->input('paid_participant_telegram'),
-                'wechat' => $request->input('paid_participant_wechat'),
-                'imo' => $request->input('paid_participant_imo'),
-                'passport_no' => $request->input('paid_participant_passport_no'),
-                'passport_issue' => $request->input('paid_participant_passport_issue'),
-                'passport_expiry' => $request->input('paid_participant_passport_expiry'),
-                'passport_type' => $request->input('paid_participant_passport_type'),
-                'previous_trips' => $request->input('paid_participant_previous_trips'),
-                'passport_file' => $request->hasFile('paid_participant_passport') ? $request->file('paid_participant_passport')->store("participant_attachment_{$user->id}", 'public') : null,
-            ]);        
-        }
-          // Step 3: Insert Business Details
-          Business::create([
-            'user_id' => $user->id,
-            'company_name' => $validated['paid_company_name'],
-            'address' => $validated['paid_company_address'],
-            'company_email' => $validated['paid_company_email'],
-            'position' => $validated['paid_position'],
-            'company_phone' => $validated['paid_business_phone'],
-            'company_mobile' => $validated['paid_business_mobile'],
-            'website_url' => $validated['paid_url'],
-            'company_registered_number' => $validated['paid_company_registered_number'],
-            'vat_tax_number' => $validated['paid_vat_number'],
-            'chamber_association_member' => json_encode($validated['paid_chamber_member_number']),
-            'nature_of_business' => $validated['paid_business_type'],
-            'type_of_business' => json_encode($validated['paid_business_type']),
-            'main_business_items' => $validated['paid_business_items'],
-            'main_import_items' => $validated['paid_import_items'],
-            // 'main_export_items' => $validated['paid_export_items'],
-            'main_import_countries' => $validated['paid_import_countries'],
-            'main_export_countries' => $validated['paid_export_countries'],
-            'annual_turnover' => $validated['paid_annual_turnover'],
-            'annual_import_export' => $validated['paid_annaul_import'],
-            'annual_import_from_pak' => $validated['paid_annual_import_pakistan'],
-            // 'national_sale' => $validated['paid_national_sale'],
-            'product_interest' => $validated['paid_products'],
-            // 'ntn' => $validated['paid_ntn'],
-            // 'gst' => $validated['paid_gst'],
-            'chamber_association_no' => $validated['paid_chamber_member_number'] ? true : false,
-        ]);
+        // if ($request->filled('paid_participant_firstname')) {
+        //     UserParticipant::create([
+        //         'user_id' => $user->id, // ID of the main user
+        //         'firstname' => $request->input('paid_participant_firstname'),
+        //         'lastname' => $request->input('paid_participant_lastname'),
+        //         'father_firstname' => $request->input('paid_participant_father_firstname'),
+        //         'father_lastname' => $request->input('paid_participant_father_lastname'),
+        //         'gender' => $request->input('paid_participant_gender'),
+        //         'phone' => $request->input('paid_participant_phone'),
+        //         'mobile' => $request->input('paid_participant_mobile'),
+        //         'whatsapp' => $request->input('paid_participant_whatsapp'),
+        //         'email' => $request->input('paid_participant_email'),
+        //         'facebook' => $request->input('paid_participant_facebook'),
+        //         'linkedin' => $request->input('paid_participant_linkedin'),
+        //         'instagram' => $request->input('paid_participant_instagram'),
+        //         'telegram' => $request->input('paid_participant_telegram'),
+        //         'wechat' => $request->input('paid_participant_wechat'),
+        //         'imo' => $request->input('paid_participant_imo'),
+        //         'passport_no' => $request->input('paid_participant_passport_no'),
+        //         'passport_issue' => $request->input('paid_participant_passport_issue'),
+        //         'passport_expiry' => $request->input('paid_participant_passport_expiry'),
+        //         'passport_type' => $request->input('paid_participant_passport_type'),
+        //         'previous_trips' => $request->input('paid_participant_previous_trips'),
+        //         'passport_file' => $request->hasFile('paid_participant_passport') ? $request->file('paid_participant_passport')->store("participant_attachment_{$user->id}", 'public') : null,
+        //     ]);        
+        // }
+        //   // Step 3: Insert Business Details
+        //   Business::create([
+        //     'user_id' => $user->id,
+        //     'company_name' => $validated['paid_company_name'],
+        //     'address' => $validated['paid_company_address'],
+        //     'company_email' => $validated['paid_company_email'],
+        //     'position' => $validated['paid_position'],
+        //     'company_phone' => $validated['paid_business_phone'],
+        //     'company_mobile' => $validated['paid_business_mobile'],
+        //     'website_url' => $validated['paid_url'],
+        //     'company_registered_number' => $validated['paid_company_registered_number'],
+        //     'vat_tax_number' => $validated['paid_vat_number'],
+        //     'chamber_association_member' => json_encode($validated['paid_chamber_member_number']),
+        //     'nature_of_business' => $validated['paid_business_type'],
+        //     'type_of_business' => json_encode($validated['paid_business_type']),
+        //     'main_business_items' => $validated['paid_business_items'],
+        //     'main_import_items' => $validated['paid_import_items'],
+        //     // 'main_export_items' => $validated['paid_export_items'],
+        //     'main_import_countries' => $validated['paid_import_countries'],
+        //     'main_export_countries' => $validated['paid_export_countries'],
+        //     'annual_turnover' => $validated['paid_annual_turnover'],
+        //     'annual_import_export' => $validated['paid_annaul_import'],
+        //     'annual_import_from_pak' => $validated['paid_annual_import_pakistan'],
+        //     // 'national_sale' => $validated['paid_national_sale'],
+        //     'product_interest' => $validated['paid_products'],
+        //     // 'ntn' => $validated['paid_ntn'],
+        //     // 'gst' => $validated['paid_gst'],
+        //     'chamber_association_no' => $validated['paid_chamber_member_number'] ? true : false,
+        // ]);
 
 
         
