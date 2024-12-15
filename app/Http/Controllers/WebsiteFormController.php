@@ -455,36 +455,36 @@ class WebsiteFormController extends Controller
 
 
         
-             // Function to save files and generate file name
-        $saveFile = function ($file, $folder, $identifier) {
-            if ($file) {
-                $fileName = time() . '-' . $identifier . '.' . $file->extension();
-                $file->move(public_path($folder), $fileName);
-                return $folder . '/' . $fileName; // Return relative file path
-            }
-            return null;
-        };
+        //      // Function to save files and generate file name
+        // $saveFile = function ($file, $folder, $identifier) {
+        //     if ($file) {
+        //         $fileName = time() . '-' . $identifier . '.' . $file->extension();
+        //         $file->move(public_path($folder), $fileName);
+        //         return $folder . '/' . $fileName; // Return relative file path
+        //     }
+        //     return null;
+        // };
 
-        // Save files and get file paths
-        $passportFile = $saveFile($request->file('passport_cnic_file'), 'attachments/passports', $request->user_id);
-        $personalPhoto = $saveFile($request->file('personal_photo'), 'attachments/photos', $request->user_id);
-        $companyCatalogue = $saveFile($request->file('company_catalogue'), 'attachments/catalogues', $request->user_id);
-        $bankStatement = $saveFile($request->file('bank_statement'), 'attachments/statements', $request->user_id);
-        $businessCard = $saveFile($request->file('business_card'), 'attachments/cards', $request->user_id);
-        $companyCertificate = $saveFile($request->file('company_certificate'), 'attachments/certificates', $request->user_id);
-        $chamberCertificate = $saveFile($request->file('chamber_certificate'), 'attachments/certificates', $request->user_id);
+        // // Save files and get file paths
+        // $passportFile = $saveFile($request->file('passport_cnic_file'), 'attachments/passports', $request->user_id);
+        // $personalPhoto = $saveFile($request->file('personal_photo'), 'attachments/photos', $request->user_id);
+        // $companyCatalogue = $saveFile($request->file('company_catalogue'), 'attachments/catalogues', $request->user_id);
+        // $bankStatement = $saveFile($request->file('bank_statement'), 'attachments/statements', $request->user_id);
+        // $businessCard = $saveFile($request->file('business_card'), 'attachments/cards', $request->user_id);
+        // $companyCertificate = $saveFile($request->file('company_certificate'), 'attachments/certificates', $request->user_id);
+        // $chamberCertificate = $saveFile($request->file('chamber_certificate'), 'attachments/certificates', $request->user_id);
 
-        // Insert into database
-        $attachment = Attachment::create([
-            'user_id' =>  $user->id,
-            'passport_cnic_file' => $passportFile,
-            'personal_photo' => $personalPhoto,
-            'company_catalogue' => $companyCatalogue,
-            'bank_statement' => $bankStatement,
-            'business_card' => $businessCard,
-            'company_certificate' => $companyCertificate,
-            'chamber_association_certificate' => $chamberCertificate,
-        ]);
+        // // Insert into database
+        // $attachment = Attachment::create([
+        //     'user_id' =>  $user->id,
+        //     'passport_cnic_file' => $passportFile,
+        //     'personal_photo' => $personalPhoto,
+        //     'company_catalogue' => $companyCatalogue,
+        //     'bank_statement' => $bankStatement,
+        //     'business_card' => $businessCard,
+        //     'company_certificate' => $companyCertificate,
+        //     'chamber_association_certificate' => $chamberCertificate,
+        // ]);
 
             
         return response()->json([
