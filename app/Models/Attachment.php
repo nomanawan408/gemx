@@ -9,18 +9,17 @@ class Attachment extends Model
     //
     protected $fillable = [
         'user_id',
-        'passport_cnic_file',
-        'personal_photo',
-        'company_catalogue',
-        'bank_statement',
         'business_card',
+        'company_logo',
+        'company_catalogue',
         'company_certificate',
         'chamber_association_certificate',
+        'personal_photo',
+        'passport_cnic_file',
+        'bank_statement',
         'company_registration_number',
-        'company_logo',
         'pay_order_draft_no',
         'pay_order_amount',
         'pay_order_date',
         'pay_order_bank_name',
-        'pay_order_image'
-    ];}
+        'pay_order_image'    ];}

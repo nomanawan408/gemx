@@ -449,7 +449,9 @@ class WebsiteFormController extends Controller
                 'annual_import_export' => $validated['paid_annaul_import'],
                 'annual_import_from_pak' => $validated['paid_annual_import_pakistan'],
                 // 'national_sale' => $validated['paid_national_sale'],
-                'product_interest' => $validated['paid_products'],
+                'product_interest' => json_encode($validated['paid_products']), // Ensure proper JSON encoding
+                'amount' => $validated['paid_amount'],
+                
                 // 'ntn' => $validated['paid_ntn'],
                 // 'gst' => $validated['paid_gst'],
                 'chamber_association_no' => $validated['paid_chamber_member_number'] ? true : false,
@@ -475,7 +477,7 @@ class WebsiteFormController extends Controller
             $businessCard = $saveFile($request->file('business_card'), 'attachments/cards', $request->user_id);
             $companyCertificate = $saveFile($request->file('company_certificate'), 'attachments/certificates', $request->user_id);
             $chamberCertificate = $saveFile($request->file('chamber_certificate'), 'attachments/certificates', $request->user_id);
-
+ 
             // Insert into database
             $attachment = Attachment::create([
                 'user_id' =>  $user->id,
