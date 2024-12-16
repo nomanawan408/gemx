@@ -83,5 +83,34 @@ class User extends Authenticatable
          * Get the business associated with the user.
          */
 
+         public function business()
+         {
+             return $this->hasOne(Business::class, 'user_id', 'id');
+         }
+    
+        /**
+         * Get the user participants associated with the user.
+         */
+        public function userParticipants()
+        {
+            return $this->hasMany(UserParticipant::class);
+        }
+    
+        /**
+         * Get the exhibitions associated with the user.
+         */
+        public function exhibitions()
+        {
+            return $this->hasMany(Exhibition::class);
+        }
+    
+        /**
+         * Get the stalls associated with the user.
+         */
+        public function stalls()
+        {
+            return $this->hasMany(Stall::class);
+        }
+    
     
 }

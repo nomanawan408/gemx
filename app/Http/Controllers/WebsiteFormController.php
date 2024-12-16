@@ -41,7 +41,7 @@ class WebsiteFormController extends Controller
             'father_firstname' => 'nullable|string|max:255',
             'father_lastname' => 'nullable|string|max:255',
             'gender' => 'required|in:Male,Female,Other',
-            
+            'address' => 'required|string',
             'profession' => 'nullable|string|max:255',
             'email' => 'required|email|unique:users,email',
             'phone' => 'nullable|string|max:20',
@@ -58,20 +58,23 @@ class WebsiteFormController extends Controller
             'cnic_expiry' => 'nullable|date',
             'cnic_picture' => 'nullable|url',
             'personal_photo' => 'nullable|url',
+            'business' => 'required|in:Yes,No',
             'company_name' => 'nullable|string|max:255',
             'company_address' => 'nullable|string',
             'company_phone' => 'nullable|string|max:20',
             'business_mobile' => 'nullable|string|max:20',
+            'business_phone' => 'nullable|string|max:20',
             'position' => 'nullable|string|max:255',
             'export_items' => 'nullable|string',
             'Import_countries' => 'nullable|string',
             'export_country' => 'nullable|string',
-            'annual_turnover' => 'nullable|numeric',
+            'annual_turnover' => 'nullable|string',
+            'national_sale' => 'nullable|numeric',
             'annual_export' => 'nullable|numeric',
             'url' => 'nullable|url',
-        ]);
-
-        // Step 2: Create User
+            'invited_way' => 'nullable|string',
+            'shoowothers' => 'nullable|string',
+        ]);        // Step 2: Create User
         $user = User::create([
             'username' =>  $data['username'],
             'name' => $validated['firstname'] . ' ' . $validated['lastname'],
@@ -451,36 +454,67 @@ class WebsiteFormController extends Controller
                 // 'national_sale' => $validated['paid_national_sale'],
                 'product_interest' => json_encode($validated['paid_products']), // Ensure proper JSON encoding
                 'amount' => $validated['paid_amount'],
-                
                 // 'ntn' => $validated['paid_ntn'],
                 // 'gst' => $validated['paid_gst'],
                 'chamber_association_no' => $validated['paid_chamber_member_number'] ? true : false,
             ]);
 
 
-            
-                // Function to save files and generate file name
+             // Function to save files and generate file name
             $saveFile = function ($file, $folder, $identifier) {
                 if ($file) {
+                    // Generate a file name using a timestamp, identifier, and the file extension
                     $fileName = time() . '-' . $identifier . '.' . $file->extension();
+                    // Move the file to the appropriate folder
                     $file->move(public_path($folder), $fileName);
-                    return $folder . '/' . $fileName; // Return relative file path
+                    // Return relative file path
+                    return $folder . '/' . $fileName;
                 }
                 return null;
             };
 
-            // Save files and get file paths
-            $passportFile = $saveFile($request->file('passport_cnic_file'), 'attachments/passports', $request->user_id);
-            $personalPhoto = $saveFile($request->file('personal_photo'), 'attachments/photos', $request->user_id);
-            $companyCatalogue = $saveFile($request->file('company_catalogue'), 'attachments/catalogues', $request->user_id);
-            $bankStatement = $saveFile($request->file('bank_statement'), 'attachments/statements', $request->user_id);
-            $businessCard = $saveFile($request->file('business_card'), 'attachments/cards', $request->user_id);
-            $companyCertificate = $saveFile($request->file('company_certificate'), 'attachments/certificates', $request->user_id);
-            $chamberCertificate = $saveFile($request->file('chamber_certificate'), 'attachments/certificates', $request->user_id);
- 
-            // Insert into database
+            // Initialize variables for file paths
+            $passportFile = null;
+            $personalPhoto = null;
+            $companyCatalogue = null;
+            $bankStatement = null;
+            $businessCard = null;
+            $companyCertificate = null;
+            $chamberCertificate = null;
+
+            // Check if the corresponding files are included in the request, then save them
+            if ($request->hasFile('passport_cnic_file')) {
+                $passportFile = $saveFile($request->file('passport_cnic_file'), 'attachments/passports', $request->user_id);
+            }
+
+            if ($request->hasFile('personal_photo')) {
+                $personalPhoto = $saveFile($request->file('personal_photo'), 'attachments/photos', $request->user_id);
+            }
+
+            if ($request->hasFile('company_catalogue')) {
+                $companyCatalogue = $saveFile($request->file('company_catalogue'), 'attachments/catalogues', $request->user_id);
+            }
+
+            if ($request->hasFile('bank_statement')) {
+                $bankStatement = $saveFile($request->file('bank_statement'), 'attachments/statements', $request->user_id);
+            }
+
+            if ($request->hasFile('business_card')) {
+                $businessCard = $saveFile($request->file('business_card'), 'attachments/cards', $request->user_id);
+            }
+
+            if ($request->hasFile('company_certificate')) {
+                $companyCertificate = $saveFile($request->file('company_certificate'), 'attachments/certificates', $request->user_id);
+            }
+
+            if ($request->hasFile('chamber_certificate')) {
+                $chamberCertificate = $saveFile($request->file('chamber_certificate'), 'attachments/certificates', $request->user_id);
+            }
+
+            // Assuming you have a User model that stores this information
+            // Insert file paths into the database (attachments table)
             $attachment = Attachment::create([
-                'user_id' =>  $user->id,
+                'user_id' =>  $request->user_id, // Assuming user_id is passed in the request
                 'passport_cnic_file' => $passportFile,
                 'personal_photo' => $personalPhoto,
                 'company_catalogue' => $companyCatalogue,
@@ -490,8 +524,9 @@ class WebsiteFormController extends Controller
                 'chamber_association_certificate' => $chamberCertificate,
             ]);
 
-            Log::info('Data Saved Successfully:', ['user_id' => $user->id]);
-                
+            // Log successful file save
+            Log::info('Files and data saved successfully for user_id:', ['user_id' => $request->user_id]);
+
             return response()->json([
                 'success' => true,
                 'message' => 'Form data submitted successfully!',
@@ -514,3 +549,5 @@ class WebsiteFormController extends Controller
         }
     }
 }
+
+

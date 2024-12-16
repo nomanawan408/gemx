@@ -58,15 +58,22 @@
                                   <td>{{ $visitor->phone }}</td>
                                   <td>{{ $visitor->cnic_passport_no }}</td>
                                   <td>
-                                  @if($visitor->status == 'pending')
-                                      <div>
-                                          <button type="button" class="btn btn-success btn-sm">Approve</button>
-                                          <button type="button" class="btn btn-danger btn-sm">Reject</button>
-                                      </div>                                  
-                                  @else
-                                      <span class="badge bg-{{ $visitor->status == 'approved' ? 'success' : 'danger' }}">{{ ucfirst($visitor->status) }}</span>
-                                  @endif
-                                </td>
+                                    <td>
+                                      @if($visitor->status == 'pending')
+                                          <div>
+                                              <form action="{{ route('users.approve', $visitor->id) }}" method="POST" style="display:inline;">
+                                                  @csrf
+                                                  <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                              </form>
+                                              <form action="{{ route('users.reject', $visitor->id) }}" method="POST" style="display:inline;">
+                                                  @csrf
+                                                  <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                              </form>
+                                          </div>                                  
+                                      @else
+                                          <span class="badge bg-{{ $visitor->status == 'approved' ? 'success' : 'danger' }}">{{ ucfirst($visitor->status) }}</span>
+                                      @endif
+                                    </td>       
                                   
                                   <td>
                                     <button type="button" class="btn btn-link btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#visitorModal{{ $visitor->id }}">

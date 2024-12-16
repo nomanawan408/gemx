@@ -11,7 +11,7 @@ use App\Http\Controllers\TransportDepController;
 use App\Http\Controllers\HospitalityDepController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\WebsiteFormController;
-
+use App\Http\Controllers\DashboardController;
 
 
 
@@ -19,11 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard.index');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -59,9 +58,16 @@ Route::get('/logout', function () {
     return redirect('/');
 })->middleware('auth')->name('logout');
 
+
+// APIs for website forms
 Route::post('/submit-national-visitor-form', [WebsiteFormController::class, 'submit_national_visitor_form'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 Route::post('/submit-international-visitor-form', [WebsiteFormController::class, 'submit_international_visitor_form'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 Route::post('/submit-exhibitor-form', [WebsiteFormController::class, 'submit_exhibitor_form'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 Route::post('/submit-buyer-form', [WebsiteFormController::class, 'submit_buyer_form'])->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+
+// status update
+Route::post('/users/{id}/approve', [DashboardController::class, 'approveUser'])->name('users.approve');
+Route::post('/users/{id}/reject', [DashboardController::class, 'rejectUser'])->name('users.reject');
+
 
 require __DIR__.'/auth.php';

@@ -30,6 +30,7 @@
                   <p>Dashboard</p>
                 </a>
               </li>
+              @if(auth()->user()->hasRole('superadmin'))
               <li class="nav-item {{ request()->is('visitors*') ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#visitors">
                   <i class="fas fa-users"></i>
@@ -159,8 +160,9 @@
                   </ul>
                 </div>
               </li>
-
+              @endif
               {{-- --- --}}
+              @if(auth()->user()->hasRole('buyer'))
               <li class="nav-item {{ request()->is('flight-details*') ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#flight">
                   <i class="fas fa-plane"></i>
@@ -187,6 +189,7 @@
                   </ul>
                 </div>
               </li>
+              @endif            
             </ul>
           </div>
         </div>

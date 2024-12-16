@@ -8,12 +8,11 @@
             >
               <div>
                 <h3 class="fw-bold mb-3">Dashboard</h3>
-                <h6 class="op-7 mb-2">Free Bootstrap 5 Admin Dashboard</h6>
               </div>
-              <div class="ms-md-auto py-2 py-md-0">
+              {{-- <div class="ms-md-auto py-2 py-md-0">
                 <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
                 <a href="#" class="btn btn-primary btn-round">Add Customer</a>
-              </div>
+              </div> --}}
             </div>
             <div class="row">
               <div class="col-sm-6 col-md-3">
@@ -30,7 +29,7 @@
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
                           <p class="card-category">Visitors</p>
-                          <h4 class="card-title">1,294</h4>
+                          <h4 class="card-title">{{ count($visitor)}}</h4>
                         </div>
                       </div>
                     </div>
@@ -51,7 +50,7 @@
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
                           <p class="card-category">Buyers</p>
-                          <h4 class="card-title">1303</h4>
+                          <h4 class="card-title">{{ count($buyer) }}</h4>
                         </div>
                       </div>
                     </div>
@@ -72,7 +71,7 @@
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
                           <p class="card-category">Exhibitors</p>
-                          <h4 class="card-title">$ 1,345</h4>
+                          <h4 class="card-title">{{ count($exhibitor) }}</h4>
                         </div>
                       </div>
                     </div>
@@ -93,7 +92,7 @@
                       <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
                           <p class="card-category">International Visitors</p>
-                          <h4 class="card-title">576</h4>
+                          <h4 class="card-title">{{ count($international_visitor) }}</h4>
                         </div>
                       </div>
                     </div>

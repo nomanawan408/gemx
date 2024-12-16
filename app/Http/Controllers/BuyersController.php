@@ -12,7 +12,7 @@ class BuyersController extends Controller
      */
     public function index()
     {
-        $buyers = User::role('buyer')->get(); // Fetch users with 'buyer' role
+        $buyers = User::role('buyer')->with('business')->get();
         return view('buyers.index', compact('buyers'));
     }
 

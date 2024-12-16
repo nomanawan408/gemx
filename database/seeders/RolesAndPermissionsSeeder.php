@@ -33,6 +33,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'view hospitality',
             'view flight details',
             'create flights details',
+            'manage flights details',
+            'edit flight details',
+            'delete flight details',
+            'view flight details',
+            
             // Add more permissions as needed
         ];
 
@@ -43,13 +48,13 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Define Roles
         $roles = [
-            'buyer' => ['view users', 'access admin panel'],
+            'buyer' => ['manage flights details', 'create flights details'],
             'visitor' => ['view users', 'access admin panel'],
             'international_visitor' => ['view users', 'access admin panel'],
             'exhibitor' => ['view users', 'access admin panel'],
             'transport' => ['manage transport','view flight details'],
             'hospitality' => ['manage hospitality'],
-            'superadmin' => ['view users', 'create users', 'edit users', 'delete users', 'manage roles', 'manage permissions', 'view reports', 'manage transport', 'manage hospitality', 'access admin panel'],
+            'superadmin' => ['create flights details', 'manage flights details', 'edit flight details', 'delete flight details', 'view flight details','view users', 'create users', 'edit users', 'delete users', 'manage roles', 'manage permissions', 'view reports', 'manage transport', 'manage hospitality', 'access admin panel'],
         ];
 
         // Create Roles and Assign Permissions

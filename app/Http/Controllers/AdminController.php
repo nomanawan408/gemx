@@ -12,10 +12,16 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $buyers = User::role('superadmin')->get(); // Fetch users with 'buyer' role
-        return view('buyers.index', compact('buyers'));
-    }
+        $superadmins = User::role('superadmin')->get();
+        $buyer = User::role('buyer')->get();
+        $visitor = User::role('visitor')->get();
+        $international_visitor = User::role('international_visitor')->get();
+        $exhibitor = User::role('exhibitor')->get();
+        return view('dashboard', compact('superadmins', 'buyer', 'visitor','international_visitor', 'exhibitor'));    }
 
+    /**
+     * Show the form for creating a new buyer.
+     */
     public function create()
     {
         return view('buyers.create');
