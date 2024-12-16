@@ -40,7 +40,7 @@ return new class extends Migration
             $table->string('wechat')->nullable();
             $table->string('imo')->nullable();
             $table->string('cnic_passport_no')->nullable();
-            $table->enum('type_of_passport', ['Official', 'Ordinary'])->nullable();
+            $table->enum('passport_type', ['Ordinary', 'Official'])->nullable();
             $table->date('date_of_issue')->nullable();
             $table->date('date_of_expiry')->nullable();
             $table->boolean('trip_to_pak')->default(false);
