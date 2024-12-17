@@ -31,10 +31,7 @@ class WebsiteFormController extends Controller
         
         \Log::info('Request Data:', $request->all());
 
-        $data = json_decode($request->getContent(), true);
-
-        // Validate incoming data
-        // Step 1: Validate incoming data
+        // Remove json_decode since data is already available in $request
         $validated = $request->validate([
             'username' => 'required|string|max:255',
             'password' => 'required|string|min:8',
@@ -63,7 +60,6 @@ class WebsiteFormController extends Controller
             'personal_photo' => 'nullable|url',
             'invited_way' => 'nullable|string',
             'shoowothers' => 'nullable|string',
-
             'business' => 'nullable|in:Yes,No',
             'company_name' => 'nullable|string|max:255',
             'company_address' => 'nullable|string',
@@ -82,7 +78,7 @@ class WebsiteFormController extends Controller
         
         // Step 2: Create User
         $user = User::create([
-            'username' =>  $data['username'],
+            'username' =>  $validated['username'],
             'name' => $validated['firstname'] . ' ' . $validated['lastname'],
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
@@ -92,7 +88,7 @@ class WebsiteFormController extends Controller
             'father_last_name' => $validated['father_lastname'],
             'gender' => $validated['gender'],
             'country' => 'Pakistan', 
-            'address' => $data['address'], 
+            'address' => $validated['address'], 
             'profession' => $validated['profession'],
             'phone' => $validated['phone'],
             'mobile' => $validated['mobile'],
@@ -134,8 +130,8 @@ class WebsiteFormController extends Controller
             };
 
             // Download and save each file
-            $personalPhoto = $saveFileFromUrl($request->input('personal_photo'), 'uploads/photos', $user->id);
-            $passport = $saveFileFromUrl($request->input('cnic_picture'), 'uploads/passports', $user->id);
+            $personalPhoto = $saveFileFromUrl($validated['personal_photo'], 'uploads/photos', $user->id);
+            $passport = $saveFileFromUrl($validated['cnic_picture'], 'uploads/passports', $user->id);
             
             // Step 3: Save Attachments to Database
             Attachment::create([
@@ -188,7 +184,6 @@ class WebsiteFormController extends Controller
             ], 500);
         }
     }
-
     
     public function submit_international_visitor_form(Request $request)
     {
