@@ -71,7 +71,7 @@ class WebsiteFormController extends Controller
             'business_mobile' => 'nullable|string|max:20',
             'business_phone' => 'nullable|string|max:20',
             'position' => 'nullable|string|max:255',
-            'url' => 'nullable|url',
+            'url' => 'nullable',
             'export_items' => 'nullable|string',
             'import_countries' => 'nullable|string',
             'export_country' => 'nullable|string',
@@ -106,6 +106,7 @@ class WebsiteFormController extends Controller
             'cnic_passport_no' => $validated['cnic_no'],
             'date_of_issue' => $validated['cnic_issue'],
             'date_of_expiry' => $validated['cnic_expiry'],
+            'invited_way' => $validated['invited_way'],
             'declaration' => true,
         ]);
 

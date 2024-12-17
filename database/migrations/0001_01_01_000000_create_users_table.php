@@ -44,6 +44,8 @@ return new class extends Migration
             $table->date('date_of_issue')->nullable();
             $table->date('date_of_expiry')->nullable();
             $table->boolean('trip_to_pak')->default(false);
+            $table->string('invited_way')->nullable();
+            
             // $table->foreignId('role_id')->constrained('roles');
             $table->boolean('declaration')->default(false);
             $table->enum('status', ['approved', 'pending', 'rejected'])->default('pending');
