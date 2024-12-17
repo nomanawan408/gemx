@@ -31,9 +31,9 @@ class User extends Authenticatable
         'father_first_name',
         'father_last_name',
         'gender',
-        // 'country',
+        'country',
         'address',
-        // 'city',
+        'city',
         'nationality',
         'profession',
         'mobile',
@@ -53,6 +53,7 @@ class User extends Authenticatable
         'provider_id',
         'provider',
         'access_token',
+        'invited_way',
         'avatar'    
     ];
 
