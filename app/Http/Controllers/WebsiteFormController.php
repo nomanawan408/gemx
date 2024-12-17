@@ -514,7 +514,7 @@ class WebsiteFormController extends Controller
             // Assuming you have a User model that stores this information
             // Insert file paths into the database (attachments table)
             $attachment = Attachment::create([
-                'user_id' =>  $request->user_id, // Assuming user_id is passed in the request
+                'user_id' =>  $user->id, // Assuming user_id is passed in the request
                 'passport_cnic_file' => $passportFile,
                 'personal_photo' => $personalPhoto,
                 'company_catalogue' => $companyCatalogue,
