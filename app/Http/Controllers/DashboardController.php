@@ -24,6 +24,7 @@ class DashboardController extends Controller
         $user->status = 'rejected';
         $user->save();
 
-    return redirect()->back()->with('success', 'User rejected successfully');    }
+    return redirect()->back()->with('success', 'User rejected successfully');    
+    }
     
 }

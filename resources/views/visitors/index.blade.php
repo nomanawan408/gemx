@@ -37,7 +37,7 @@
                                   <th>Action</th>
                               </tr>
                           </thead>
-                          <tfoot>
+                          {{-- <tfoot>
                               <tr>
                                   <th>Name</th>
                                   <th>Profession</th>
@@ -47,7 +47,7 @@
                                   <th>Status</th>
                                   <th>Action</th>
                               </tr>
-                          </tfoot>
+                          </tfoot> --}}
                           <tbody>
                               @foreach($visitors as $visitor)
                               <tr>
@@ -94,9 +94,27 @@
                                         <div class="col-md-6">
                                           <div class="row">
                                             <h3>Personal Details</h3>
-                                            <p><strong>Name:</strong> {{ $visitor->name }}</p>
-                                            <p><strong>Profession:</strong> {{ $visitor->profession }}</p>
+                                            <p><strong>Username:</strong> {{ $visitor->username }}</p>
+                                            <p><strong>Name:</strong> {{ $visitor->first_name }} {{ $visitor->last_name }}</p>
+                                            <p><strong>Father Name:</strong> {{ $visitor->father_first_name }} {{ $visitor->father_last_name }}</p>
+                                            <p><strong>Gender:</strong> {{ $visitor->gender }}</p>
+                                            <p><strong>Country:</strong> {{ $visitor->country }}</p>
+                                            <p><strong>Nationality:</strong> {{ $visitor->nationality }}</p>
                                             <p><strong>Address:</strong> {{ $visitor->address }}</p>
+                                            <p><strong>Profession:</strong> {{ $visitor->profession }}</p>
+                                            <p><strong>Phone:</strong> {{ $visitor->phone }}</p>
+                                            <p><strong>Mobile:</strong> {{ $visitor->mobile }}</p>
+                                            <p><strong>WhatsApp:</strong> {{ $visitor->whatsapp }}</p>
+                                            <p><strong>Facebook:</strong> {{ $visitor->fb_url }}</p>
+                                            <p><strong>LinkedIn:</strong> {{ $visitor->linkedin }}</p>
+                                            <p><strong>Telegram:</strong> {{ $visitor->telegram }}</p>
+                                            <p><strong>Instagram:</strong> {{ $visitor->instagram }}</p>
+                                            <p><strong>WeChat:</strong> {{ $visitor->wechat }}</p>
+                                            <p><strong>IMO:</strong> {{ $visitor->imo }}</p>
+                                            <p><strong>CNIC/Passport No:</strong> {{ $visitor->cnic_passport_no }}</p>
+                                            <p><strong>Date of Issue:</strong> {{ $visitor->date_of_issue }}</p>
+                                            <p><strong>Date of Expiry:</strong> {{ $visitor->date_of_expiry }}</p>
+                                            <p><strong>Invited Way:</strong> {{ $visitor->invited_way }}</p>
                                           </div>
                                           <div class="row">
                                             <h3>Bussiness Details</h3>
@@ -106,10 +124,22 @@
                                           </div>
                                         </div>
                                         <div class="col-md-6">
-                                          <p><strong>Email:</strong> {{ $visitor->email }}</p>
-                                          <p><strong>Phone:</strong> {{ $visitor->phone }}</p>
-                                          <p><strong>CNIC/Passport No:</strong> {{ $visitor->cnic_passport_no }}</p>
-                                        </div>
+                                          <div class="row">
+                                            <h3>Business Details</h3>
+                                            <p><strong>Company Name:</strong> {{ $visitor->business->company_name }}</p>
+                                            <p><strong>Address:</strong> {{ $visitor->business->address }}</p>
+                                            <p><strong>Company Phone:</strong> {{ $visitor->business->company_phone }}</p>
+                                            <p><strong>Company Mobile:</strong> {{ $visitor->business->company_mobile }}</p>
+                                            <p><strong>Business Phone:</strong> {{ $visitor->business->business_phone }}</p>
+                                            <p><strong>Position:</strong> {{ $visitor->business->position }}</p>
+                                            <p><strong>Website URL:</strong> {{ $visitor->business->website_url }}</p>
+                                            <p><strong>Export Items:</strong> {{ $visitor->business->export_items }}</p>
+                                            <p><strong>Main Import Countries:</strong> {{ $visitor->business->main_import_countries }}</p>
+                                            <p><strong>Main Export Countries:</strong> {{ $visitor->business->main_export_countries }}</p>
+                                            <p><strong>Annual Turnover:</strong> {{ $visitor->business->annual_turnover }}</p>
+                                            <p><strong>National Sale:</strong> {{ $visitor->business->national_sale }}</p>
+                                            <p><strong>Annual Import/Export:</strong> {{ $visitor->business->annual_import_export }}</p>
+                                        </div>                                      
                                       </div>
                                     </div>
                                     <div class="modal-footer">
