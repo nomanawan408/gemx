@@ -277,12 +277,10 @@ class WebsiteFormController extends Controller
     public function submit_buyer_form(Request $request)
     {
         try {
-            \Log::info($request->all()); // Log for debugging
-            //
-            $data = json_decode($request->getContent(), true);
-
+            \Log::info('Received Request:', $request->all());
+    
+            // **Handle File Uploads** and Validation Rules
             $validated = $request->validate([
-                // User Information
                 'paid_username' => 'required|string|max:255',
                 'paid_password' => 'required|string|min:8',
                 'paid_confirm_password' => 'required|same:paid_password',
@@ -460,90 +458,56 @@ class WebsiteFormController extends Controller
             ]);
 
 
-             // Function to save files and generate file name
-            $saveFile = function ($file, $folder, $identifier) {
+          
+            // **Step 2: Save Uploaded Files**
+            $saveFile = function ($file, $folder, $userId) {
                 if ($file) {
-                    // Generate a file name using a timestamp, identifier, and the file extension
-                    $fileName = time() . '-' . $identifier . '.' . $file->extension();
-                    // Move the file to the appropriate folder
+                    $fileName = time() . '-' . $userId . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path($folder), $fileName);
-                    // Return relative file path
                     return $folder . '/' . $fileName;
                 }
                 return null;
             };
 
-            // Initialize variables for file paths
-            $passportFile = null;
-            $personalPhoto = null;
-            $companyCatalogue = null;
-            $bankStatement = null;
-            $businessCard = null;
-            $companyCertificate = null;
-            $chamberCertificate = null;
+            $personalPhoto = $saveFile($request->file('paid_personal_photo'), 'uploads/photos', $user->id);
+            $companyCatalog = $saveFile($request->file('paid_company_catalog'), 'uploads/catalogs', $user->id);
+            $bankStatement = $saveFile($request->file('bank_statment'), 'uploads/statements', $user->id);
+            $businessCard = $saveFile($request->file('paid_business_card'), 'uploads/cards', $user->id);
+            $companyCertificate = $saveFile($request->file('paid_company_certificate'), 'uploads/certificates', $user->id);
+            $chamberCertificate = $saveFile($request->file('chamber_certificate'), 'uploads/certificates', $user->id);
 
-            // Check if the corresponding files are included in the request, then save them
-            if ($request->hasFile('passport_cnic_file')) {
-                $passportFile = $saveFile($request->file('passport_cnic_file'), 'attachments/passports', $request->user_id);
-            }
-
-            if ($request->hasFile('personal_photo')) {
-                $personalPhoto = $saveFile($request->file('personal_photo'), 'attachments/photos', $request->user_id);
-            }
-
-            if ($request->hasFile('company_catalogue')) {
-                $companyCatalogue = $saveFile($request->file('company_catalogue'), 'attachments/catalogues', $request->user_id);
-            }
-
-            if ($request->hasFile('bank_statement')) {
-                $bankStatement = $saveFile($request->file('bank_statement'), 'attachments/statements', $request->user_id);
-            }
-
-            if ($request->hasFile('business_card')) {
-                $businessCard = $saveFile($request->file('business_card'), 'attachments/cards', $request->user_id);
-            }
-
-            if ($request->hasFile('company_certificate')) {
-                $companyCertificate = $saveFile($request->file('company_certificate'), 'attachments/certificates', $request->user_id);
-            }
-
-            if ($request->hasFile('chamber_certificate')) {
-                $chamberCertificate = $saveFile($request->file('chamber_certificate'), 'attachments/certificates', $request->user_id);
-            }
-
-            // Assuming you have a User model that stores this information
-            // Insert file paths into the database (attachments table)
-            $attachment = Attachment::create([
-                'user_id' =>  $user->id, // Assuming user_id is passed in the request
-                'passport_cnic_file' => $passportFile,
+            // Step 3: Save Attachments
+            Attachment::create([
+                'user_id' => $user->id,
                 'personal_photo' => $personalPhoto,
-                'company_catalogue' => $companyCatalogue,
+                'company_catalogue' => $companyCatalog,
                 'bank_statement' => $bankStatement,
                 'business_card' => $businessCard,
                 'company_certificate' => $companyCertificate,
                 'chamber_association_certificate' => $chamberCertificate,
             ]);
 
-            // Log successful file save
-            Log::info('Files and data saved successfully for user_id:', ['user_id' => $request->user_id]);
+            // Step 4: Log Success and Return Response
+            \Log::info('User and attachments created successfully for user ID: ' . $user->id);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Form data submitted successfully!',
+                'message' => 'Form submitted successfully.',
                 'user_id' => $user->id
             ], 200);
-        }catch (\Illuminate\Validation\ValidationException $e) {
-            Log::error('Validation Error:', $e->errors());
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Validation Error:', $e->errors());
             return response()->json([
                 'success' => false,
-                'message' => 'Validation error.',
+                'message' => 'Validation failed.',
                 'errors' => $e->errors()
             ], 422);
         } catch (\Exception $e) {
-            Log::error('Server Error:', ['message' => $e->getMessage()]);
+            \Log::error('Server Error:', ['message' => $e->getMessage()]);
             return response()->json([
                 'success' => false,
-                'message' => 'Something went wrong. Please try again later.',
+                'message' => 'Something went wrong. Please try again.',
                 'error' => $e->getMessage()
             ], 500);
         }
