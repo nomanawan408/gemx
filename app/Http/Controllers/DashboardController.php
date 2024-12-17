@@ -15,7 +15,7 @@ class DashboardController extends Controller
         $user->save();
 
         //return back to route
-        return redirect()->route('buyers.index')->with('success', 'User approved successfully');
+        return redirect()->back()->with('success', 'User approved successfully');
     }
 
     public function rejectUser($id)
@@ -24,6 +24,6 @@ class DashboardController extends Controller
         $user->status = 'rejected';
         $user->save();
 
-    return redirect()->route('buyers.index')->with('success', 'User rejected successfully');    }
+    return redirect()->back()->with('success', 'User rejected successfully');    }
     
 }
