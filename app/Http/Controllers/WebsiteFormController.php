@@ -155,11 +155,11 @@ class WebsiteFormController extends Controller
                     'position' => $validated['position'],
                     'url' => $validated['url'],
                     'export_items' => $validated['export_items'],
-                    'import_countries' => $validated['import_countries'],
-                    'export_country' => $validated['export_country'],
+                    'main_import_countries' => $validated['import_countries'],
+                    'main_export_countries' => $validated['export_country'],
                     'annual_turnover' => $validated['annual_turnover'],
                     'national_sale' => $validated['national_sale'],
-                    'annual_export' => $validated['annual_export'],
+                    'annual_import_export' => $validated['annual_export'],
                 ]);
             }
             
