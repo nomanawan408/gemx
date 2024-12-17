@@ -277,7 +277,8 @@ class WebsiteFormController extends Controller
     public function submit_buyer_form(Request $request)
     {
         try {
-            \Log::info('Received Request:', $request->all());
+            \Log::info('Request Data:', $request->all());
+            \Log::info('Uploaded Files:', $request->allFiles());
     
             // **Handle File Uploads** and Validation Rules
             $validated = $request->validate([
