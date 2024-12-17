@@ -65,19 +65,19 @@ class WebsiteFormController extends Controller
             'shoowothers' => 'nullable|string',
 
             'business' => 'required|in:Yes,No',
-            'company_name' => 'nullable|string|max:255',
-            'company_address' => 'nullable|string',
-            'company_phone' => 'nullable|string|max:20',
-            'business_mobile' => 'nullable|string|max:20',
-            'business_phone' => 'nullable|string|max:20',
-            'position' => 'nullable|string|max:255',
-            'url' => 'nullable|url',
-            'export_items' => 'nullable|string',
-            'Import_countries' => 'nullable|string',
-            'export_country' => 'nullable|string',
-            'annual_turnover' => 'nullable|string',
-            'national_sale' => 'nullable|numeric',
-            'annual_export' => 'nullable|numeric',
+            'company_name' => 'required|string|max:255',
+            'company_address' => 'required|string',
+            'company_phone' => 'required|string|max:20',
+            'business_mobile' => 'required|string|max:20',
+            'business_phone' => 'required|string|max:20',
+            'position' => 'required|string|max:255',
+            'url' => 'required|url',
+            'export_items' => 'required|string',
+            'import_countries' => 'required|string',
+            'export_country' => 'required|string',
+            'annual_turnover' => 'required|string',
+            'national_sale' => 'required|numeric',
+            'annual_export' => 'required|numeric',        
         ]);        
         
         // Step 2: Create User
@@ -92,8 +92,7 @@ class WebsiteFormController extends Controller
             'father_last_name' => $validated['father_lastname'],
             'gender' => $validated['gender'],
             'country' => 'Pakistan', 
-            // 'city' => $data['city'],
-            'address' => $data['address'], // Added address to users table
+            'address' => $data['address'], 
             'profession' => $validated['profession'],
             'phone' => $validated['phone'],
             'mobile' => $validated['mobile'],
@@ -143,6 +142,27 @@ class WebsiteFormController extends Controller
                 'personal_photo' => $personalPhoto,
                 'passport_cnic_file' => $passport,
             ]);
+
+            // Step 4: Save Business Information if applicable
+            if ($validated['business'] === 'Yes') {
+                Business::create([
+                    'user_id' => $user->id,
+                    'company_name' => $validated['company_name'],
+                    'company_address' => $validated['company_address'],
+                    'company_phone' => $validated['company_phone'],
+                    'business_mobile' => $validated['business_mobile'],
+                    'business_phone' => $validated['business_phone'],
+                    'position' => $validated['position'],
+                    'url' => $validated['url'],
+                    'export_items' => $validated['export_items'],
+                    'import_countries' => $validated['import_countries'],
+                    'export_country' => $validated['export_country'],
+                    'annual_turnover' => $validated['annual_turnover'],
+                    'national_sale' => $validated['national_sale'],
+                    'annual_export' => $validated['annual_export'],
+                ]);
+            }
+            
 
             Log::info("User {$user->id} and attachments saved successfully.");
 
