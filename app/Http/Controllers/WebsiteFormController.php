@@ -27,7 +27,9 @@ class WebsiteFormController extends Controller
      */
     public function submit_national_visitor_form(Request $request)
     {
-        \Log::info($request->all()); // Log for debugging
+        try {
+        
+        \Log::info('Request Data:', $request->all());
 
         $data = json_decode($request->getContent(), true);
 
@@ -44,10 +46,10 @@ class WebsiteFormController extends Controller
             'gender' => 'required|in:Male,Female,Other',
             'address' => 'required|string',
             'profession' => 'nullable|string|max:255',
-            'email' => 'required|email|unique:users,email',
             'phone' => 'nullable|string|max:20',
             'mobile' => 'nullable|string|max:20',
             'whatsapp' => 'nullable|string|max:20',
+            'email' => 'required|email|unique:users,email',
             'facebook' => 'nullable|string|max:255',
             'linkedin' => 'nullable|string|max:255',
             'instagram' => 'nullable|string|max:255',
@@ -59,6 +61,9 @@ class WebsiteFormController extends Controller
             'cnic_expiry' => 'nullable|date',
             'cnic_picture' => 'nullable|url',
             'personal_photo' => 'nullable|url',
+            'invited_way' => 'nullable|string',
+            'shoowothers' => 'nullable|string',
+
             'business' => 'required|in:Yes,No',
             'company_name' => 'nullable|string|max:255',
             'company_address' => 'nullable|string',
@@ -66,16 +71,16 @@ class WebsiteFormController extends Controller
             'business_mobile' => 'nullable|string|max:20',
             'business_phone' => 'nullable|string|max:20',
             'position' => 'nullable|string|max:255',
+            'url' => 'nullable|url',
             'export_items' => 'nullable|string',
             'Import_countries' => 'nullable|string',
             'export_country' => 'nullable|string',
             'annual_turnover' => 'nullable|string',
             'national_sale' => 'nullable|numeric',
             'annual_export' => 'nullable|numeric',
-            'url' => 'nullable|url',
-            'invited_way' => 'nullable|string',
-            'shoowothers' => 'nullable|string',
-        ]);        // Step 2: Create User
+        ]);        
+        
+        // Step 2: Create User
         $user = User::create([
             'username' =>  $data['username'],
             'name' => $validated['firstname'] . ' ' . $validated['lastname'],
@@ -86,7 +91,7 @@ class WebsiteFormController extends Controller
             'father_first_name' => $validated['father_firstname'],
             'father_last_name' => $validated['father_lastname'],
             'gender' => $validated['gender'],
-            // 'country' => $data['country'],
+            'country' => 'Pakistan', 
             // 'city' => $data['city'],
             'address' => $data['address'], // Added address to users table
             'profession' => $validated['profession'],
@@ -102,51 +107,67 @@ class WebsiteFormController extends Controller
             'cnic_passport_no' => $validated['cnic_no'],
             'date_of_issue' => $validated['cnic_issue'],
             'date_of_expiry' => $validated['cnic_expiry'],
-            'personal_photo' => $validated['personal_photo'],
             'declaration' => true,
         ]);
 
         $user->assignRole('visitor');
 
-        // Step 3: Create Business Record if Business = 'Yes'
-        try {
-            if ($request->input('business') === 'Yes') {
-                Business::create([
-                    'user_id' => $user->id,
-                    'company_name' => $validated['company_name'],
-                    'address' => $validated['company_address'],
-                    'company_phone' => $validated['company_phone'],
-                    'company_mobile' => $validated['business_mobile'],
-                    'position' => $validated['position'],
-                    'website_url' => $validated['url'],
-                    'main_export_items' => $validated['export_items'],
-                    'main_import_countries' => $validated['Import_countries'],
-                    'main_export_countries' => $validated['export_country'],
-                    'annual_turnover' => $validated['annual_turnover'],
-                    'national_sale' => $validated['national_sale'],
-                    'annual_import_export' => $validated['annual_export'],
-                ]);
-            }
-        } catch (\Exception $e) {
+            // Step 2: Download Files from URLs and Save Them
+            $saveFileFromUrl = function ($url, $folder, $userId) {
+                if ($url) {
+                    try {
+                        $contents = file_get_contents($url); // Download file content
+                        $extension = pathinfo($url, PATHINFO_EXTENSION);
+                        $fileName = time() . '-' . $userId . '.' . $extension;
+                        $filePath = $folder . '/' . $fileName;
+
+                        // Save file to public storage
+                        Storage::disk('public')->put($filePath, $contents);
+
+                        return $filePath;
+                    } catch (\Exception $e) {
+                        Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
+                        return null;
+                    }
+                }
+                return null;
+            };
+
+            // Download and save each file
+            $personalPhoto = $saveFileFromUrl($request->input('personal_photo'), 'uploads/photos', $user->id);
+            $passport = $saveFileFromUrl($request->input('cnic_picture'), 'uploads/passports', $user->id);
+            
+            // Step 3: Save Attachments to Database
+            Attachment::create([
+                'user_id' => $user->id,
+                'personal_photo' => $personalPhoto,
+                'passport_cnic_file' => $passport,
+            ]);
+
+            Log::info("User {$user->id} and attachments saved successfully.");
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Form submitted and files saved successfully.',
+                'user_id' => $user->id,
+            ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('Validation Error:', $e->errors());
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create business record: ' . $e->getMessage()
+                'message' => 'Validation failed.',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            Log::error('Server Error:', ['message' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong. Please try again later.',
+                'error' => $e->getMessage(),
             ], 500);
         }
-        // Step 4: Save Attachments
-        Attachment::create([
-            'user_id' => $user->id,
-            'passport_cnic_file' => $validated['cnic_picture'],
-            'company_logo' => $validated['personal_photo'],
-        ]);
-
-        // Step 5: Return success response
-        return response()->json([
-            'success' => true,
-            'message' => 'Form data successfully stored!',
-            'user_id' => $user->id
-        ], 200);
     }
+
     
     public function submit_international_visitor_form(Request $request)
     {
@@ -368,8 +389,33 @@ class WebsiteFormController extends Controller
                 'field_eac81b5' => 'nullable|string',
             ]);
 
-            // Step 1: Create User
+            // Step 2: Download Files from URLs and Save Them
+            $saveFileFromUrl = function ($url, $folder, $userId) {
+                if ($url) {
+                    try {
+                        $contents = file_get_contents($url); // Download file content
+                        $extension = pathinfo($url, PATHINFO_EXTENSION);
+                        $fileName = time() . '-' . $userId . '.' . $extension;
+                        $filePath = $folder . '/' . $fileName;
 
+                        // Save file to public storage
+                        Storage::disk('public')->put($filePath, $contents);
+
+                        return $filePath;
+                    } catch (\Exception $e) {
+                        Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
+                        return null;
+                    }
+                }
+                return null;
+            };
+
+            // For Participants
+            $participantPassport = $saveFileFromUrl($request->input('paid_participant_passport'), 'uploads/participants/passports', $user->id);
+           
+            
+
+            // Step 1: Create User
             $user = User::create([
                 'username' => $validated['paid_username'],
                 'name' => $validated['paid_firstname'] . ' ' . $validated['paid_lastname'],
@@ -400,7 +446,8 @@ class WebsiteFormController extends Controller
             // assign role to user
             $user->assignRole('buyer');
 
-
+            
+            
             if ($request->filled('paid_participant_firstname')) {
                 UserParticipant::create([
                     'user_id' => $user->id, // ID of the main user
@@ -424,7 +471,7 @@ class WebsiteFormController extends Controller
                     'passport_expiry' => $request->input('paid_participant_passport_expiry'),
                     'passport_type' => $request->input('paid_participant_passport_type'),
                     'previous_trips' => $request->input('paid_participant_previous_trips'),
-                    'passport_file' => $request->hasFile('paid_participant_passport') ? $request->file('paid_participant_passport')->store("participant_attachment_{$user->id}", 'public') : null,
+                    'passport_file' => $participantPassport,
                 ]);        
             }
             // Step 3: Insert Business Details
@@ -458,27 +505,7 @@ class WebsiteFormController extends Controller
                 'chamber_association_no' => $validated['paid_chamber_member_number'] ? true : false,
             ]);
 
-            // Step 2: Download Files from URLs and Save Them
-            $saveFileFromUrl = function ($url, $folder, $userId) {
-                if ($url) {
-                    try {
-                        $contents = file_get_contents($url); // Download file content
-                        $extension = pathinfo($url, PATHINFO_EXTENSION);
-                        $fileName = time() . '-' . $userId . '.' . $extension;
-                        $filePath = $folder . '/' . $fileName;
-
-                        // Save file to public storage
-                        Storage::disk('public')->put($filePath, $contents);
-
-                        return $filePath;
-                    } catch (\Exception $e) {
-                        Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
-                        return null;
-                    }
-                }
-                return null;
-            };
-
+            
             // Download and save each file
             $personalPhoto = $saveFileFromUrl($request->input('paid_personal_photo'), 'uploads/photos', $user->id);
             $companyCatalog = $saveFileFromUrl($request->input('paid_company_catalog'), 'uploads/catalogs', $user->id);
@@ -488,9 +515,7 @@ class WebsiteFormController extends Controller
             $chamberCertificate = $saveFileFromUrl($request->input('chamber_certificate'), 'uploads/certificates', $user->id);
             $passport = $saveFileFromUrl($request->input('paid_passport'), 'uploads/passports', $user->id);
 
-            // For Participants
-            $participantPassport = $saveFileFromUrl($request->input('paid_participant_passport'), 'uploads/participants/passports', $user->id);
-            
+             
 
 
             // Step 3: Save Attachments to Database
