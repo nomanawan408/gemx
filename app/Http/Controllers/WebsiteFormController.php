@@ -406,32 +406,6 @@ class WebsiteFormController extends Controller
                 'field_eac81b5' => 'nullable|string',
             ]);
 
-            // Step 2: Download Files from URLs and Save Them
-            $saveFileFromUrl = function ($url, $folder, $userId) {
-                if ($url) {
-                    try {
-                        $contents = file_get_contents($url); // Download file content
-                        $extension = pathinfo($url, PATHINFO_EXTENSION);
-                        $fileName = time() . '-' . $userId . '.' . $extension;
-                        $filePath = $folder . '/' . $fileName;
-
-                        // Save file to public storage
-                        Storage::disk('public')->put($filePath, $contents);
-
-                        return $filePath;
-                    } catch (\Exception $e) {
-                        Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
-                        return null;
-                    }
-                }
-                return null;
-            };
-
-            // For Participants
-            $participantPassport = $saveFileFromUrl($request->input('paid_participant_passport'), 'uploads/participants/passports', $user->id);
-           
-            
-
             // Step 1: Create User
             $user = User::create([
                 'username' => $validated['paid_username'],
@@ -463,7 +437,29 @@ class WebsiteFormController extends Controller
             // assign role to user
             $user->assignRole('buyer');
 
-            
+            // Step 2: Download Files from URLs and Save Them
+            $saveFileFromUrl = function ($url, $folder, $userId) {
+                if ($url) {
+                    try {
+                        $contents = file_get_contents($url); // Download file content
+                        $extension = pathinfo($url, PATHINFO_EXTENSION);
+                        $fileName = time() . '-' . $userId . '.' . $extension;
+                        $filePath = $folder . '/' . $fileName;
+
+                        // Save file to public storage
+                        Storage::disk('public')->put($filePath, $contents);
+
+                        return $filePath;
+                    } catch (\Exception $e) {
+                        Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
+                        return null;
+                    }
+                }
+                return null;
+            };
+
+            // For Participants
+            $participantPassport = $saveFileFromUrl($request->input('paid_participant_passport'), 'uploads/participants/passports', $user->id);
             
             if ($request->filled('paid_participant_firstname')) {
                 UserParticipant::create([
@@ -491,6 +487,7 @@ class WebsiteFormController extends Controller
                     'passport_file' => $participantPassport,
                 ]);        
             }
+
             // Step 3: Insert Business Details
             Business::create([
                 'user_id' => $user->id,
@@ -521,7 +518,6 @@ class WebsiteFormController extends Controller
                 // 'gst' => $validated['paid_gst'],
                 'chamber_association_no' => $validated['paid_chamber_member_number'] ? true : false,
             ]);
-
             
             // Download and save each file
             $personalPhoto = $saveFileFromUrl($request->input('paid_personal_photo'), 'uploads/photos', $user->id);
@@ -531,9 +527,6 @@ class WebsiteFormController extends Controller
             $companyCertificate = $saveFileFromUrl($request->input('paid_company_certificate'), 'uploads/certificates', $user->id);
             $chamberCertificate = $saveFileFromUrl($request->input('chamber_certificate'), 'uploads/certificates', $user->id);
             $passport = $saveFileFromUrl($request->input('paid_passport'), 'uploads/passports', $user->id);
-
-             
-
 
             // Step 3: Save Attachments to Database
             Attachment::create([
@@ -568,8 +561,7 @@ class WebsiteFormController extends Controller
                 'message' => 'Something went wrong. Please try again later.',
                 'error' => $e->getMessage(),
             ], 500);
-        }
-    }
+        }    }
 }
 
 
