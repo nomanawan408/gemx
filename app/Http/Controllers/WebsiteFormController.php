@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
 use App\Models\UserParticipant;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -456,7 +457,7 @@ class WebsiteFormController extends Controller
                 // 'gst' => $validated['paid_gst'],
                 'chamber_association_no' => $validated['paid_chamber_member_number'] ? true : false,
             ]);
-            
+
             // Step 2: Download Files from URLs and Save Them
             $saveFileFromUrl = function ($url, $folder, $userId) {
                 if ($url) {
@@ -485,6 +486,12 @@ class WebsiteFormController extends Controller
             $businessCard = $saveFileFromUrl($request->input('paid_business_card'), 'uploads/cards', $user->id);
             $companyCertificate = $saveFileFromUrl($request->input('paid_company_certificate'), 'uploads/certificates', $user->id);
             $chamberCertificate = $saveFileFromUrl($request->input('chamber_certificate'), 'uploads/certificates', $user->id);
+            $passport = $saveFileFromUrl($request->input('paid_passport'), 'uploads/passports', $user->id);
+
+            // For Participants
+            $participantPassport = $saveFileFromUrl($request->input('paid_participant_passport'), 'uploads/participants/passports', $user->id);
+            
+
 
             // Step 3: Save Attachments to Database
             Attachment::create([
@@ -495,6 +502,7 @@ class WebsiteFormController extends Controller
                 'business_card' => $businessCard,
                 'company_certificate' => $companyCertificate,
                 'chamber_association_certificate' => $chamberCertificate,
+                'passport_cnic_file' => $passport,
             ]);
 
             Log::info("User {$user->id} and attachments saved successfully.");
