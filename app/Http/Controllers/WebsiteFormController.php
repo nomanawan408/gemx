@@ -278,7 +278,6 @@ class WebsiteFormController extends Controller
     {
         try {
             \Log::info('Request Data:', $request->all());
-            \Log::info('Uploaded Files:', $request->allFiles());
     
             // **Handle File Uploads** and Validation Rules
             $validated = $request->validate([
@@ -457,27 +456,37 @@ class WebsiteFormController extends Controller
                 // 'gst' => $validated['paid_gst'],
                 'chamber_association_no' => $validated['paid_chamber_member_number'] ? true : false,
             ]);
+            
+            // Step 2: Download Files from URLs and Save Them
+            $saveFileFromUrl = function ($url, $folder, $userId) {
+                if ($url) {
+                    try {
+                        $contents = file_get_contents($url); // Download file content
+                        $extension = pathinfo($url, PATHINFO_EXTENSION);
+                        $fileName = time() . '-' . $userId . '.' . $extension;
+                        $filePath = $folder . '/' . $fileName;
 
+                        // Save file to public storage
+                        Storage::disk('public')->put($filePath, $contents);
 
-          
-            // **Step 2: Save Uploaded Files**
-            $saveFile = function ($file, $folder, $userId) {
-                if ($file) {
-                    $fileName = time() . '-' . $userId . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path($folder), $fileName);
-                    return $folder . '/' . $fileName;
+                        return $filePath;
+                    } catch (\Exception $e) {
+                        Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
+                        return null;
+                    }
                 }
                 return null;
             };
 
-            $personalPhoto = $saveFile($request->file('paid_personal_photo'), 'uploads/photos', $user->id);
-            $companyCatalog = $saveFile($request->file('paid_company_catalog'), 'uploads/catalogs', $user->id);
-            $bankStatement = $saveFile($request->file('bank_statment'), 'uploads/statements', $user->id);
-            $businessCard = $saveFile($request->file('paid_business_card'), 'uploads/cards', $user->id);
-            $companyCertificate = $saveFile($request->file('paid_company_certificate'), 'uploads/certificates', $user->id);
-            $chamberCertificate = $saveFile($request->file('chamber_certificate'), 'uploads/certificates', $user->id);
+            // Download and save each file
+            $personalPhoto = $saveFileFromUrl($request->input('paid_personal_photo'), 'uploads/photos', $user->id);
+            $companyCatalog = $saveFileFromUrl($request->input('paid_company_catalog'), 'uploads/catalogs', $user->id);
+            $bankStatement = $saveFileFromUrl($request->input('bank_statment'), 'uploads/statements', $user->id);
+            $businessCard = $saveFileFromUrl($request->input('paid_business_card'), 'uploads/cards', $user->id);
+            $companyCertificate = $saveFileFromUrl($request->input('paid_company_certificate'), 'uploads/certificates', $user->id);
+            $chamberCertificate = $saveFileFromUrl($request->input('chamber_certificate'), 'uploads/certificates', $user->id);
 
-            // Step 3: Save Attachments
+            // Step 3: Save Attachments to Database
             Attachment::create([
                 'user_id' => $user->id,
                 'personal_photo' => $personalPhoto,
@@ -488,28 +497,26 @@ class WebsiteFormController extends Controller
                 'chamber_association_certificate' => $chamberCertificate,
             ]);
 
-            // Step 4: Log Success and Return Response
-            \Log::info('User and attachments created successfully for user ID: ' . $user->id);
+            Log::info("User {$user->id} and attachments saved successfully.");
 
             return response()->json([
                 'success' => true,
-                'message' => 'Form submitted successfully.',
-                'user_id' => $user->id
+                'message' => 'Form submitted and files saved successfully.',
+                'user_id' => $user->id,
             ], 200);
-
         } catch (\Illuminate\Validation\ValidationException $e) {
-            \Log::error('Validation Error:', $e->errors());
+            Log::error('Validation Error:', $e->errors());
             return response()->json([
                 'success' => false,
                 'message' => 'Validation failed.',
-                'errors' => $e->errors()
+                'errors' => $e->errors(),
             ], 422);
         } catch (\Exception $e) {
-            \Log::error('Server Error:', ['message' => $e->getMessage()]);
+            Log::error('Server Error:', ['message' => $e->getMessage()]);
             return response()->json([
                 'success' => false,
-                'message' => 'Something went wrong. Please try again.',
-                'error' => $e->getMessage()
+                'message' => 'Something went wrong. Please try again later.',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
