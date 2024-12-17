@@ -22,4 +22,12 @@ class Attachment extends Model
         'pay_order_amount',
         'pay_order_date',
         'pay_order_bank_name',
-        'pay_order_image'    ];}
+        'pay_order_image'    
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    
+    }

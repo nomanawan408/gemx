@@ -30,7 +30,6 @@
                                   <th>Name</th>
                                   <th>Profession</th>
                                   <th>Address</th>
-                                  <th>Email</th>
                                   <th>Phone</th>
                                   <th>CNIC No</th>
                                   <th>Status</th>
@@ -51,14 +50,26 @@
                           <tbody>
                               @foreach($visitors as $visitor)
                               <tr>
-                                  <td>{{ $visitor->name }}</td>
+                                  <td>
+                                    <div class="d-flex align-items-center">
+                                      <div class="avatar me-2">
+                                        @if($visitor->attachment && $visitor->attachment->personal_photo)
+                                          <img src="{{ asset('storage/' . $visitor->attachment->personal_photo) }}" alt="Profile" class="rounded-circle" width="40" height="40">
+                                        @else
+                                          <div class="avatar-initial rounded-circle bg-label-primary">{{ substr($visitor->name, 0, 1) }}</div>
+                                        @endif
+                                      </div>
+                                      <div class="d-flex flex-column">
+                                        <h6 class="mb-0 text-sm">{{ $visitor->name }}</h6>
+                                        <small class="text-muted">{{ $visitor->email }}</small>
+                                      </div>
+                                    </div>
+                                  </td>
                                   <td>{{ $visitor->profession }}</td>
                                   <td>{{ $visitor->address }}</td>
-                                  <td>{{ $visitor->email }}</td>
                                   <td>{{ $visitor->phone }}</td>
                                   <td>{{ $visitor->cnic_passport_no }}</td>
                                   <td>
-                                    <td>
                                       @if($visitor->status == 'pending')
                                           <div>
                                               <form action="{{ route('users.approve', $visitor->id) }}" method="POST" style="display:inline;">
@@ -117,10 +128,7 @@
                                             <p><strong>Invited Way:</strong> {{ $visitor->invited_way }}</p>
                                           </div>
                                           <div class="row">
-                                            <h3>Bussiness Details</h3>
-                                            <p><strong>Business Name:</strong> {{ $visitor->business_name }}</p>
-                                            <p><strong>Business Type:</strong> {{ $visitor->business_type }}</p>
-                                            <p><strong>Business Address:</strong> {{ $visitor->business_address }}</p>
+                                            
                                           </div>
                                         </div>
                                         <div class="col-md-6">

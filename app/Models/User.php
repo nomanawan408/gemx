@@ -113,5 +113,8 @@ class User extends Authenticatable
             return $this->hasMany(Stall::class);
         }
     
-    
+        public function attachment()
+        {
+            return $this->hasOne(Attachment::class, 'user_id', 'id');
+        }
 }
