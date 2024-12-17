@@ -50,7 +50,21 @@
                           <tbody>
                               @foreach($buyers as $buyer)
                               <tr>
-                                  <td>{{ $buyer->name }}</td>
+                                <td>
+                                  <div class="d-flex align-items-center">
+                                    <div class="avatar me-2">
+                                      @if($buyer->attachment && $buyer->attachment->personal_photo)
+                                        <img src="{{ asset('storage/' . $buyer->attachment->personal_photo) }}" alt="Profile" class="rounded-circle" width="40" height="40">
+                                      @else
+                                        <div class="avatar-initial rounded-circle bg-label-primary">{{ substr($buyer->name, 0, 1) }}</div>
+                                      @endif
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                      <h6 class="mb-0 text-sm">{{ $buyer->name }}</h6>
+                                      <small class="text-muted">{{ $buyer->email }}</small>
+                                    </div>
+                                  </div>
+                                </td>
                                   <td>{{ $buyer->email }}</td>
                                   <td>{{ $buyer->business->company_name ?? 'N/A' }}</td>
                                   <td>{{ $buyer->business->company_email ?? 'N/A' }}</td>
