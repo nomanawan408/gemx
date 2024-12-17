@@ -145,7 +145,7 @@ class WebsiteFormController extends Controller
                 Business::create([
                     'user_id' => $user->id,
                     'company_name' => $validated['company_name'],
-                    'company_address' => $validated['company_address'],
+                    'address' => $validated['company_address'],
                     'company_phone' => $validated['company_phone'],
                     'company_mobile' => $validated['business_mobile'],
                     'business_phone' => $validated['business_phone'],
