@@ -195,7 +195,7 @@ class WebsiteFormController extends Controller
         try {
         $data = json_decode($request->getContent(), true);
 
-        $validated = Validator::make($data, [
+        $validated = $request->validate([
             'int_username' => 'required|string|max:255|unique:users,username',
             'int_password' => 'required|string|min:6',
             'int_confirm_password' => 'required|same:int_password',
@@ -247,40 +247,40 @@ class WebsiteFormController extends Controller
             'int_annual_import_pakistan' => 'nullable|string',
             'int_company_tax_number' => 'nullable|string',
             'field_eac81b5' => 'nullable|string',
-        ])->validate();
+        ]);
 
         // Step 1: Create User
         $user = User::create([
-            'username' => $data['int_username'],
-            'name' => $data['int_firstname'] . ' ' . $data['int_lastname'],
+            'username' => $validated['int_username'],
+            'name' => $validated['int_firstname'] . ' ' . $validated['int_lastname'],
             'password' => bcrypt($validated['int_password']),
-            'email' => $data['int_email'],
-            'first_name' => $data['int_firstname'],
-            'last_name' => $data['int_lastname'],
-            'father_first_name' => $data['int_father_firstname'],
-            'father_last_name' => $data['int_father_lastname'],
-            'gender' => $data['int_gender'],
-            'country' => $data['int_country'],
-            'nationality' => $data['int_nationality'],
-            'profession' => $data['int_profession'],
-            'address' => $data['int_address'],
-            'phone' => $data['int_phone'],
-            'mobile' => $data['int_mobile'],
-            'whatsapp' => $data['int_whatsapp'],
-            'fb_url' => $data['int_facebook'],
-            'linkedin' => $data['int_linkedin'],
-            'instagram' => $data['int_instagram'],
-            'telegram' => $data['int_telegram'],
-            'wechat' => $data['int_wechat'],
-            'imo' => $data['int_imo'],
-            'cnic_passport_no' => $data['int_passport_no'],
-            'passport_type' => $data['int_passport_type'],
-            'date_of_issue' => $data['int_passport_issue'],
-            'date_of_expiry' => $data['int_passort_expiry'],
-            'trip_to_pak' => $data['int_privous_trips'],
-            'invited_way' => $data['invited_way'],
-            // 'describe_way' => $data['describe_way'],
-            'declaration' => $data['field_eac81b5'],
+            'email' => $validated['int_email'],
+            'first_name' => $validated['int_firstname'],
+            'last_name' => $validated['int_lastname'],
+            'father_first_name' => $validated['int_father_firstname'],
+            'father_last_name' => $validated['int_father_lastname'],
+            'gender' => $validated['int_gender'],
+            'country' => $validated['int_country'],
+            'nationality' => $validated['int_nationality'],
+            'profession' => $validated['int_profession'],
+            'address' => $validated['int_address'],
+            'phone' => $validated['int_phone'],
+            'mobile' => $validated['int_mobile'],
+            'whatsapp' => $validated['int_whatsapp'],
+            'fb_url' => $validated['int_facebook'],
+            'linkedin' => $validated['int_linkedin'],
+            'instagram' => $validated['int_instagram'],
+            'telegram' => $validated['int_telegram'],
+            'wechat' => $validated['int_wechat'],
+            'imo' => $validated['int_imo'],
+            'cnic_passport_no' => $validated['int_passport_no'],
+            'passport_type' => $validated['int_passport_type'],
+            'date_of_issue' => $validated['int_passport_issue'],
+            'date_of_expiry' => $validated['int_passort_expiry'],
+            'trip_to_pak' => $validated['int_privous_trips'],
+            'invited_way' => $validated['invited_way'],
+            // 'describe_way' => $validated['describe_way'],
+            'declaration' => $validated['field_eac81b5'],
             'status' => 'pending'
         ]);        
 
@@ -308,8 +308,8 @@ class WebsiteFormController extends Controller
             };
 
             // Download and save each file
-            $personalPhoto = $saveFileFromUrl($data['personal_photo'], 'uploads/photos', $user->id);
-            $passport = $saveFileFromUrl($data['int_passport'], 'uploads/passports', $user->id);
+            $personalPhoto = $saveFileFromUrl($validated['personal_photo'], 'uploads/photos', $user->id);
+            $passport = $saveFileFromUrl($validated['int_passport'], 'uploads/passports', $user->id);
             
             // Step 3: Save Attachments to Database
             Attachment::create([
@@ -320,25 +320,25 @@ class WebsiteFormController extends Controller
 
 
         // Step 3: Create Business Information if provided
-        if ($data['business'] === 'Yes') {
+        if ($validated['business'] === 'Yes') {
             Business::create([
                 'user_id' => $user->id,
-                'company_name' => $data['int_comapny_name'],
-                'address' => $data['int_company_address'],
-                'company_mobile' => $data['int_business_mobile'],
-                'company_phone' => $data['int_business_phone'],
-                'position' => $data['int_company_position'],
-                'website_url' => $data['int_url'],
-                'type_of_business' => $data['int_type_biz'],
-                'main_business_items' => $data['int_business_items'],
-                'main_import_items' => $data['int_import_items'],
-                'main_import_countries' => $data['int_import_countries'],
-                'main_export_countries' => $data['int_main_export_countries'],
-                'annual_turnover' => $data['int_annual_turnover'],
-                'annual_import_export' => $data['int_annual_export'],
-                'annual_import_from_pak' => $data['int_annual_import_pakistan'],
-                'amount' => $data['int_amount'],
-                'vat_tax_number' => $data['int_company_tax_number'],
+                'company_name' => $validated['int_comapny_name'],
+                'address' => $validated['int_company_address'],
+                'company_mobile' => $validated['int_business_mobile'],
+                'company_phone' => $validated['int_business_phone'],
+                'position' => $validated['int_company_position'],
+                'website_url' => $validated['int_url'],
+                'type_of_business' => $validated['int_type_biz'],
+                'main_business_items' => $validated['int_business_items'],
+                'main_import_items' => $validated['int_import_items'],
+                'main_import_countries' => $validated['int_import_countries'],
+                'main_export_countries' => $validated['int_main_export_countries'],
+                'annual_turnover' => $validated['int_annual_turnover'],
+                'annual_import_export' => $validated['int_annual_export'],
+                'annual_import_from_pak' => $validated['int_annual_import_pakistan'],
+                'amount' => $validated['int_amount'],
+                'vat_tax_number' => $validated['int_company_tax_number'],
             ]);
         }
         return response()->json([
@@ -360,8 +360,7 @@ class WebsiteFormController extends Controller
             'success' => false,
             'message' => 'Something went wrong. Please try again later.',
             'error' => $e->getMessage(),
-        ], 500);
-    }
+        ], 500);    }
 }
 
 
