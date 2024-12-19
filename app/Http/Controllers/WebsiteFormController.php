@@ -224,7 +224,7 @@ class WebsiteFormController extends Controller
             'int_passort_expiry' => 'required|date',
             'int_passport_type' => 'required|string',
             'int_passport' => 'required|string',
-            'upload_ppic' => 'required|string',
+            'personal_photo' => 'required|string',
             'int_product_interest' => 'required|string',
             'int_items' => 'required|string',
             'invited_way' => 'nullable|string',
@@ -283,6 +283,42 @@ class WebsiteFormController extends Controller
             'declaration' => $data['field_eac81b5'],
             'status' => 'pending'
         ]);        
+
+        $user->assignRole('international_visitor');
+
+            // Step 2: Download Files from URLs and Save Them
+            $saveFileFromUrl = function ($url, $folder, $userId) {
+                if ($url) {
+                    try {
+                        $contents = file_get_contents($url); // Download file content
+                        $extension = pathinfo($url, PATHINFO_EXTENSION);
+                        $fileName = time() . '-' . $userId . '.' . $extension;
+                        $filePath = $folder . '/' . $fileName;
+
+                        // Save file to public storage
+                        Storage::disk('public')->put($filePath, $contents);
+
+                        return $filePath;
+                    } catch (\Exception $e) {
+                        Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
+                        return null;
+                    }
+                }
+                return null;
+            };
+
+            // Download and save each file
+            $personalPhoto = $saveFileFromUrl($data['personal_photo'], 'uploads/photos', $user->id);
+            $passport = $saveFileFromUrl($data['int_passport'], 'uploads/passports', $user->id);
+            
+            // Step 3: Save Attachments to Database
+            Attachment::create([
+                'user_id' => $user->id,
+                'personal_photo' => $personalPhoto,
+                'passport_cnic_file' => $passport,
+            ]);
+
+
         // Step 3: Create Business Information if provided
         if ($data['business'] === 'Yes') {
             Business::create([
