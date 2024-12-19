@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('father_first_name')->nullable();
             $table->string('father_last_name')->nullable();
-            $table->enum('gender', ['Male', 'Female', 'Other']);
+            $table->enum('gender', ['Male', 'Female', 'Preferred Not To Say']);
             $table->string('country')->nullable();
             $table->text('address')->nullable();
             $table->string('city')->nullable();
