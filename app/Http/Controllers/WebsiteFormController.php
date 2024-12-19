@@ -226,7 +226,7 @@ class WebsiteFormController extends Controller
             'int_passport' => 'required|string',
             'personal_photo' => 'required|string',
             'int_product_interest' => 'required|string',
-            'int_items' => 'required|string',
+            'int_items' => 'string|nullable',
             'invited_way' => 'nullable|string',
             'describe_way' => 'nullable|string',
             'int_amount' => 'nullable|string',
