@@ -191,8 +191,135 @@ class WebsiteFormController extends Controller
         //
         \Log::info($request->all()); // Log for debugging
 
-       
-    }
+    //     try {
+    //     $data = json_decode($request->getContent(), true);
+
+    //     $validated = Validator::make($data, [
+    //         'int_username' => 'required|string|max:255|unique:users,username',
+    //         'int_password' => 'required|string|min:6',
+    //         'int_confirm_password' => 'required|same:int_password',
+    //         'int_firstname' => 'required|string|max:255',
+    //         'int_lastname' => 'required|string|max:255',
+    //         'int_father_firstname' => 'nullable|string|max:255',
+    //         'int_father_lastname' => 'nullable|string|max:255',
+    //         'int_gender' => 'required|string',
+    //         'int_country' => 'required|string',
+    //         'int_nationality' => 'required|string',
+    //         'int_profession' => 'required|string',
+    //         'int_address' => 'required|string',
+    //         'int_phone' => 'nullable|string|max:15',
+    //         'int_mobile' => 'nullable|string|max:15',
+    //         'int_whatsapp' => 'nullable|string|max:15',
+    //         'int_email' => 'required|email|unique:users,email',
+    //         'int_facebook' => 'nullable|string|max:255',
+    //         'int_linkedin' => 'nullable|string|max:255',
+    //         'int_instagram' => 'nullable|string|max:255',
+    //         'int_telegram' => 'nullable|string|max:255',
+    //         'int_wechat' => 'nullable|string|max:255',
+    //         'int_imo' => 'nullable|string|max:255',
+    //         'int_privous_trips' => 'required|string',
+    //         'int_passport_no' => 'required|string',
+    //         'int_passport_issue' => 'required|date',
+    //         'int_passort_expiry' => 'required|date',
+    //         'int_passport_type' => 'required|string',
+    //         'int_passport' => 'required|string',
+    //         'upload_ppic' => 'required|string',
+    //         'int_product_interest' => 'required|string',
+    //         'int_items' => 'required|string',
+    //         'field_54c6596' => 'nullable|string',
+    //         'field_6f25e06' => 'nullable|string',
+    //         'int_comapny_name' => 'nullable|string',
+    //         'business' => 'nullable|string',
+    //         'field_b924cb1' => 'nullable|string',
+    //         'int_company_address' => 'nullable|string',
+    //         'int_business_mobile' => 'nullable|string|max:15',
+    //         'int_business_phone' => 'nullable|string|max:15',
+    //         'int_company_position' => 'nullable|string',
+    //         'int_url' => 'nullable|string|url',
+    //         'int_type_biz' => 'nullable|string',
+    //         'field_8e84f1a' => 'nullable|string',
+    //         'field_a5632cf' => 'nullable|string',
+    //         'int_import_countries' => 'nullable|string',
+    //         'int_main_export_country' => 'nullable|string',
+    //         'int_annual_turnover' => 'nullable|string',
+    //         'int_annual_export' => 'nullable|string',
+    //         'field_af347e6' => 'nullable|string',
+    //         'int_company_tax_number' => 'nullable|string',
+    //         'field_eac81b5' => 'nullable|string',
+    //     ])->validate();
+
+    //     // Step 1: Create User
+    //     $user = User::create([
+    //         'username' => $data['int_username'],
+    //         'password' => bcrypt($data['int_password']),
+    //         'email' => $data['int_email'],
+    //         'first_name' => $data['int_firstname'],
+    //         'last_name' => $data['int_lastname'],
+    //         'father_first_name' => $data['int_father_firstname'],
+    //         'father_last_name' => $data['int_father_lastname'],
+    //         'gender' => $data['int_gender'],
+    //         'country' => $data['int_country'],
+    //         'nationality' => $data['int_nationality'],
+    //         'profession' => $data['int_profession'],
+    //         'address' => $data['int_address'],
+    //         'mobile' => $data['int_mobile'],
+    //         'phone' => $data['int_phone'],
+    //         'whatsapp' => $data['int_whatsapp'],
+    //         'linkedin' => $data['int_linkedin'],
+    //         'instagram' => $data['int_instagram'],
+    //         'telegram' => $data['int_telegram'],
+    //         'wechat' => $data['int_wechat'],
+    //         'imo' => $data['int_imo'],
+    //         'cnic_passport_no' => $data['int_passport_no'],
+    //         'passport_type' => $data['int_passport_type'],
+    //         'date_of_issue' => $data['int_passport_issue'],
+    //         'date_of_expiry' => $data['int_passort_expiry'],
+    //         'trip_to_pak' => $data['int_privous_trips'] === 'Yes',
+    //         'status' => 'pending'
+    //     ]);
+        
+    //     // Step 3: Create Business Information if provided
+    //     if ($data['field_e1d7457'] === 'Yes') {
+    //         Business::create([
+    //             'user_id' => $user->id,
+    //             'company_name' => $data['field_b924cb1'],
+    //             'address' => $data['int_company_address'],
+    //             'business_mobile' => $data['int_business_mobile'],
+    //             'business_phone' => $data['int_business_phone'],
+    //             'position' => $data['int_company_position'],
+    //             'website_url' => $data['int_url'],
+    //             'business_type' => $data['int_type_biz'],
+    //             'main_import_countries' => $data['int_import_countries'],
+    //             'main_export_countries' => $data['int_main_export_country'],
+    //             'annual_turnover' => $data['int_annual_turnover'],
+    //             'annual_import_export' => $data['int_annual_export'],
+    //             'tax_number' => $data['int_company_tax_number'],
+    //         ]);
+    //     }
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'International visitor registration completed successfully.',
+    //         'user_id' => $user->id,
+    //     ], 200);
+
+    // } catch (\Illuminate\Validation\ValidationException $e) {
+    //     Log::error('Validation Error:', $e->errors());
+    //     return response()->json([
+    //         'success' => false,
+    //         'message' => 'Validation failed.',
+    //         'errors' => $e->errors(),
+    //     ], 422);
+    // } catch (\Exception $e) {
+    //     Log::error('Server Error:', ['message' => $e->getMessage()]);
+    //     return response()->json([
+    //         'success' => false,
+    //         'message' => 'Something went wrong. Please try again later.',
+    //         'error' => $e->getMessage(),
+    //     ], 500);
+    // }
+
+}
 
 
     public function submit_exhibitor_form(Request $request)
