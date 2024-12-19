@@ -329,7 +329,8 @@ class WebsiteFormController extends Controller
                 'company_phone' => $validated['int_business_phone'],
                 'position' => $validated['int_company_position'],
                 'website_url' => $validated['int_url'],
-                'type_of_business' => $validated['int_type_biz'],
+                'product_interest' => json_encode($validated['int_product_interest']),
+                'type_of_business' =>  json_encode($validated['int_type_biz']), // Convert to JSON
                 'main_business_items' => $validated['int_business_items'],
                 'main_import_items' => $validated['int_import_items'],
                 'main_import_countries' => $validated['int_import_countries'],
