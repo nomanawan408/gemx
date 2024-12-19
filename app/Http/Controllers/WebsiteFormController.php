@@ -364,69 +364,6 @@ class WebsiteFormController extends Controller
         ], 500);    }
 }
 
-
-    public function submit_exhibitor_form(Request $request)
-    {
-        \Log::info($request->all()); // Log for debugging
-        //
-        $data = json_decode($request->getContent(), true);
-
-        $validated = Validator::make($data, [
-            'username' => 'required|string|max:255|unique:users,username',
-            'password' => 'required|string|min:6|confirmed',
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'father_firstname' => 'nullable|string|max:255',
-            'father_lastname' => 'nullable|string|max:255',
-            'gender' => 'required|in:Male,Female,Other',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'nullable|string|max:15',
-            'mobile' => 'nullable|string|max:15',
-            'whatsapp' => 'nullable|string|max:15',
-            'linkedin' => 'nullable|string|max:255',
-            'instagram' => 'nullable|string|max:255',
-            'telegram' => 'nullable|string|max:255',
-            'wechat' => 'nullable|string|max:255',
-            'imo' => 'nullable|string|max:255',
-            'cnic_no' => 'nullable|string|max:20',
-            'cnic_issue' => 'nullable|date',
-            'cnic_expiry' => 'nullable|date',
-            'personal_photo' => 'nullable',
-        ])->validate();
-
-        // Step 1: Create User
-        $user = User::create([
-            'username' => $data['username'],
-            'name' => $data['firstname'] . ' ' . $data['lastname'],
-            'email' => $validated['email'],
-            'password' => bcrypt($data['password'] ?? str_random(10)),
-            'first_name' => $validated['firstname'],
-            'last_name' => $validated['lastname'],
-            'father_first_name' => $validated['father_firstname'],
-            'father_last_name' => $validated['father_lastname'],
-            'gender' => $validated['gender'],
-            'mobile' => $validated['mobile'],
-            'phone' => $validated['phone'],
-            'whatsapp' => $validated['whatsapp'],
-            'linkedin' => $validated['linkedin'],
-            'telegram' => $validated['telegram'],
-            'instagram' => $validated['instagram'],
-            'wechat' => $validated['wechat'],
-            'imo' => $validated['imo'],
-            'cnic_passport_no' => $validated['cnic_no'],
-            'personal_photo' => $validated['personal_photo'],   
-            'date_of_issue' => $validated['cnic_issue'],
-            'date_of_expiry' => $validated['cnic_expiry'],
-            'declaration' => true,
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Form data submitted successfully!',
-            'user_id' => $user->id
-        ], 200);
-    }
-
     public function submit_buyer_form(Request $request)
     {
         try {
@@ -675,7 +612,16 @@ class WebsiteFormController extends Controller
                 'message' => 'Something went wrong. Please try again later.',
                 'error' => $e->getMessage(),
             ], 500);
-        }    }
+        }    
+    }
+
+    
+    public function submit_exhibitor_form(Request $request)
+    {
+        \Log::info($request->all()); // Log for debugging
+        //
+        $data = json_decode($request->getContent(), true);
+
+     
+    }
 }
-
-
