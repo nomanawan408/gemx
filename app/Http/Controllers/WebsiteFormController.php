@@ -280,7 +280,7 @@ class WebsiteFormController extends Controller
             'trip_to_pak' => $validated['int_privous_trips'],
             'invited_way' => $validated['invited_way'],
             // 'describe_way' => $validated['describe_way'],
-            'declaration' => $validated['field_eac81b5'],
+            'declaration' => true,
             'status' => 'pending'
         ]);        
 
