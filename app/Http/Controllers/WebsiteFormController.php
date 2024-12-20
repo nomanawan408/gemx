@@ -7,9 +7,11 @@ use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use App\Models\Business;
 use App\Models\Attachment;
+use App\Models\Exhibition;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
+use App\Models\Stall;
 use App\Models\UserParticipant;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -372,7 +374,7 @@ class WebsiteFormController extends Controller
             // **Handle File Uploads** and Validation Rules
             $validated = $request->validate([
                 'paid_username' => 'required|string|max:255',
-                'paid_password' => 'required|string|min:8',
+                'paid_password' => 'required|string|max:255',
                 'paid_confirm_password' => 'required|same:paid_password',
                 'paid_firstname' => 'required|string|max:255',
                 'paid_lastname' => 'required|string|max:255',
@@ -618,10 +620,251 @@ class WebsiteFormController extends Controller
     
     public function submit_exhibitor_form(Request $request)
     {
-        \Log::info($request->all()); // Log for debugging
-        //
-        $data = json_decode($request->getContent(), true);
 
-     
+        try{
+            
+            \Log::info($request->all()); // Log for debugging
+            //
+            $data = json_decode($request->getContent(), true);
+
+            $validated = $request->validate([
+                'field_25c2fed' => 'nullable',
+                'username' => 'nullable|string|unique:users',
+                'password' => 'nullable|min:6',
+                'confirm_password' => 'nullable|same:password',
+                'field_9bb0f5b' => 'nullable',
+                'firstname' => 'nullable|string',
+                'lastname' => 'nullable|string',
+                'father_firstname' => 'nullable|string',
+                'father_lastname' => 'nullable|string',
+                'gender' => 'nullable',
+                'country' => 'nullable|string',
+                'city' => 'nullable|string',
+                'profession' => 'nullable|string',
+                'field_9cf3165' => 'nullable',
+                'phone' => 'nullable|string',
+                'mobile' => 'nullable|string',
+                'whatsapp' => 'nullable|string',
+                'email' => 'nullable',
+                'facebook' => 'nullable|string',
+                'linkedin' => 'nullable|string',
+                'instagram' => 'nullable|string',
+                'telegram' => 'nullable|string',
+                'wechat' => 'nullable|string',
+                'imo' => 'nullable|string',
+                'cnic_no' => 'nullable|string',
+                'cnic_file' => 'nullable|string',
+                'cnic_issue' => 'nullable|date',
+                'cnic_expiry' => 'nullable|date',
+                'field_29aa5ef' => 'nullable',
+                'company_name' => 'nullable|string',
+                'company_address' => 'nullable|string',
+                'company_phone' => 'nullable|string',
+                'company_email' => 'nullable|email',
+                'business_mobile' => 'nullable|string',
+                'business_phone' => 'nullable|string',
+                'position' => 'nullable|string',
+                'url' => 'nullable',
+                'chamber_number' => 'nullable|string',
+                'business_nature' => 'nullable|string',
+                'business_type' => 'nullable|string',
+                'export_items' => 'nullable|string',
+                'business_registered' => 'nullable',
+                'ntn' => 'nullable|string',
+                'gst' => 'nullable|string',
+                'chamber_member_number' => 'nullable|string',
+                // 'field_22800ae' => 'nullable',
+                'export_countries' => 'nullable|string',
+                'annual_turnover' => 'nullable|string',
+                'annual_export' => 'nullable|string',
+                'bank_statement' => 'nullable',
+                'exhibition' => 'nullable|string',
+                'exhibition_date' => 'nullable|date',
+                'exhibition_type' => 'nullable|string',
+                'exhibition_country' => 'nullable|string',
+                'exhibition_name' => 'nullable|string',
+                'invited_way' => 'nullable|string',
+                'invited_by_other' => 'nullable|string',
+                'field_89099fa' => 'nullable',
+                'stall' => 'nullable|string',
+                'stall_products' => 'nullable|string',
+                'selectbiz' => 'nullable|string',
+                'booth_type' => 'nullable|string',
+                'booth_size' => 'nullable|string',
+                'other_booth_size' => 'nullable|string',
+                'personal_photo' => 'nullable|string',
+                'company_registration_copy' => 'nullable|string',
+                'company_logo' => 'nullable|string',
+                'company_catalog' => 'nullable',
+                'business_card' => 'nullable|string',
+                'chamber_membership_certificate' => 'nullable|string',
+                'pay_order' => 'nullable|string',
+                'amount' => 'nullable|numeric',
+                'pay_date' => 'nullable|date',
+                'bank_name' => 'nullable|string',
+                'pay_order_copy' => 'nullable|string',
+                'recommendation' => 'nullable|string',
+                // 'term_conditions' => 'nullable|string',
+                'field_0863cce' => 'nullable',
+                'field_eac81b5' => 'nullable',
+                'field_13750aa' => 'nullable',           
+             ]);   
+             
+
+        // Step 1: Create User
+        $user = User::create([
+            'username' => $validated['username'],
+            'name' => $validated['firstname'] . ' ' . $validated['lastname'],
+            'password' => bcrypt($validated['password']),
+            'email' => $validated['email'],
+            'first_name' => $validated['firstname'],
+            'last_name' => $validated['lastname'],
+            'father_first_name' => $validated['father_firstname'],
+            'father_last_name' => $validated['father_lastname'],
+            'gender' => $validated['gender'],
+            'country' => $validated['country'],
+            'city' => $validated['city'],
+            'nationality' => $validated['country'],
+            'profession' => $validated['profession'],
+            'address' => $validated['city'],
+            'phone' => $validated['phone'],
+            'mobile' => $validated['mobile'],
+            'whatsapp' => $validated['whatsapp'],
+            'fb_url' => $validated['facebook'],
+            'linkedin' => $validated['linkedin'],
+            'instagram' => $validated['instagram'],
+            'telegram' => $validated['telegram'],
+            'wechat' => $validated['wechat'],
+            'imo' => $validated['imo'],
+            'cnic_passport_no' => $validated['cnic_no'],
+            'passport_type' => null,
+            'date_of_issue' => $validated['cnic_issue'],
+            'date_of_expiry' => $validated['cnic_expiry'],
+            'invited_way' => $validated['invited_way'],
+            'declaration' => true,
+            'status' => 'pending'        
+        ]);        
+
+        $user->assignRole('international_visitor');
+
+            // Step 2: Download Files from URLs and Save Them
+            $saveFileFromUrl = function ($url, $folder, $userId) {
+                if ($url) {
+                    try {
+                        $contents = file_get_contents($url); // Download file content
+                        $extension = pathinfo($url, PATHINFO_EXTENSION);
+                        $fileName = time() . '-' . $userId . '.' . $extension;
+                        $filePath = $folder . '/' . $fileName;
+
+                        // Save file to public storage
+                        Storage::disk('public')->put($filePath, $contents);
+
+                        return $filePath;
+                    } catch (\Exception $e) {
+                        Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
+                        return null;
+                    }
+                }
+                return null;
+            };
+
+           // Download and save each file
+            $personalPhoto = $saveFileFromUrl($validated['personal_photo'], 'uploads/photos', $user->id);
+            $companyRegistration = $saveFileFromUrl($validated['company_registration_copy'], 'uploads/registrations', $user->id);
+            $companyLogo = $saveFileFromUrl($validated['company_logo'], 'uploads/logos', $user->id);
+            $companyCatalog = $saveFileFromUrl($validated['company_catalog'], 'uploads/catalogs', $user->id);
+            $businessCard = $saveFileFromUrl($validated['business_card'], 'uploads/cards', $user->id);
+            $chamberCertificate = $saveFileFromUrl($validated['chamber_membership_certificate'], 'uploads/certificates', $user->id);
+            $cnicFile = $saveFileFromUrl($validated['cnic_file'], 'uploads/passports', $user->id);
+            $bankStatement = $saveFileFromUrl($validated['bank_statement'], 'uploads/bank_statements', $user->id);
+            $payOrderCopy = $saveFileFromUrl($validated['pay_order_copy'], 'uploads/pay_orders', $user->id);
+            
+
+            // Save Attachments to Database
+            Attachment::create([
+                'user_id' => $user->id,
+                'personal_photo' => $personalPhoto,
+                'company_registration_number' => $companyRegistration,
+                'company_logo' => $companyLogo,
+                'company_catalogue' => $companyCatalog,
+                'business_card' => $businessCard,
+                'chamber_association_certificate' => $chamberCertificate,
+                'passport_cnic_file' => $cnicFile,
+                'bank_statement' => $bankStatement,
+                'pay_order_image' => $payOrderCopy,
+                'pay_order_draft_no' => $validated['pay_order'] ?? null,
+                'pay_order_amount' => $validated['amount'] ?? null,
+                'pay_order_date' => $validated['pay_date'] ?? null,
+                'pay_order_bank_name' => $validated['bank_name'] ?? null,
+                'recommendation' => $validated['recommendation'],
+                ]);
+
+            // Step 4: Save Business Details
+            Business::create([
+                'user_id' => $user->id,
+                'field_29aa5ef' => $validated['field_29aa5ef'] ?? null,
+                'company_name' => $validated['company_name'] ?? null,
+                'company_address' => $validated['company_address'] ?? null,
+                'company_phone' => $validated['company_phone'] ?? null,
+                'company_mobile' => $validated['business_mobile'] ?? null,
+                'company_email' => $validated['company_email'] ?? null,
+                'website_url' => $validated['url'] ?? null,
+                'position' => $validated['position'] ?? null,
+                'company_registered_number' => $validated['business_registered'] ?? null,
+                'chamber_association_member' => $validated['chamber_number'] ? json_encode($validated['chamber_number']) : null,
+                'nature_of_business' => $validated['business_nature'] ?? null,
+                'type_of_business' => json_encode($validated['business_type']) ?? null,
+                'main_export_items' => $validated['export_items'] ?? null,
+                'main_export_countries' => $validated['export_countries'] ?? null,
+                'annual_turnover' => $validated['annual_turnover'] ?? null,
+                'annual_import_export' => $validated['annual_export'] ?? null,
+                'ntn' => $validated['ntn'] ?? null,
+                'gst' => $validated['gst'] ?? null,
+                'chamber_association_no' => $validated['chamber_member_number'] ?? null,
+            ]);
+            // Save Exhibition Details
+            Exhibition::create([
+                'user_id' => $user->id,
+                'exhibition_name' => $validated['exhibition_name'] ?? null,
+                'exhibition_date' => $validated['exhibition_date'] ?? null,
+                'type' => $validated['exhibition_type'] ?? null,
+                'country' => $validated['exhibition_country'] ?? null,
+            ]);
+        
+
+            // Step 5: Save Stall Details
+            Stall::create([
+                'user_id' => $user->id,
+                'stall' => $validated['stall'],
+                'stall_products' => json_encode($validated['stall_products']),
+                'selectbiz' => json_encode($validated['selectbiz']),
+                'booth_type' => $validated['booth_type'] ?? null,
+                'booth_size' => $validated['booth_size'] ?? null,
+                'other_booth_size' => $validated['other_booth_size'] ?? null,
+            ]);
+
+
+            Log::info("User {$user->id} and attachments saved successfully.");
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Form submitted and files saved successfully.',
+                'user_id' => $user->id,
+            ], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('Validation Error:', $e->errors());
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed.',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            Log::error('Server Error:', ['message' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong. Please try again later.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

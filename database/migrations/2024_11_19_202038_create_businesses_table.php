@@ -31,7 +31,7 @@ return new class extends Migration
             $table->text('main_export_items')->nullable();
             $table->text('main_import_countries')->nullable();
             $table->text('main_export_countries')->nullable();
-            $table->decimal('annual_turnover', 15, 2)->nullable();
+            $table->string('annual_turnover')->nullable();
             $table->decimal('annual_import_export', 15, 2)->nullable();
             $table->decimal('national_sale', 15, 2)->nullable();
             $table->decimal('annual_import_from_pak', 15, 2)->nullable();
@@ -40,7 +40,7 @@ return new class extends Migration
             
             $table->string('ntn')->nullable();
             $table->string('gst')->nullable();
-            $table->boolean('chamber_association_no')->default(false);
+            $table->string('chamber_association_no')->default('false');
             $table->timestamps();
         });
     }

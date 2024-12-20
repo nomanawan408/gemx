@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('stalls', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->string('stall_interest')->nullable();
-            $table->json('product_display')->nullable();
-            $table->json('product_display_gems_minerals')->nullable();
-            $table->string('booth_type')->nullable();
-            $table->string('booth_size')->nullable();
-            $table->timestamps();
+            $table->string('stall')->nullable();
+            $table->string('stall_products')->nullable();
+            $table->string('selectbiz')->nullable();
+            $table->string('booth_type')->default('Gems & Jewellery');
+            $table->string('booth_size')->default('Any Special Request');
+            $table->string('other_booth_size')->default('5x5');
+            $table->timestamps();        
         });
     }
 

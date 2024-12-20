@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('exhibitions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
+            $table->string('exhibition_name')->nullable();
             $table->date('exhibition_date')->nullable();
             $table->string('type')->nullable();
             $table->string('country')->nullable();
-            $table->string('exhibition_name')->nullable();
             $table->timestamps();
         });
     }
