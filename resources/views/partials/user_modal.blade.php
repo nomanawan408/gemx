@@ -16,6 +16,7 @@
                         <p><strong>Username:</strong> {{ $user->username }}</p>
                         <p><strong>Name:</strong> {{ $user->first_name }} {{ $user->last_name }}</p>
                         <p><strong>Father's Name:</strong> {{ $user->father_first_name }} {{ $user->father_last_name }}</p>
+                        <p><strong>Gender:</strong> {{ $user->email }}</p>
                         <p><strong>Gender:</strong> {{ $user->gender }}</p>
                         <p><strong>Country:</strong> {{ $user->country }}</p>
                         <p><strong>Nationality:</strong> {{ $user->nationality }}</p>
