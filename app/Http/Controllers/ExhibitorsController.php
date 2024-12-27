@@ -12,8 +12,8 @@ class ExhibitorsController extends Controller
      */
     public function index()
     {
-        $exhibitor = User::role('exhibitor')->get(); // Fetch users with 'buyer' role
-        return view('exhibitors.index', compact('exhibitor'));
+        $users = User::role('exhibitor')->get(); // Fetch users with 'buyer' role
+        return view('exhibitors.index', compact('users'));
     }
 
     public function create()

@@ -3,7 +3,7 @@
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-            <a href="index.html" class="logo">
+            <a href="{{ route('dashboard.index') }}" class="logo">
               <img src="{{ asset('assets/img/logo.png') }}" alt="" style="width:80px;margin:0 auto;">
 
             </a>
@@ -94,7 +94,27 @@
                   </ul>
                 </div>
               </li>
-
+              <li class="nav-item {{ request()->is('international-visitors*') ? 'active' : '' }}">
+                <a data-bs-toggle="collapse" href="#international">
+                  <i class="fas fa-globe"></i>
+                  <p>International Visiters</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="international">
+                  <ul class="nav nav-collapse">
+                    <li class="{{ request()->routeIs('international-visitors.index') ? 'active' : '' }}">
+                      <a href="{{ route('international-visitors.index') }}">
+                        <span class="sub-item">All International Visiters</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{{ route('flight-details.index') }}">
+                        <span class="sub-item">Flight Details</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
               <li class="nav-item {{ request()->is('transports*') ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#transports">
                   <i class="fas fa-bus"></i>
@@ -139,30 +159,41 @@
                 </div>
               </li>
 
-              <li class="nav-item {{ request()->is('international-visitors*') ? 'active' : '' }}">
-                <a data-bs-toggle="collapse" href="#international">
-                  <i class="fas fa-globe"></i>
-                  <p>International Visiters</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="international">
-                  <ul class="nav nav-collapse">
-                    <li class="{{ request()->routeIs('international-visitors.index') ? 'active' : '' }}">
-                      <a href="{{ route('international-visitors.index') }}">
-                        <span class="sub-item">All International Visiters</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ route('flight-details.index') }}">
-                        <span class="sub-item">Flight Details</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
+              
               @endif
               {{-- --- --}}
-              @if(auth()->user()->hasRole('buyer'))
+              @can('view visa')
+                <li class="nav-item {{ request()->is('visa*') ? 'active' : '' }}">
+                  <a data-bs-toggle="collapse" href="#visa">
+                    <i class="fas fa-passport"></i>
+                    <p>Visa</p>
+                    <span class="caret"></span>
+                  </a>
+                  <div class="collapse" id="visa">
+                    <ul class="nav nav-collapse">
+                      <li class="{{ request()->routeIs('visa.index') ? 'active' : '' }}">
+                        <a href="{{ route('visa.index') }}">
+                          <span class="sub-item">All Visa Applications</span>
+                        </a>
+                      </li>
+                      @can('create visa')
+                        <li class="{{ request()->routeIs('visa.create') ? 'active' : '' }}">
+                          <a href="{{ route('visa.create') }}">
+                            <span class="sub-item">Upload Visa</span>
+                          </a>
+                        </li>
+                        {{-- <li class="{{ request()->routeIs('visa.show') ? 'active' : '' }}">
+                          <a href="{{ route('visa.show', auth()->user()->id) }}">
+                            <span class="sub-item">Visa Details</span>
+                          </a>
+                        </li> --}}
+                      @endcan
+                    </ul>
+                  </div>
+                </li>
+              @endcan
+              
+              
               <li class="nav-item {{ request()->is('flight-details*') ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#flight">
                   <i class="fas fa-plane"></i>
@@ -171,6 +202,11 @@
                 </a>
                 <div class="collapse" id="flight">
                   <ul class="nav nav-collapse">
+                    <li class="{{ request()->routeIs('flight-details.selfcreate') ? 'active' : '' }}">
+                      <a href="{{ route('flight-details.selfcreate') }}">
+                        <span class="sub-item">Add Flight Details for visitor</span>
+                      </a>
+                    </li>
                     <li class="{{ request()->routeIs('flight-details.buyer_selection') ? 'active' : '' }}">
                       <a href="{{ route('flight-details.buyer_selection') }}">
                         <span class="sub-item">Add Flight Details</span>
@@ -189,8 +225,7 @@
                   </ul>
                 </div>
               </li>
-              @endif            
-            </ul>
+              </ul>
           </div>
         </div>
       </div>

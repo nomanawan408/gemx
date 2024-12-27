@@ -12,8 +12,8 @@ class InternationalVisitorsController extends Controller
      */
      public function index()
      {
-         $international_visitor = User::role('international_visitor')->get(); // Fetch users with 'buyer' role
-         return view('international_visitors.index', compact('international_visitor'));
+         $users = User::role('international_visitor')->get(); // Fetch users with 'buyer' role
+         return view('international_visitors.index', compact('users'));
      }
  
      public function create()

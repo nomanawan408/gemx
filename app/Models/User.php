@@ -117,4 +117,15 @@ class User extends Authenticatable
         {
             return $this->hasOne(Attachment::class, 'user_id', 'id');
         }
+
+        public function flights()
+        {
+            return $this->hasMany(Flight::class);
+        }
+                
+        // relation for visa
+        public function visa()
+        {
+            return $this->hasOne(Visa::class);
+        }
 }

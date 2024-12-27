@@ -15,71 +15,57 @@
                     <div class="card-body">
                         <form action="{{ route('flight-details.store') }}" method="POST">
                             @csrf
+                            <input type="hidden" name="user_id" value="{{ $user->id }}">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" required>
+                                    <input type="text" value="{{ $user->name }}" readonly class="form-control" id="name" name="name" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="country" class="form-label">Country</label>
-                                    <input type="text" class="form-control" id="country" name="country" required>
+                                    <input type="text" class="form-control" readonly value="{{ $user->country }}" id="country" name="country" required>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="passport_no" class="form-label">Passport No.</label>
-                                    <input type="text" class="form-control" id="passport_no" name="passport_no" required>
+                                    <input type="text" class="form-control" readonly value="{{ $user->cnic_passport_no }}" id="passport_no" name="passport_no" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="phone" class="form-label">Phone Number</label>
-                                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                                    <input type="tel" class="form-control" readonly id="phone" name="phone" value="{{ $user->phone }}" required>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-12 mb-3">
-                                    <label for="arrival_datetime" class="form-label">Flight Arrival Date & Time</label>
-                                    <input type="datetime-local" class="form-control" id="arrival_datetime" name="arrival_datetime" required>
+                                    <label for="arrival_datetime" class="form-label">Flight Arrival Date & Time<span style="color: red;">*</span></label>
+                                    <input type="datetime-local" class="form-control" id="arrival_datetime" name="flight_arrival_date_time" required>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6 mb-3">
+                                {{-- <div class="col-md-6 mb-3">
                                     <label for="pickup_location" class="form-label">Pickup Location</label>
                                     <select class="form-select" id="pickup_location" name="pickup_location" required>
                                         <option value="">Select Location Type</option>
                                         <option value="airport">Airport Terminal</option>
                                         <option value="hotel">Hotel</option>
                                     </select>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6 mb-3 airport-pickup">
-                                    <label for="pickup_terminal" class="form-label">Pickup Terminal</label>
-                                    <select class="form-select" id="pickup_terminal" name="pickup_terminal">
-                                        <option value="">Select Terminal</option>
-                                        <option value="Terminal 1">Terminal 1</option>
-                                        <option value="Terminal 2">Terminal 2</option>
-                                        <option value="Terminal 3">Terminal 3</option>
-                                        <option value="Terminal 4">Terminal 4</option>
-                                    </select>
+                                    <label for="pickup_terminal" class="form-label">Pickup Location<span style="color: red;">*</span></label>
+                                    <textarea class="form-control" id="pickup_terminal" name="pickup_terminal" rows="3"></textarea>
                                 </div>
-                                <div class="col-md-6 mb-3 hotel-pickup" style="display: none;">
-                                    <label for="hotel_details" class="form-label">Hotel Details</label>
-                                    <textarea class="form-control" id="hotel_details" name="hotel_details" rows="3" placeholder="Enter hotel name and address"></textarea>
+                                <div class="col-md-6 mb-3">
+                                    <label for="dropoff_terminal" class="form-label">Drop off Location<span style="color: red;">*</span></label>
+                                    <textarea class="form-control" id="dropoff_terminal" name="dropoff_terminal" rows="3" required></textarea>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="dropoff_terminal" class="form-label">Drop off Terminal</label>
-                                    <select class="form-select" id="dropoff_terminal" name="dropoff_terminal" required>
-                                        <option value="">Select Terminal</option>
-                                        <option value="Terminal 1">Terminal 1</option>
-                                        <option value="Terminal 2">Terminal 2</option>
-                                        <option value="Terminal 3">Terminal 3</option>
-                                        <option value="Terminal 4">Terminal 4</option>
-                                    </select>
-                                </div>
+                                
                             </div>
 
                             <div class="row">

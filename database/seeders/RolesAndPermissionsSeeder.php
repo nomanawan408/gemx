@@ -15,30 +15,59 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Define Permissions
         $permissions = [
+
+            //
             'view users',
             'create users',
+            'manage users',
             'edit users',
             'delete users',
+
+            //
             'manage roles',
             'manage permissions',
             'view reports',
-            'manage transport',
-            'manage hospitality',
-            'access admin panel',
+
+            //
             'view visitors',
-            'view international visitors',
             'view exhibitors',
+            'view international visitors',
             'view buyers',
             'view transport',
             'view hospitality',
+           
+            //
+            'can approve',
+            'can reject',
+            'add inivitation letter',
+            'view inivitation letter',
+            'delete inivitation letter',
+            'update inivitation letter',
+
+            //
+            'create visa',
+            'update visa',
+            'delete visa',
+            'view visa',
+            'appove visa',
+            
+            //
             'view flight details',
             'create flights details',
-            'manage flights details',
             'edit flight details',
             'delete flight details',
-            'view flight details',
+            'manage flights details', 
+        
+            // 
+            'view accomodation details',
+            'create accomodation details',
+            'edit accomodation details',
+            'delete accomodation details',
+            'manage accomodation details',
+
+            //
+            'upload demand draft',
             
-            // Add more permissions as needed
         ];
 
         // Create Permissions
@@ -48,13 +77,121 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Define Roles
         $roles = [
-            'buyer' => ['manage flights details', 'create flights details'],
-            'visitor' => ['view users', 'access admin panel'],
-            'international_visitor' => ['view users', 'access admin panel'],
-            'exhibitor' => ['view users', 'access admin panel'],
-            'transport' => ['manage transport','view flight details'],
-            'hospitality' => ['manage hospitality'],
-            'superadmin' => ['create flights details', 'manage flights details', 'edit flight details', 'delete flight details', 'view flight details','view users', 'create users', 'edit users', 'delete users', 'manage roles', 'manage permissions', 'view reports', 'manage transport', 'manage hospitality', 'access admin panel'],
+            'buyer' => [
+                'view exhibitors',
+                'create visa',
+                'update visa',
+                'delete visa',
+                'view visa',
+                'view flight details',
+                'view accomodation details',
+                'view inivitation letter',
+                'view reports',
+            ],
+
+            'visitor' => [
+                'view exhibitors',
+                'view reports',
+            ],
+
+            'international_visitor' => [
+                'view exhibitors',
+                'create visa',
+                'delete visa',
+                'view visa',
+                'view flight details',
+                'create flights details',
+                'edit flight details',
+                'delete flight details',
+                'view reports',
+                'view inivitation letter',
+                'view accomodation details',
+                'create accomodation details',
+                'edit accomodation details',
+                'delete accomodation details',
+            ],
+
+            'exhibitor' => [
+                'upload demand draft',
+                'view reports',
+            ],
+
+            'transport' => [
+                'view flight details',
+                'view international visitors',
+                'view buyers',
+                'view accomodation details',
+            ],
+
+            'hospitality' => [
+                'view flight details',
+                'create flights details',
+                'edit flight details',
+                'delete flight details',
+                'manage flights details', 
+                'view accomodation details',
+                'create accomodation details',
+                'edit accomodation details',
+                'delete accomodation details',
+                'manage accomodation details',
+                'appove visa',
+                'view international visitors',
+                'view buyers',
+
+            ],
+
+           'superadmin' => [
+                //
+                'view users',
+                'create users',
+                'manage users',
+                'edit users',
+                'delete users',
+                //
+                'manage roles',
+                'manage permissions',
+                'view reports',
+                //
+                'view visitors',
+                'view exhibitors',
+                'view international visitors',
+                'view buyers',
+                'view transport',
+                'view hospitality',
+                //
+                'can approve',
+                'can reject',
+                'add inivitation letter',
+                'view inivitation letter',
+                'delete inivitation letter',
+                'update inivitation letter',
+                //
+                'create visa',
+                'update visa',
+                'delete visa',
+                'view visa',
+                'appove visa',
+                //
+                'view flight details',
+                'create flights details',
+                'edit flight details',
+                'delete flight details',
+                'manage flights details', 
+                // 
+                'view accomodation details',
+                'create accomodation details',
+                'edit accomodation details',
+                'delete accomodation details',
+                'manage accomodation details',
+                //
+                'upload demand draft',
+            ],
+           
+
+
+
+           
+           
         ];
 
         // Create Roles and Assign Permissions

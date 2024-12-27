@@ -206,7 +206,7 @@
                           <a href="#">
                             <div class="notif-img">
                               <img
-                                src="assets/img/profile2.jpg"
+                                src="{{ asset('assets/img/profile.jpg') }}"
                                 alt="Img Profile"
                               />
                             </div>

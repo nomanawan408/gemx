@@ -12,8 +12,8 @@ class BuyersController extends Controller
      */
     public function index()
     {
-        $buyers = User::role('buyer')->with('business')->get();
-        return view('buyers.index', compact('buyers'));
+        $users = User::role('buyer')->with('business')->get();
+        return view('buyers.index', compact('users'));
     }
 
     public function create()

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('flights', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Relates to users
-            $table->dateTime('flight_arrival_date_time'); // Flight arrival date & time
-            $table->string('pickup_terminal'); // Airport terminal or hotel details
-            $table->string('dropoff_terminal'); // Airport or custom location
+            $table->dateTime('flight_arrival_date_time')->nullable(); // Flight arrival date & time
+            $table->string('pickup_terminal')->nullable(); // Airport terminal or hotel details
+            $table->string('dropoff_terminal')->nullable(); // Airport or custom location
             $table->timestamps();
         });
     }
