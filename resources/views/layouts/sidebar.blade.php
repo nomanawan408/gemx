@@ -41,14 +41,14 @@
                   <ul class="nav nav-collapse">
                     <li class="{{ request()->routeIs('visitors.index') ? 'active' : '' }}">
                       <a href="{{ route('visitors.index') }}">
-                        <span class="sub-item">All Visitors</span>
+                        <span class="sub-item">Natioanl Visitors</span>
                       </a>
                     </li>
-                    {{-- <li class="{{ request()->routeIs('visitors.create') ? 'active' : '' }}">
-                      <a href="{{ route('visitors.create') }}">
-                        <span class="sub-item">Add New Visitor</span>
+                    <li class="{{ request()->routeIs('international-visitors.index') ? 'active' : '' }}">
+                      <a href="{{ route('international-visitors.index') }}">
+                        <span class="sub-item">International Visiters</span>
                       </a>
-                    </li> --}}
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -94,22 +94,7 @@
                   </ul>
                 </div>
               </li>
-              <li class="nav-item {{ request()->is('international-visitors*') ? 'active' : '' }}">
-                <a data-bs-toggle="collapse" href="#international">
-                  <i class="fas fa-globe"></i>
-                  <p>International Visiters</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="international">
-                  <ul class="nav nav-collapse">
-                    <li class="{{ request()->routeIs('international-visitors.index') ? 'active' : '' }}">
-                      <a href="{{ route('international-visitors.index') }}">
-                        <span class="sub-item">All International Visiters</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
+              
               <li class="nav-item {{ request()->is('transports*') ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#transports">
                   <i class="fas fa-bus"></i>
