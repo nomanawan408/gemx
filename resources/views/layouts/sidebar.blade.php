@@ -150,11 +150,6 @@
                   </a>
                   <div class="collapse" id="visa">
                     <ul class="nav nav-collapse">
-                      <li class="{{ request()->routeIs('visa.index') ? 'active' : '' }}">
-                        <a href="{{ route('visa.index') }}">
-                          <span class="sub-item">All Visa Applications</span>
-                        </a>
-                      </li>
                       @can('create visa')
                         <li class="{{ request()->routeIs('visa.create') ? 'active' : '' }}">
                           <a href="{{ route('visa.create') }}">

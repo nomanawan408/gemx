@@ -13,18 +13,24 @@ class DashboardController extends Controller
         $user = User::findOrFail($id);
         $user->status = 'approved';
         $user->save();
-
-        //return back to route
+    
+        // Send approval email
+        \Mail::to($user->email)->send(new \App\Mail\UserApproved($user));
+    
         return redirect()->back()->with('success', 'User approved successfully');
     }
-
+    
     public function rejectUser($id)
     {
         $user = User::findOrFail($id);
         $user->status = 'rejected';
         $user->save();
-
-    return redirect()->back()->with('success', 'User rejected successfully');    
+    
+        // Send rejection email
+        \Mail::to($user->email)->send(new \App\Mail\UserRejected($user));
+    
+        return redirect()->back()->with('success', 'User rejected successfully');    
     }
+    
     
 }
