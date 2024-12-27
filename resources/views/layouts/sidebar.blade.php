@@ -107,11 +107,6 @@
                         <span class="sub-item">All International Visiters</span>
                       </a>
                     </li>
-                    <li>
-                      <a href="{{ route('flight-details.index') }}">
-                        <span class="sub-item">Flight Details</span>
-                      </a>
-                    </li>
                   </ul>
                 </div>
               </li>
@@ -123,16 +118,16 @@
                 </a>
                 <div class="collapse" id="transports">
                   <ul class="nav nav-collapse">
-                    <li class="{{ request()->routeIs('transports.index') ? 'active' : '' }}">
-                      <a href="{{ route('transports.index') }}">
-                        <span class="sub-item">All Transports</span>
+                    <li class="{{ request()->routeIs('flight-details.buyers') ? 'active' : '' }}">
+                      <a href="{{ route('flight-details.buyers') }}">
+                        <span class="sub-item">Buyers Flight Details</span>
                       </a>
                     </li>
-                    {{-- <li class="{{ request()->routeIs('transports.create') ? 'active' : '' }}">
-                      <a href="{{ route('transports.create') }}">
-                        <span class="sub-item">Add New Transport</span>
+                    <li class="{{ request()->routeIs('flight-details.visitors') ? 'active' : '' }}">
+                      <a href="{{ route('flight-details.visitors') }}">
+                        <span class="sub-item">Foreigners Flight Details</span>
                       </a>
-                    </li> --}}
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -145,21 +140,24 @@
                 </a>
                 <div class="collapse" id="hospitality">
                   <ul class="nav nav-collapse">
-                    <li class="{{ request()->routeIs('hospitality.index') ? 'active' : '' }}">
-                      <a href="{{ route('hospitality.index') }}">
-                        <span class="sub-item">All Hospitality</span>
+                    <li class="{{ request()->routeIs('flight-details.buyer_selection') ? 'active' : '' }}">
+                      <a href="{{ route('flight-details.buyer_selection') }}">
+                        <span class="sub-item">Add Flight Details</span>
                       </a>
                     </li>
-                    {{-- <li class="{{ request()->routeIs('hospitality.create') ? 'active' : '' }}">
-                      <a href="{{ route('hospitality.create') }}">
-                        <span class="sub-item">Add New Hospitality</span>
+                    <li class="{{ request()->routeIs('flight-details.buyers') ? 'active' : '' }}">
+                      <a href="{{ route('flight-details.buyers') }}">
+                        <span class="sub-item">Buyers Flight Details</span>
                       </a>
-                    </li> --}}
+                    </li>
+                    <li class="{{ request()->routeIs('flight-details.visitors') ? 'active' : '' }}">
+                      <a href="{{ route('flight-details.visitors') }}">
+                        <span class="sub-item">Foreigners Flight Details</span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </li>
-
-              
               @endif
               {{-- --- --}}
               @can('view visa')
@@ -207,21 +205,7 @@
                         <span class="sub-item">Add Flight Details for visitor</span>
                       </a>
                     </li>
-                    <li class="{{ request()->routeIs('flight-details.buyer_selection') ? 'active' : '' }}">
-                      <a href="{{ route('flight-details.buyer_selection') }}">
-                        <span class="sub-item">Add Flight Details</span>
-                      </a>
-                    </li>
-                    <li class="{{ request()->routeIs('flight-details.buyers') ? 'active' : '' }}">
-                      <a href="{{ route('flight-details.buyers') }}">
-                        <span class="sub-item">Buyers Flight Details</span>
-                      </a>
-                    </li>
-                    <li class="{{ request()->routeIs('flight-details.visitors') ? 'active' : '' }}">
-                      <a href="{{ route('flight-details.visitors') }}">
-                        <span class="sub-item">Foreigners Flight Details</span>
-                      </a>
-                    </li>
+                    
                   </ul>
                 </div>
               </li>

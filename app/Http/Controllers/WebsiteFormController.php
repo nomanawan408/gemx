@@ -37,7 +37,7 @@ class WebsiteFormController extends Controller
         // Remove json_decode since data is already available in $request
         $validated = $request->validate([
             'username' => 'nullable|string|max:255',
-            'password' => 'nullable|string|min:8',
+            'password' => 'nullable|string',
             'confirm_password' => 'nullable|same:password',
             'firstname' => 'nullable|string|max:255',
             'lastname' => 'nullable|string|max:255',
@@ -67,8 +67,8 @@ class WebsiteFormController extends Controller
             'company_name' => 'nullable|string|max:255',
             'company_address' => 'nullable|string',
             'company_phone' => 'nullable|string|max:20',
-            'business_mobile' => 'nullable|string|max:20',
-            'business_phone' => 'nullable|string|max:20',
+            'business_mobile' => 'nullable|string|max:50',
+            'business_phone' => 'nullable|string|max:50',
             'position' => 'nullable|string|max:255',
             'url' => 'nullable',
             'export_items' => 'nullable|string',
@@ -152,7 +152,6 @@ class WebsiteFormController extends Controller
                     'address' => $validated['company_address'],
                     'company_phone' => $validated['company_phone'],
                     'company_mobile' => $validated['business_mobile'],
-                    'business_phone' => $validated['business_phone'],
                     'position' => $validated['position'],
                     'website_url' => $validated['url'],
                     'main_export_items' => $validated['export_items'],
@@ -199,7 +198,7 @@ class WebsiteFormController extends Controller
 
         $validated = $request->validate([
             'int_username' => 'nullable|string|max:255|unique:users,username',
-            'int_password' => 'nullable|string|min:6',
+            'int_password' => 'nullable|string',
             'int_confirm_password' => 'nullable|same:int_password',
             'int_firstname' => 'nullable|string|max:255',
             'int_lastname' => 'nullable|string|max:255',
@@ -630,7 +629,7 @@ class WebsiteFormController extends Controller
             $validated = $request->validate([
                 'field_25c2fed' => 'nullable',
                 'username' => 'nullable|string|unique:users',
-                'password' => 'nullable|min:6',
+                'password' => 'nullable|string',
                 'confirm_password' => 'nullable|same:password',
                 'field_9bb0f5b' => 'nullable',
                 'firstname' => 'nullable|string',
