@@ -166,9 +166,6 @@ class RolesAndPermissionsSeeder extends Seeder
                 'delete inivitation letter',
                 'update inivitation letter',
                 //
-                'create visa',
-                'update visa',
-                'delete visa',
                 'view visa',
                 'appove visa',
                 //

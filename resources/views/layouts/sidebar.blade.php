@@ -31,6 +31,22 @@
                 </a>
               </li>
               @if(auth()->user()->hasRole('superadmin'))
+              <li class="nav-item {{ request()->is('buyers*') ? 'active' : '' }}">
+                <a data-bs-toggle="collapse" href="#buyers">
+                  <i class="fas fa-shopping-cart"></i>
+                  <p>Buyers</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="buyers">
+                  <ul class="nav nav-collapse">
+                    <li class="{{ request()->routeIs('buyers.index') ? 'active' : '' }}">
+                      <a href="{{ route('buyers.index') }}">
+                        <span class="sub-item">All Buyers</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
               <li class="nav-item {{ request()->is('visitors*') ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#visitors">
                   <i class="fas fa-users"></i>
@@ -52,27 +68,7 @@
                   </ul>
                 </div>
               </li>
-              <li class="nav-item {{ request()->is('buyers*') ? 'active' : '' }}">
-                <a data-bs-toggle="collapse" href="#buyers">
-                  <i class="fas fa-shopping-cart"></i>
-                  <p>Buyers</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="buyers">
-                  <ul class="nav nav-collapse">
-                    <li class="{{ request()->routeIs('buyers.index') ? 'active' : '' }}">
-                      <a href="{{ route('buyers.index') }}">
-                        <span class="sub-item">All Buyers</span>
-                      </a>
-                    </li>
-                    {{-- <li class="{{ request()->routeIs('buyers.create') ? 'active' : '' }}">
-                      <a href="{{ route('buyers.create') }}">
-                        <span class="sub-item">Add New Buyer</span>
-                      </a>
-                    </li> --}}
-                  </ul>
-                </div>
-              </li>
+             
               <li class="nav-item {{ request()->is('exhibitors*') ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#exhibitors">
                   <i class="fas fa-store"></i>
@@ -145,7 +141,7 @@
               </li>
               @endif
               {{-- --- --}}
-              @can('view visa')
+              @can('create visa')
                 <li class="nav-item {{ request()->is('visa*') ? 'active' : '' }}">
                   <a data-bs-toggle="collapse" href="#visa">
                     <i class="fas fa-passport"></i>
@@ -176,24 +172,26 @@
                 </li>
               @endcan
               
-              
+              @if(auth()->user()->hasRole(['international-visitor']))
               <li class="nav-item {{ request()->is('flight-details*') ? 'active' : '' }}">
-                <a data-bs-toggle="collapse" href="#flight">
-                  <i class="fas fa-plane"></i>
-                  <p>Flight Details</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="flight">
-                  <ul class="nav nav-collapse">
-                    <li class="{{ request()->routeIs('flight-details.selfcreate') ? 'active' : '' }}">
-                      <a href="{{ route('flight-details.selfcreate') }}">
-                        <span class="sub-item">Add Flight Details for visitor</span>
+                      <a data-bs-toggle="collapse" href="#flight">
+                        <i class="fas fa-plane"></i>
+                        <p>Flight Details</p>
+                        <span class="caret"></span>
                       </a>
-                    </li>
-                    
-                  </ul>
-                </div>
-              </li>
+                      <div class="collapse" id="flight">
+                        <ul class="nav nav-collapse">
+                       
+                        <li class="{{ request()->routeIs('flight-details.selfcreate') ? 'active' : '' }}">
+                          <a href="{{ route('flight-details.selfcreate') }}">
+                          <span class="sub-item">Add Flight Details</span>
+                          </a>
+                        </li>
+                        
+                        </ul>
+                      </div>
+                </li>
+                @endif
               </ul>
           </div>
         </div>
