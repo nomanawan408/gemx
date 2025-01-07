@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Flight;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\FlightCreated;
 
 class FlightController extends Controller
 {
@@ -49,29 +51,49 @@ class FlightController extends Controller
         return view('flights.select_buyer', compact('buyers'));   
      }
     
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'arrival_date_time' => 'required',
-            'pickup_terminal' => 'required|string',
-            'dropoff_terminal' => 'required|string',
-        ]);
-
-        $flight = Flight::create([
-            'user_id' => $validated['user_id'],
-            'arrival_date_time' => $validated['arrival_date_time'],
-            'pickup_terminal' => $validated['pickup_terminal'],
-            'dropoff_terminal' => $validated['dropoff_terminal'],
-        ]);
-
-        $flight->save();
-
-        // Send Flight/ ticket uplaod  email
-        // \Mail::to($user->email)->send(new \App\Mail\UserApproved($user));
-
-        return redirect()->route('flight-details.index')->with('success', 'Flight created successfully.');
-    }
+     public function store(Request $request)
+     {
+         // Validate the incoming request data
+         $validated = $request->validate([
+             'user_id' => 'required|exists:users,id',
+             'flight_no' => 'nullable|string',
+             'airline_name' => 'nullable|string',
+             'seat_no' => 'nullable|string',
+             'no_of_persons' => 'nullable|integer',
+             'ticket_upload' => 'nullable|file|mimes:jpeg,png,pdf|max:2048', // Allow image or PDF files
+             'departure_date_time' => 'nullable|date',
+             'arrival_date_time' => 'required|date',
+             'pickup_terminal' => 'required|string',
+             'dropoff_terminal' => 'required|string',
+         ]);
+     
+         // Handle file upload if ticket is provided
+         $ticketPath = null;
+         if ($request->hasFile('ticket_upload')) {
+             $ticketPath = $request->file('ticket_upload')->store('tickets', 'public');
+         }
+     
+         // Create the flight record
+         $flight = Flight::create([
+             'user_id' => $validated['user_id'],
+             'flight_no' => $validated['flight_no'] ?? null,
+             'airline_name' => $validated['airline_name'] ?? null,
+             'seat_no' => $validated['seat_no'] ?? null,
+             'no_of_persons' => $validated['no_of_persons'] ?? null,
+             'ticket_upload' => $ticketPath,
+             'departure_date_time' => $validated['departure_date_time'] ?? null,
+             'arrival_date_time' => $validated['arrival_date_time'],
+             'pickup_terminal' => $validated['pickup_terminal'],
+             'dropoff_terminal' => $validated['dropoff_terminal'],
+         ]);
+     
+         // Send notification email
+         Mail::to($flight->user->email)->send(new FlightCreated($flight));
+     
+         // Redirect to the flight details page with a success message
+         return redirect()->route('flight-details.index')->with('success', 'Flight created successfully.');
+     }
+     
     public function buyersDetails()
     {
         // Filter all flights for users with the "buyer" role

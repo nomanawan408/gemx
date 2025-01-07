@@ -42,6 +42,9 @@ class AccommodationController extends Controller
             'description' => 'nullable|string',
         ]);
     
+        // Retrieve user details
+        $user = User::find($request->user_id);
+        
         // Create the accommodation record
         $accommodation = Accommodation::create([
             'user_id' => $request->user_id,
@@ -50,11 +53,8 @@ class AccommodationController extends Controller
             'check_in_time' => $request->check_in_time,
             'description' => $request->description,
         ]);
-
-        // Send the email only if the user has the 'buyer' role
-        if ($request->user()->hasRole('buyer')) {
-            Mail::to($request->user()->email)->send(new AccommodationCreated($accommodation));
-        }
+            
+        Mail::to($user->email)->send(new AccommodationCreated($accommodation));
     
         // Redirect to the index page with a success message
         return redirect()->route('accommodation.index')->with('success', 'Accommodation created successfully.');
@@ -68,7 +68,7 @@ class AccommodationController extends Controller
     public function edit(Accommodation $accommodation)
     {
         return view('accommodation.edit', compact('accommodation'));
-    }
+    }   
 
     public function update(Request $request, Accommodation $accommodation)
     {

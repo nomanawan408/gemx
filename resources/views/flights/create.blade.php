@@ -13,68 +13,99 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('flight-details.store') }}" method="POST">
+                        <form action="{{ route('flight-details.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="user_id" value="{{ $user->id }}">
+                            
+                            <!-- User Details -->
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" value="{{ $user->name }}" readonly class="form-control" id="name" name="name" required>
+                                    <input type="text" value="{{ $user->name }}" readonly class="form-control" id="name" name="name">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="country" class="form-label">Country</label>
-                                    <input type="text" class="form-control" readonly value="{{ $user->country }}" id="country" name="country" required>
+                                    <input type="text" class="form-control" readonly value="{{ $user->country }}" id="country" name="country">
                                 </div>
                             </div>
-
+                        
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="passport_no" class="form-label">Passport No.</label>
-                                    <input type="text" class="form-control" readonly value="{{ $user->cnic_passport_no }}" id="passport_no" name="passport_no" required>
+                                    <input type="text" class="form-control" readonly value="{{ $user->cnic_passport_no }}" id="passport_no" name="passport_no">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="phone" class="form-label">Phone Number</label>
-                                    <input type="tel" class="form-control" readonly id="phone" name="phone" value="{{ $user->phone }}" required>
+                                    <input type="tel" class="form-control" readonly id="phone" name="phone" value="{{ $user->phone }}">
                                 </div>
                             </div>
-
+                        
+                            <!-- Flight Details -->
                             <div class="row">
-                                <div class="col-md-12 mb-3">
-                                    <label for="arrival_datetime" class="form-label">Flight Arrival Date & Time<span style="color: red;">*</span></label>
-                                    <input type="datetime-local" class="form-control" id="arrival_datetime" name="arrival_date_time" required>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                {{-- <div class="col-md-6 mb-3">
-                                    <label for="pickup_location" class="form-label">Pickup Location</label>
-                                    <select class="form-select" id="pickup_location" name="pickup_location" required>
-                                        <option value="">Select Location Type</option>
-                                        <option value="airport">Airport Terminal</option>
-                                        <option value="hotel">Hotel</option>
-                                    </select>
-                                </div> --}}
-                                <div class="col-md-6 mb-3 airport-pickup">
-                                    <label for="pickup_terminal" class="form-label">Pickup Location<span style="color: red;">*</span></label>
-                                    <textarea class="form-control" id="pickup_terminal" name="pickup_terminal" rows="3"></textarea>
+                                <div class="col-md-6 mb-3">
+                                    <label for="flight_no" class="form-label">Flight Number</label>
+                                    <input type="text" class="form-control" id="flight_no" name="flight_no" placeholder="Enter flight number">
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="dropoff_terminal" class="form-label">Drop off Location<span style="color: red;">*</span></label>
-                                    <textarea class="form-control" id="dropoff_terminal" name="dropoff_terminal" rows="3" required></textarea>
+                                    <label for="airline_name" class="form-label">Airline Name</label>
+                                    <input type="text" class="form-control" id="airline_name" name="airline_name" placeholder="Enter airline name">
                                 </div>
                             </div>
-
+                        
                             <div class="row">
-                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="seat_no" class="form-label">Seat Number</label>
+                                    <input type="text" class="form-control" id="seat_no" name="seat_no" placeholder="Enter seat number">
+                                </div>
+                                @if (!auth()->user()->hasRole('international_visitor'))
+                                    <div class="col-md-6 mb-3">
+                                        <label for="no_of_persons" class="form-label">Number of Persons</label>
+                                        <input type="number" class="form-control" id="no_of_persons" name="no_of_persons" placeholder="Enter number of persons">
+                                    </div>
+                                @endif
                             </div>
+                        
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="departure_date_time" class="form-label">Departure Date & Time</label>
+                                    <input type="datetime-local" class="form-control" id="departure_date_time" name="departure_date_time">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="arrival_date_time" class="form-label">Arrival Date & Time<span style="color: red;">*</span></label>
+                                    <input type="datetime-local" class="form-control" id="arrival_date_time" name="arrival_date_time" required>
+                                </div>
+                            </div>
+                        
+                            <!-- Pickup and Dropoff -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="pickup_terminal" class="form-label">Pickup Location<span style="color: red;">*</span></label>
+                                    <textarea class="form-control" id="pickup_terminal" name="pickup_terminal" rows="3" placeholder="Enter pickup terminal or location"></textarea>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="dropoff_terminal" class="form-label">Dropoff Location<span style="color: red;">*</span></label>
+                                    <textarea class="form-control" id="dropoff_terminal" name="dropoff_terminal" rows="3" placeholder="Enter dropoff terminal or location" required></textarea>
+                                </div>
+                            </div>
+                        
+                            <!-- Ticket Upload -->
+                            @if (!auth()->user()->hasRole('international_visitor'))
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label for="ticket_upload" class="form-label">Upload Ticket</label>
+                                    <input type="file" class="form-control" id="ticket_upload" name="ticket_upload" accept=".jpeg, .png, .pdf">
+                                </div>
+                            </div>
+                            @endif
 
+                            <!-- Submit Button -->
                             <div class="row">
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary">Create Flight</button>
                                     <a href="{{ route('flight-details.index') }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </div>
-                        </form>
+                        </form>                        
                     </div>
                 </div>
             </div>

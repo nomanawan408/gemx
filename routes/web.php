@@ -117,7 +117,7 @@ Route::get('/logout', function () {
     auth()->logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
-    return redirect('/');
+    return redirect('https://pkgjs.com');
 })->middleware('auth')->name('logout');
 
 
