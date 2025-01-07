@@ -17,12 +17,17 @@ class FlightController extends Controller
     public function index()
     {
         $user = auth()->user();
+
         if ($user->can('admin')) {
+            // Get all flights for admin
             $flights = Flight::with('user')->get();
         } else {
+            // Get flights only for the authenticated user
             $flights = Flight::where('user_id', $user->id)->with('user')->get();
         }
+        
         return view('flights.index', compact('flights'));
+        
     }
 
     public function create(Request $request)
@@ -60,7 +65,7 @@ class FlightController extends Controller
              'airline_name' => 'nullable|string',
              'seat_no' => 'nullable|string',
              'no_of_persons' => 'nullable|integer',
-             'ticket_upload' => 'nullable|file|mimes:jpeg,png,pdf|max:2048', // Allow image or PDF files
+             'ticket_upload' => 'nullable|file|mimes:jpeg,png,pdf', // Allow image or PDF files
              'departure_date_time' => 'nullable|date',
              'arrival_date_time' => 'required|date',
              'pickup_terminal' => 'required|string',
@@ -70,7 +75,7 @@ class FlightController extends Controller
          // Handle file upload if ticket is provided
          $ticketPath = null;
          if ($request->hasFile('ticket_upload')) {
-             $ticketPath = $request->file('ticket_upload')->store('tickets', 'public');
+             $ticketPath = $request->file('ticket_upload')->store('uploads/tickets', 'public');
          }
      
          // Create the flight record

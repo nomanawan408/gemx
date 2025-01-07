@@ -7,7 +7,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-r from-[#02381b] to-[#0e3e1e] flex items-center justify-center h-screen">
+<body class="bg-gradient-to-r from-[#02381b] to-[#0e3e1e] flex items-center justify-center h-screen" style="background-image:url('{{asset('assets/img/login-bg.jpg')}}');background-size:cover;">
 
     <!-- Login Card -->
     <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">

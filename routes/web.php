@@ -42,6 +42,7 @@ Route::middleware(['auth', CheckPendingStatus::class])->group(function () {
     Route::get('flight-details/visitors', [FlightController::class, 'visitorsDetails'])->name('flight-details.visitors');
     Route::get('flight-details/select-buyer', [FlightController::class, 'buyerSelection'])->name('flight-details.buyer_selection');
     
+    
     Route::get('flight-details/create', [FlightController::class, 'create'])->name('flight-details.create');
     Route::get('flight-details/self-create', [FlightController::class, 'selfcreate'])->name('flight-details.selfcreate');
     Route::post('flight-details/create-flight', [FlightController::class, 'createflight'])->name('flight-details.createflight');

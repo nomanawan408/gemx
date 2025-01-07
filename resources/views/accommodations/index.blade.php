@@ -25,7 +25,9 @@
                                         <th>Room No</th>
                                         <th>Check-in Time</th>
                                         <th>Description</th>
-                                        <th>Actions</th>
+                                       @can('admin')
+                                       <th>Actions</th>
+                                       @endcan
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -51,15 +53,17 @@
                                             <td>{{ $accommodation->room_no }}</td>
                                             <td>{{ $accommodation->check_in_time }}</td>
                                             <td>{{ $accommodation->description }}</td>
+                                            @can('admin')
+                                        
                                             <td>
-                                                <a href="{{ route('accommodation.edit', $accommodation->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                                {{-- <a href="{{ route('accommodation.edit', $accommodation->id) }}" class="btn btn-sm btn-primary">Edit</a> --}}
                                                 <form action="{{ route('accommodation.destroy', $accommodation->id) }}" method="POST" style="display:inline-block;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                                 </form>
                                             </td>
-                                            
+                                                @endcan
                                         </tr>
                                     @endforeach
                                 </tbody>

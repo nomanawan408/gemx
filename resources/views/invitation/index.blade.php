@@ -11,7 +11,7 @@
         <div class="card shadow-sm">
             <div class="card">
                 <div class="card-body text-center" style="background: linear-gradient(to right, #e0f7e9, #a8d5ba); border-radius: 15px; padding: 30px; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);">
-                    <h1 class="fw-bold" style="color: #2e7d32;">You're Invited!</h1>
+                    <h1 class="fw-bold" style="color: #2e7d32;">{{ Auth::user()->name }}</h1>
                     <p class="mt-3" style="color: #1b5e20; font-size: 1.1rem; line-height: 1.6;">
                         Join us for an unforgettable celebration of creativity, innovation, and connection in a vibrant atmosphere.
                     </p>

@@ -444,7 +444,7 @@
                  </div>
           </div>
 
-            <div class="py-5">
+            <div class="p-0 m-0">
             <div class="owl-carousel owl-theme">
               <div class="item" style="width:250px">
                 <img src="{{ asset('assets/img/logos/1.png') }}" alt="">

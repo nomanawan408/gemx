@@ -182,7 +182,7 @@
                                   <span class="badge bg-{{ $user->status == 'approved' ? 'success' : 'danger' }}">
                                       {{ ucfirst($user->status) }}
                                   </span>
-                              @endcan
+                              
                           </td>                                  
                           <!-- Action -->
                           <td>
@@ -190,7 +190,7 @@
                                   <i class="fa fa-eye"></i>
                               </a>
                           </td>
-                                 
+                          @endcan       
                               </tr>
                           @endforeach
                       </tbody>                          
@@ -244,40 +244,41 @@
                                   <!-- Profession -->
                                   <td>{{ $user->profession }}</td>
                                   <td>{{ $user->business->stall_products ?? 'N/A' }}</td>
-             <!-- Status -->
-             <td>
-              @can('can approve')
-                  @if($user->status == 'pending')
-                      <div>
-                          <form action="{{ route('users.approve', $user->id) }}" method="POST" style="display:inline;">
-                              @csrf
-                              <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                          </form>
-                          <form action="{{ route('users.reject', $user->id) }}" method="POST" style="display:inline;">
-                              @csrf
-                              <button type="submit" class="btn btn-danger btn-sm">Reject</button>
-                          </form>
-                      </div>                                  
-                  @else
-                      <span class="badge bg-{{ $user->status == 'approved' ? 'success' : 'danger' }}">
-                          {{ ucfirst($user->status) }}
-                      </span>
-                  @endif
-              @endcan
-              @can('view status')
-                  <span class="badge bg-{{ $user->status == 'approved' ? 'success' : 'danger' }}">
-                      {{ ucfirst($user->status) }}
-                  </span>
-              @endcan
-          </td>                                  
-          <!-- Action -->
-          <td>
-              <a href="{{ route('profile.index', $user->id) }}" class="btn btn-link btn-primary btn-lg">
-                  <i class="fa fa-eye"></i>
-              </a>
-          </td>
-                 
-                                 
+                                    <!-- Status -->
+                                    <td>
+                                    @can('can approve')
+                                        @if($user->status == 'pending')
+                                            <div>
+                                                <form action="{{ route('users.approve', $user->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                                </form>
+                                                <form action="{{ route('users.reject', $user->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                                </form>
+                                            </div>                                  
+                                        @else
+                                            <span class="badge bg-{{ $user->status == 'approved' ? 'success' : 'danger' }}">
+                                                {{ ucfirst($user->status) }}
+                                            </span>
+                                        @endif
+                                    @endcan
+                                    @can('view status')
+                                        <span class="badge bg-{{ $user->status == 'approved' ? 'success' : 'danger' }}">
+                                            {{ ucfirst($user->status) }}
+                                        </span>
+                                    @endcan
+                                </td>                                  
+                                <!-- Action -->
+                                @can('admin')
+                                <td>
+                                    <a href="{{ route('profile.index', $user->id) }}" class="btn btn-link btn-primary btn-lg">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </td>
+                                @endcan        
+                                                        
                               </tr>
                           @endforeach
                       </tbody>                          

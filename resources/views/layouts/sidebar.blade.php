@@ -125,14 +125,14 @@
                         </a>
                       </li>
                      @endcan
-                    @can('view accomodation details')
+                    {{-- @can('view accomodation details')
                     <li class="{{ request()->routeIs('accommodation.index') ? 'active' : '' }}">
                       <a href="{{ route('accommodation.index') }}">
                         <span class="sub-item">View Accommodations</span>
                       </a>
-                    </li>
+                    </li> --}}
                       
-                    @endcan
+                    {{-- @endcan --}}
                       @endcan
                     </ul>
                   </div>
