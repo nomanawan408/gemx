@@ -15,7 +15,6 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Define Permissions
         $permissions = [
-
             //
             'view users',
             'create users',
@@ -37,6 +36,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'view hospitality',
            
             //
+            'view status',
             'can approve',
             'can reject',
             'add inivitation letter',
@@ -67,6 +67,18 @@ class RolesAndPermissionsSeeder extends Seeder
 
             //
             'upload demand draft',
+
+            // 
+            'view invitation letter',
+            'view exhibitor invitation letter',
+            'view entry pass',
+
+            //
+            'pkgjs sales',
+            'pkgjs purchase',
+
+            //
+            'admin',
             
         ];
 
@@ -87,11 +99,17 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view accomodation details',
                 'view inivitation letter',
                 'view reports',
+                'view invitation letter',
+                'view entry pass',
+                'pkgjs purchase',
             ],
 
             'visitor' => [
                 'view exhibitors',
                 'view reports',
+                'view invitation letter',
+                'view entry pass',
+                'pkgjs purchase',
             ],
 
             'international_visitor' => [
@@ -105,24 +123,30 @@ class RolesAndPermissionsSeeder extends Seeder
                 'delete flight details',
                 'view reports',
                 'view inivitation letter',
-                'view accomodation details',
-                'create accomodation details',
-                'edit accomodation details',
-                'delete accomodation details',
+                // 'view accomodation details',
+                // 'create accomodation details',
+                // 'edit accomodation details',
+                // 'delete accomodation details',
+                'view invitation letter',
+                'view entry pass',
+                'pkgjs purchase',
             ],
 
             'exhibitor' => [
                 'upload demand draft',
                 'view reports',
+                'view exhibitor invitation letter',
+                'view entry pass',
+                'pkgjs sales',
+                'admin',
             ],
 
             'transport' => [
                 'view flight details',
                 'view international visitors',
                 'view buyers',
-                'view accomodation details',
+                'admin',
             ],
-
             'hospitality' => [
                 'view flight details',
                 'create flights details',
@@ -135,13 +159,17 @@ class RolesAndPermissionsSeeder extends Seeder
                 'delete accomodation details',
                 'manage accomodation details',
                 'appove visa',
+                'view visa',
                 'view international visitors',
                 'view buyers',
+                'view status',
+                'admin',
 
             ],
 
            'superadmin' => [
                 //
+                'admin',
                 'view users',
                 'create users',
                 'manage users',

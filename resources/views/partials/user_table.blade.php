@@ -13,17 +13,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                {{-- <tfoot>
-                    <tr>
-                        <th>Name</th>
-                        <th>Profession</th>
-                        <th>Address</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </tfoot> --}}
+               
                 <tbody>
                     @foreach($users as $user)
                         <tr>
@@ -33,7 +23,7 @@
                                     <div class="avatar me-2">
                                         @if($user->attachment && $user->attachment->personal_photo)
                                             {{-- <img src="{{ asset('storage/' . $user->attachment->personal_photo) }}" alt="Profile" class="rounded-circle" width="40" height="40"> --}}
-                                            <img src="{{ asset($user->attachment->personal_photo) }}" alt="Profile" class="rounded-circle" width="40" height="40">
+                                            <img src="{{ asset('storage/'.$user->attachment->personal_photo) }}" alt="Profile" class="rounded-circle" width="40" height="40">
                                         @else
                                             <div class="avatar-initial rounded-circle bg-label-primary">{{ strtoupper(substr($user->name, 0, 1)) }}</div>
                                         @endif
@@ -59,29 +49,35 @@
 
                             <!-- Status -->
                             <td>
-                                @if($user->status == 'pending')
-                                    <div>
-                                        <form action="{{ route('users.approve', $user->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                        </form>
-                                        <form action="{{ route('users.reject', $user->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
-                                        </form>
-                                    </div>                                  
-                                @else
+                                @can('can approve')
+                                    @if($user->status == 'pending')
+                                        <div>
+                                            <form action="{{ route('users.approve', $user->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                            </form>
+                                            <form action="{{ route('users.reject', $user->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                            </form>
+                                        </div>                                  
+                                    @else
+                                        <span class="badge bg-{{ $user->status == 'approved' ? 'success' : 'danger' }}">
+                                            {{ ucfirst($user->status) }}
+                                        </span>
+                                    @endif
+                                @endcan
+                                @can('view status')
                                     <span class="badge bg-{{ $user->status == 'approved' ? 'success' : 'danger' }}">
                                         {{ ucfirst($user->status) }}
                                     </span>
-                                @endif
+                                @endcan
                             </td>                                  
-
                             <!-- Action -->
                             <td>
-                                <button type="button" class="btn btn-link btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#userModal{{ $user->id }}">
+                                <a href="{{ route('profile.index', $user->id) }}" class="btn btn-link btn-primary btn-lg">
                                     <i class="fa fa-eye"></i>
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

@@ -17,11 +17,42 @@ class AdminController extends Controller
         $visitor = User::role('visitor')->get();
         $international_visitor = User::role('international_visitor')->get();
         $exhibitor = User::role('exhibitor')->get();
-        return view('dashboard', compact('superadmins', 'buyer', 'visitor','international_visitor', 'exhibitor'));    }
+
+        $usersByCountry = User::select('country')
+            ->selectRaw('COUNT(*) as count')
+            ->whereHas('roles', function($query) {
+            $query->whereNotIn('name', ['superadmin', 'hospitality', 'transport']);
+            })
+            ->groupBy('country')
+            ->get();
+
+        $recentUsers = User::orderBy('created_at', 'desc')->take(5)->get();
+
+        return view('dashboard', compact('recentUsers', 'usersByCountry','superadmins', 'buyer', 'visitor','international_visitor', 'exhibitor'));    
+    }
+
+
+    function getCountryCode($countryName)
+    {
+        $countries = [
+            'United States' => 'us',
+            'United Kingdom' => 'gb',
+            'Pakistan' => 'pk',
+            'France' => 'fr',
+            'Germany' => 'de',
+            'China' => 'cn',
+            'India' => 'in',
+            // Add other countries as needed
+        ];
+
+        return $countries[$countryName] ?? null; // Return null if country not found
+    }
 
     /**
      * Show the form for creating a new buyer.
      */
+
+     
     public function create()
     {
         return view('buyers.create');

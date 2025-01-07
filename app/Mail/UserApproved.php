@@ -26,10 +26,9 @@ class UserApproved extends Mailable
      */
     public function content(): Content
     {
-        return new Content(
+        return (new Content(
             view: 'emails.user-approved',
-            data: ['user' => $this->user], // Pass data directly to the view
-        );
+        ))->with(['user' => $this->user]);
     }
 
     /**

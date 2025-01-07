@@ -18,57 +18,44 @@
             </div>
   
             <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
+              <div class="col-md-12">
+                  <div class="card">
                       <div class="card-body">
-                        <div class="table-responsive">
-                          <table
-                          id="multi-filter-select"
-                          class="display table table-striped table-hover"
-                      >
-                          <thead>
-                              <tr>
-                                  <th>Name</th>
-                                  <th>Country</th>
-                                  <th>Phone</th>
-                                  <th>Flight Arrival Date & Time</th>
-                                  <th>Pickup Terminal</th>
-                                  <th>Drop off Terminal</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              @foreach ($flights as $flight)
-                                  <tr>
-                                    <td>
-                                      <div class="d-flex align-items-center">
-                                        <div class="avatar me-2">
-                                          @if($flight->user->attachment && $flight->user->attachment->personal_photo)
-                                            <img src="{{ asset($flight->user->attachment->personal_photo) }}" alt="Profile" class="rounded-circle" width="40" height="40">
-                                          @else
-                                            <div class="avatar-initial rounded-circle bg-label-primary">{{ strtoupper(substr($flight->user->name, 0, 1)) }}</div>
-                                          @endif
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                          <h6 class="mb-0 text-sm">{{ $flight->user->name }}</h6>
-                                          <small class="text-muted">{{ $flight->user->email }}</small>
-                                        </div>
-                                      </div>
-                                      </td>
-                                      <td>{{ $flight->user->country }}</td>
-                                      <td>{{ $flight->user->phone }}</td>
-                                      <td>{{ $flight->flight_arrival_date_time }}</td>
-                                      <td>{{ $flight->pickup_terminal }}</td>
-                                      <td>{{ $flight->dropoff_terminal }}</td>
-                                  </tr>
-                              @endforeach
-                          </tbody>
-                      </table>
-                      
-                        </div>
+                          <!-- Tabs Navigation -->
+                          <ul class="nav nav-tabs" id="flightTabs" role="tablist">
+                              <li class="nav-item" role="presentation">
+                                  <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">All</button>
+                              </li>
+                              <li class="nav-item" role="presentation">
+                                  <button class="nav-link" id="today-tab" data-bs-toggle="tab" data-bs-target="#today" type="button" role="tab" aria-controls="today" aria-selected="false">Today</button>
+                              </li>
+                              <li class="nav-item" role="presentation">
+                                  <button class="nav-link" id="this-week-tab" data-bs-toggle="tab" data-bs-target="#this-week" type="button" role="tab" aria-controls="this-week" aria-selected="false">This Week</button>
+                              </li>
+                          </ul>
+          
+                          <!-- Tabs Content -->
+                          <div class="tab-content" id="flightTabsContent">
+                              <!-- All Tab -->
+                              <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+                                  @include('partials.flights_view_table', ['flights' => $flights])
+                              </div>
+          
+                              <!-- Today Tab -->
+                              <div class="tab-pane fade" id="today" role="tabpanel" aria-labelledby="today-tab">
+                                  @include('partials.flights_view_table', ['flights' => $todayFlights])
+                              </div>
+          
+                              <!-- This Week Tab -->
+                              <div class="tab-pane fade" id="this-week" role="tabpanel" aria-labelledby="this-week-tab">
+                                  @include('partials.flights_view_table', ['flights' => $thisWeekFlights])
+                              </div>
+                          </div>
                       </div>
-                    </div>
                   </div>
-            </div>
+              </div>
+          </div>
+          
           </div>
         </div>
 @endsection 

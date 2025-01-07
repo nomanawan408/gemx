@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('visas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('visa_file');
             $table->string('status')->default('Pending');
             $table->timestamps();

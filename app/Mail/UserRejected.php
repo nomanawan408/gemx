@@ -13,11 +13,11 @@ class UserRejected extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $user;
+
     /**
      * Create a new message instance.
      */
-    public $user;
-
     public function __construct($user)
     {
         $this->user = $user;
@@ -28,11 +28,9 @@ class UserRejected extends Mailable
      */
     public function envelope(): Envelope
     {
-        return $this->subject('Your Account Has Been Rejected')
-                    ->view('emails.user-rejected')
-                    ->with([
-                        'name' => $this->user->name,
-                    ]);
+        return new Envelope(
+            subject: 'Account Rejected'
+        );
     }
 
     /**
@@ -41,7 +39,10 @@ class UserRejected extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.user-rejected', // Your Blade view for the email
+            with: [
+                'user' => $this->user,
+            ]
         );
     }
 

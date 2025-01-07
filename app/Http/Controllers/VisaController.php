@@ -12,8 +12,12 @@ class VisaController extends Controller
     //
     public function index()
     {
-        // get all visas
-        $visas = Visa::all();
+        // get all visas if admin, otherwise get only the user's visas
+        if (auth()->user()->can('admin')) {
+            $visas = Visa::all();
+        } else {
+            $visas = Visa::where('user_id', auth()->user()->id)->get();
+        }
         return view('visa.index', compact('visas'));
     }
 
@@ -43,6 +47,7 @@ class VisaController extends Controller
         $visa->user_id = $user_id;
         $visa->visa_file = $visaFile;
         $visa->save();
+
         return redirect()->route('visa.index');
     }
 

@@ -17,45 +17,84 @@ class UserSeeder extends Seeder
     {
         // Check if the 'superadmin' role exists
         $role = Role::firstOrCreate(['name' => 'superadmin']);
-        $hospitalityRole = Role::firstOrCreate(['name' => 'hospitality_dep']);
-        $transportRole = Role::firstOrCreate(['name' => 'transport_dep']);
+        $hospitalityRole = Role::firstOrCreate(['name' => 'hospitality']);
+        $transportRole = Role::firstOrCreate(['name' => 'transport']);
 
 
         // Create the Super Admin user
         $user = User::firstOrCreate(
             ['email' => 'superadmin@app.com'], // Update this email as needed
             [
-                'name' => 'Super Admin', // Add this line
-                'first_name' => 'Super',
-                'last_name' => 'Admin',
-                'username' => 'superadmin',
-                'password' => bcrypt('password'), // Set a secure password
+            'name' => 'Super Admin', // Add this line
+            'first_name' => 'Super',
+            'last_name' => 'Admin',
+            'username' => 'superadmin',
+            'password' => bcrypt('password'), // Set a secure password
             ]
         );
+
+        // Attachments for Super Admin
+        $superAdminAttachments = [
+            [
+            'user_id' => $user->id,
+            'passport_cnic_file' => 'uploads/passports/superadmin_passport.png',
+            'personal_photo' => 'uploads/photos/superadmin_profile.jpg',
+            ],
+        ];
+
+        foreach ($superAdminAttachments as $attachment) {
+            \App\Models\Attachment::create($attachment);
+        }
 
         // Create Hospitality user
         $hospitalityUser = User::firstOrCreate(
             ['email' => 'hospitality@app.com'],
             [
-                'name' => 'Hospitality User',
-                'first_name' => 'Hospitality',
-                'last_name' => 'User',
-                'username' => 'hospitality',
-                'password' => bcrypt('password'),
+            'name' => 'Hospitality User',
+            'first_name' => 'Hospitality',
+            'last_name' => 'User',
+            'username' => 'hospitality',
+            'password' => bcrypt('password'),
             ]
         );
+
+        // Attachments for Hospitality user
+        $hospitalityAttachments = [
+            [
+            'user_id' => $hospitalityUser->id,
+            'passport_cnic_file' => 'uploads/passports/hospitality_passport.png',
+            'personal_photo' => 'uploads/photos/hospitality_profile.jpg',
+            ],
+        ];
+
+        foreach ($hospitalityAttachments as $attachment) {
+            \App\Models\Attachment::create($attachment);
+        }
 
         // Create Transport user
         $transportUser = User::firstOrCreate(
             ['email' => 'transport@app.com'],
             [
-                'name' => 'Transport User',
-                'first_name' => 'Transport',
-                'last_name' => 'User',
-                'username' => 'transport',
-                'password' => bcrypt('password'),
+            'name' => 'Transport User',
+            'first_name' => 'Transport',
+            'last_name' => 'User',
+            'username' => 'transport',
+            'password' => bcrypt('password'),
             ]
         );
+
+        // Attachments for Transport user
+        $transportAttachments = [
+            [
+            'user_id' => $transportUser->id,
+            'passport_cnic_file' => 'uploads/passports/transport_passport.png',
+            'personal_photo' => 'uploads/photos/transport_profile.jpg',
+            ],
+        ];
+
+        foreach ($transportAttachments as $attachment) {
+            \App\Models\Attachment::create($attachment);
+        }
 
     // Create buyer role
     $buyerRole = Role::firstOrCreate(['name' => 'buyer']);
@@ -131,7 +170,7 @@ class UserSeeder extends Seeder
         [
         'user_id' => $newUser->id,
         'passport_cnic_file' => 'uploads/passports/1734685892-4.png',
-        'personal_photo' => 'assets/img/profile2.jpg',
+        'personal_photo' => 'uploads/photos/profile2.jpg',
         ],
     ];
 
@@ -208,7 +247,7 @@ class UserSeeder extends Seeder
         [
             'user_id' => $visitorUser->id,
             'passport_cnic_file' => 'uploads/passports/visitor_passport.png',
-            'personal_photo' => 'assets/img/profile2.jpg',
+            'personal_photo' => 'uploads/photos/profile2.jpg',
         ],
     ];
 
@@ -285,7 +324,7 @@ class UserSeeder extends Seeder
         [
             'user_id' => $internationalUser->id,
             'passport_cnic_file' => 'uploads/passports/international_passport.png',
-            'personal_photo' => 'assets/img/profile2.jpg',
+            'personal_photo' => 'uploads/photos/profile2.jpg',
         ],
     ];
 
@@ -362,9 +401,11 @@ class UserSeeder extends Seeder
         [
             'user_id' => $exhibitorUser->id,
             'passport_cnic_file' => 'uploads/passports/exhibitor_passport.png',
-            'personal_photo' => 'assets/img/profile2.jpg',
+            'personal_photo' => 'uploads/photos/profile2.jpg',
         ],
     ];
+
+    
 
     foreach ($exhibitorAttachments as $attachment) {
         \App\Models\Attachment::create($attachment);

@@ -324,7 +324,7 @@
                   >
                     <div class="avatar-sm">
                       <img
-                        src="assets/img/profile.jpg"
+                        src="{{ auth()->user()->attachment->personal_photo ?? asset('assets/img/profile.jpg') }}"
                         alt="..."
                         class="avatar-img rounded-circle"
                       />
@@ -349,7 +349,7 @@
                             <h4>{{ auth()->user()->name }}</h4>
                             <p class="text-muted">{{ auth()->user()->email }}</p>
                             <a
-                              href="profile.html"
+                              href="{{ route('profile.index') }}"
                               class="btn btn-xs btn-secondary btn-sm"
                               >View Profile</a
                             >

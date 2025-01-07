@@ -1,5 +1,5 @@
   <!-- Sidebar -->
-  <div class="sidebar sidebar-style-2" data-background-color="dark">
+  <div class="sidebar sidebar-style-1 text-light" data-background-color="dark">
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
@@ -22,7 +22,7 @@
           <!-- End Logo Header -->
         </div>
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
-          <div class="sidebar-content">
+          <div class="sidebar-content" >
             <ul class="nav nav-secondary">
               <li class="nav-item {{ request()->is('dashboard*') ? 'active' : '' }}">
                 <a href="/dashboard">
@@ -30,8 +30,8 @@
                   <p>Dashboard</p>
                 </a>
               </li>
-              @if(auth()->user()->hasRole('superadmin'))
-              <li class="nav-item {{ request()->is('buyers*') ? 'active' : '' }}">
+              @can('view buyers')
+               <li class="nav-item {{ request()->is('buyers*') ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#buyers">
                   <i class="fas fa-shopping-cart"></i>
                   <p>Buyers</p>
@@ -39,14 +39,56 @@
                 </a>
                 <div class="collapse" id="buyers">
                   <ul class="nav nav-collapse">
+                    @can('view buyers')
                     <li class="{{ request()->routeIs('buyers.index') ? 'active' : '' }}">
                       <a href="{{ route('buyers.index') }}">
                         <span class="sub-item">All Buyers</span>
                       </a>
                     </li>
+                    @endcan
+                    @can('create flights details')
+                    <li class="{{ request()->routeIs('flight-details.buyer_selection') ? 'active' : '' }}">
+                      <a href="{{ route('flight-details.buyer_selection') }}">
+                        <span class="sub-item">Add Flight Details</span>
+                      </a>
+                    </li>
+                    @endcan
+                   @can('create accomodation details')
+                     <li class="{{ request()->routeIs('accommodation.select_user') ? 'active' : '' }}">
+                      <a href="{{ route('accommodation.select_user') }}">
+                        <span class="sub-item">Add Accommodation Details</span>
+                      </a>
+                    </li>
+                   @endcan
+                    
+                    @can('view accomodation details')
+                       <li class="{{ request()->routeIs('accommodation.index') ? 'active' : '' }}">
+                      <a href="{{ route('accommodation.index') }}">
+                        <span class="sub-item">View Accommodations</span>
+                      </a>
+                    </li>
+                    @endcan
+                   @can('view visa')
+                   <li class="{{ request()->routeIs('visa,index') ? 'active' : '' }}">
+                    <a href="{{ route('visa.index', auth()->user()->id) }}">
+                      <span class="sub-item">View All Visa Details</span>
+                    </a>
+                  </li> 
+                   @endcan
+                   @can('view flight details')
+                   <li class="{{ request()->routeIs('flight-details.buyers') ? 'active' : '' }}">
+                    <a href="{{ route('flight-details.buyers') }}">
+                      <span class="sub-item">View Flight Details</span>
+                    </a>
+                  </li>
+                   @endcan
+                   
                   </ul>
                 </div>
               </li>
+              @endcan
+
+              @can('view international visitors')
               <li class="nav-item {{ request()->is('visitors*') ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#visitors">
                   <i class="fas fa-users"></i>
@@ -55,20 +97,167 @@
                 </a>
                 <div class="collapse" id="visitors">
                   <ul class="nav nav-collapse">
-                    <li class="{{ request()->routeIs('visitors.index') ? 'active' : '' }}">
-                      <a href="{{ route('visitors.index') }}">
-                        <span class="sub-item">Natioanl Visitors</span>
+                    @can('view visitors')
+                      <li class="{{ request()->routeIs('visitors.index') ? 'active' : '' }}">
+                        <a href="{{ route('visitors.index') }}">
+                          <span class="sub-item">All Natioanl Visitors</span>
+                        </a>
+                      </li>
+                    @endcan
+
+                    @can('view international visitors')
+                      <li class="{{ request()->routeIs('international-visitors.index') ? 'active' : '' }}">
+                        <a href="{{ route('international-visitors.index') }}">
+                          <span class="sub-item">All International Visiters</span>
+                        </a>
+                      </li>
+                      @can('view visa')
+                         <li class="{{ request()->routeIs('visa.show') ? 'active' : '' }}">
+                        <a href="{{ route('visa.show', auth()->user()->id) }}">
+                          <span class="sub-item">View Visa Details</span>
+                        </a>
+                      </li>
+                      @endcan
+                     @can('view flight details')
+                      <li class="{{ request()->routeIs('flight-details.visitors') ? 'active' : '' }}">
+                        <a href="{{ route('flight-details.visitors') }}">
+                          <span class="sub-item">View International Visitor Flight Details</span>
+                        </a>
+                      </li>
+                     @endcan
+                    @can('view accomodation details')
+                    <li class="{{ request()->routeIs('accommodation.index') ? 'active' : '' }}">
+                      <a href="{{ route('accommodation.index') }}">
+                        <span class="sub-item">View Accommodations</span>
                       </a>
                     </li>
-                    <li class="{{ request()->routeIs('international-visitors.index') ? 'active' : '' }}">
-                      <a href="{{ route('international-visitors.index') }}">
-                        <span class="sub-item">International Visiters</span>
+                      
+                    @endcan
+                      @endcan
+                    </ul>
+                  </div>
+                </li>
+              @endcan
+              
+             
+              
+             
+              @can('view invitation letter')
+                 <li class="nav-item {{ request()->routeIs('invitation.index') ? 'active' : '' }}">
+                <a href="{{ route('invitation.index') }}">
+                  <i class="fas fa-file-alt"></i>
+                  <p>Inivitation Letter</p>
+                </a>
+              </li>
+              @endcan
+             
+            
+
+              @can('view entry pass')
+              <li class="nav-item {{ request()->routeIs('entry-pass.index') ? 'active' : '' }}">
+                <a href="{{ route('entry-pass.index') }}">
+                  <i class="fas fa-key"></i>
+                  <p>Enter Pass</p>
+                </a>
+              </li>
+           
+              @endcan
+            
+              {{-- ///////////////////////////////////////////// --}}
+              {{-- ///////////////////////////////////////////// --}}
+
+              @cannot('admin')
+              @can('view visa')
+              <li class="nav-item {{ request()->is('visa*') ? 'active' : '' }}">
+                <a data-bs-toggle="collapse" href="#visa">
+                  <i class="fas fa-passport"></i>
+                  <p>Visa</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="visa">
+                  <ul class="nav nav-collapse">
+                    @can('view visa')
+                    <li class="{{ request()->routeIs('visa.index') ? 'active' : '' }}">
+                      <a href="{{ route('visa.index', auth()->user()->id) }}">
+                        <span class="sub-item">View Visa</span>
                       </a>
                     </li>
+                    @endcan
+                    @can('create visa')
+                    @if(!auth()->user()->visa)
+                    <li class="{{ request()->routeIs('visa.create') ? 'active' : '' }}">
+                      <a href="{{ route('visa.create') }}">
+                        <span class="sub-item">Upload Visa</span>
+                      </a>
+                    </li>
+                    @endif
+                    @endcan
                   </ul>
                 </div>
               </li>
+              @endcan
+                @can('view flight details')
+                <li class="nav-item {{ request()->is('flight-details*') ? 'active' : '' }}">
+                  <a data-bs-toggle="collapse" href="#flight-details">
+                    <i class="fas fa-plane"></i>
+                    <p>Flight Details</p>
+                    <span class="caret"></span>
+                  </a>
+                  <div class="collapse" id="flight-details">
+                    <ul class="nav nav-collapse">
+                      @can('view flight details')
+                      <li class="{{ request()->routeIs('flight-details.index') ? 'active' : '' }}">
+                        <a href="{{ route('flight-details.index') }}">
+                          <span class="sub-item">View Flight Details</span>
+                        </a>
+                      </li>
+                      @endcan
+                      @can('create flights details')
+                        @if(!auth()->user()->flight)
+                          <li class="{{ request()->routeIs('flight-details.selfcreate') ? 'active' : '' }}">
+                            <a href="{{ route('flight-details.selfcreate') }}">
+                              <span class="sub-item">Add Flight Details</span>
+                            </a>
+                          </li>
+                        @endif
+                      @endcan
+                    </ul>
+                  </div>
+                </li>
+                @endcan
+                  
+                @can('view accomodation details')
+                <li class="nav-item {{ request()->is('accommodation*') ? 'active' : '' }}">
+                  <a data-bs-toggle="collapse" href="#accommodation">
+                    <i class="fas fa-bed"></i>
+                    <p>Accommodation</p>
+                    <span class="caret"></span>
+                  </a>
+                  <div class="collapse" id="accommodation">
+                    <ul class="nav nav-collapse">
+                      @can('view accomodation details')
+                      <li class="{{ request()->routeIs('accommodation.index') ? 'active' : '' }}">
+                        <a href="{{ route('accommodation.index') }}">
+                          <span class="sub-item">View Accommodation</span>
+                        </a>
+                      </li>
+                      @endcan
+                      @can('create accomodation details')
+                      <li class="{{ request()->routeIs('accommodation.create') ? 'active' : '' }}">
+                        <a href="{{ route('accommodation.create') }}">
+                          <span class="sub-item">Add Accommodation</span>
+                        </a>
+                      </li>
+                      @endcan
+                    </ul>
+                  </div>
+                </li>
+              @endcan
+              @endcannot
+
+
              
+              @can('view exhibitors')
               <li class="nav-item {{ request()->is('exhibitors*') ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#exhibitors">
                   <i class="fas fa-store"></i>
@@ -90,7 +279,62 @@
                   </ul>
                 </div>
               </li>
+            @endcan
+          
+            @can('pkgjs sales')
+            <li class="nav-item {{ request()->routeIs('invitation.index') ? 'active' : '' }}">
+              <a href="{{ route('invitation.index') }}">
+                <i class="fas fa-file-alt"></i>
+                <p>Floor Plan</p>
+              </a>
+            </li>
+              <li class="nav-item {{ request()->routeIs('invitation.index') ? 'active' : '' }}">
+                <a href="{{ route('invitation.index') }}">
+                  <i class="fas fa-file-alt"></i>
+                  <p>PKGJS Sales</p>
+                </a>
+              </li>
+              <li class="nav-item {{ request()->routeIs('invitation.index') ? 'active' : '' }}">
+                <a href="{{ route('invitation.index') }}">
+                  <i class="fas fa-file-alt"></i>
+                  <p>FBR Tax</p>
+                </a>
+              </li>
+            @endcan
+            @can('pkgjs purchase')
+              <li class="nav-item {{ request()->routeIs('invitation.index') ? 'active' : '' }}">
+                <a href="{{ route('invitation.index') }}">
+                  <i class="fas fa-file-alt"></i>
+                  <p>PKGJS Purchase</p>
+                </a>
+              </li>
+            @endcan
+            
               
+              <li class="nav-item {{ request()->is('profile*') ? 'active' : '' }}">
+                <a data-bs-toggle="collapse" href="#profile">
+                  <i class="fas fa-user"></i>
+                  <p>Profile</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="profile">
+                  <ul class="nav nav-collapse">
+                    <li class="{{ request()->routeIs('profile.index') ? 'active' : '' }}">
+                      <a href="{{ route('profile.index') }}">
+                        <span class="sub-item">View Profile</span>
+                      </a>
+                    </li>
+                    <li class="{{ request()->routeIs('profile.index') ? 'active' : '' }}">
+                      <a href="{{ route('profile.index') }}">
+                        <span class="sub-item">Change Password</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+
+              {{-- @can('view transport')
               <li class="nav-item {{ request()->is('transports*') ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#transports">
                   <i class="fas fa-bus"></i>
@@ -104,16 +348,14 @@
                         <span class="sub-item">Buyers Flight Details</span>
                       </a>
                     </li>
-                    <li class="{{ request()->routeIs('flight-details.visitors') ? 'active' : '' }}">
-                      <a href="{{ route('flight-details.visitors') }}">
-                        <span class="sub-item">Foreigners Flight Details</span>
-                      </a>
-                    </li>
+                   
                   </ul>
                 </div>
               </li>
 
-              <li class="nav-item {{ request()->is('hospitality*') ? 'active' : '' }}">
+              @endcan --}}
+              
+              {{-- <li class="nav-item {{ request()->is('hospitality*') ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#hospitality">
                   <i class="fas fa-hotel"></i>
                   <p>Hospitality</p>
@@ -136,12 +378,22 @@
                         <span class="sub-item">Foreigners Flight Details</span>
                       </a>
                     </li>
+                    <li class="{{ request()->routeIs('accommodation.select_user') ? 'active' : '' }}">
+                      <a href="{{ route('accommodation.select_user') }}">
+                        <span class="sub-item">Add Accommodation Details</span>
+                      </a>
+                    </li>
+                    <li class="{{ request()->routeIs('accommodation.select_user') ? 'active' : '' }}">
+                      <a href="{{ route('accommodation.select_user') }}">
+                        <span class="sub-item">View Accommodations</span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
-              </li>
-              @endif
+              </li> --}}
+              
               {{-- --- --}}
-              @can('create visa')
+              @can('create visa | view visa')
                 <li class="nav-item {{ request()->is('visa*') ? 'active' : '' }}">
                   <a data-bs-toggle="collapse" href="#visa">
                     <i class="fas fa-passport"></i>
@@ -156,11 +408,11 @@
                             <span class="sub-item">Upload Visa</span>
                           </a>
                         </li>
-                        {{-- <li class="{{ request()->routeIs('visa.show') ? 'active' : '' }}">
+                       <li class="{{ request()->routeIs('visa.show') ? 'active' : '' }}">
                           <a href="{{ route('visa.show', auth()->user()->id) }}">
                             <span class="sub-item">Visa Details</span>
                           </a>
-                        </li> --}}
+                        </li> 
                       @endcan
                     </ul>
                   </div>

@@ -14,7 +14,13 @@ return new class extends Migration
         Schema::create('flights', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Relates to users
-            $table->dateTime('flight_arrival_date_time')->nullable(); // Flight arrival date & time
+            $table->string('flight_no')->nullable(); // Flight number
+            $table->string('airline_name')->nullable(); // Airline name
+            $table->string('seat_no')->nullable(); // Seat number
+            $table->integer('no_of_persons')->nullable(); // Number of persons
+            $table->string('ticket_upload')->nullable(); // Ticket upload
+            $table->dateTime('departure_date_time')->nullable() ; // Departure date & time
+            $table->dateTime('arrival_date_time')->nullable(); // Flight arrival date & time
             $table->string('pickup_terminal')->nullable(); // Airport terminal or hotel details
             $table->string('dropoff_terminal')->nullable(); // Airport or custom location
             $table->timestamps();

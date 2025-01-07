@@ -128,4 +128,9 @@ class User extends Authenticatable
         {
             return $this->hasOne(Visa::class);
         }
+
+        public function accommodation()
+        {
+            return $this->hasOne(Accommodation::class);
+        }
 }

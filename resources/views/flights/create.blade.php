@@ -41,7 +41,7 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <label for="arrival_datetime" class="form-label">Flight Arrival Date & Time<span style="color: red;">*</span></label>
-                                    <input type="datetime-local" class="form-control" id="arrival_datetime" name="flight_arrival_date_time" required>
+                                    <input type="datetime-local" class="form-control" id="arrival_datetime" name="arrival_date_time" required>
                                 </div>
                             </div>
 

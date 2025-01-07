@@ -5,7 +5,7 @@
     <div class="page-inner">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
             <div>
-                <h3 class="fw-bold mb-3">Select Buyers</h3>
+                <h3 class="fw-bold mb-3">Select Buyer</h3>
             </div>
         </div>
 
@@ -19,12 +19,15 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <label for="select_buyer" class="form-label">Select Buyer</label>
-                                    <select class="form-select" id="select_buyer" name="select_buyer">
+                                    <select class="form-select @error('select_buyer') is-invalid @enderror" id="select_buyer" name="select_buyer">
                                         <option value="">Select Buyer</option>
                                         @foreach($buyers as $buyer)
                                             <option value="{{ $buyer->id }}">{{ $buyer->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('select_buyer')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 

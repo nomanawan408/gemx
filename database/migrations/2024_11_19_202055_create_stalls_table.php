@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('stalls', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('stall')->nullable();
             $table->string('stall_products')->nullable();
             $table->string('selectbiz')->nullable();
