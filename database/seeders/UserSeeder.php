@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             [
             'user_id' => $user->id,
             'passport_cnic_file' => 'uploads/passports/superadmin_passport.png',
-            'personal_photo' => 'uploads/photos/superadmin_profile.jpg',
+            'personal_photo' => 'uploads/photos/admin-avatar.jpg',
             ],
         ];
 
@@ -63,7 +63,7 @@ class UserSeeder extends Seeder
             [
             'user_id' => $hospitalityUser->id,
             'passport_cnic_file' => 'uploads/passports/hospitality_passport.png',
-            'personal_photo' => 'uploads/photos/hospitality_profile.jpg',
+            'personal_photo' => 'uploads/photos/admin-avatar.jpg',
             ],
         ];
 
@@ -88,7 +88,7 @@ class UserSeeder extends Seeder
             [
             'user_id' => $transportUser->id,
             'passport_cnic_file' => 'uploads/passports/transport_passport.png',
-            'personal_photo' => 'uploads/photos/transport_profile.jpg',
+            'personal_photo' => 'uploads/photos/admin-avatar.jpg',
             ],
         ];
 

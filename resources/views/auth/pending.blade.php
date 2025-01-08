@@ -47,9 +47,12 @@
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" /> --}}
 </head>
 <body >
-    <div class="container text-center" >
+    <div class="pt-4 container text-center" >
         <h1>Account Pending Approval</h1>
         <p>Your account is currently under review. Please wait while we process your request.</p>
+        <div class="pb-5">
+            <a href="{{ route('dashboard.index') }}" class="btn btn-primary mt-4">Go to Dashboard</a>
+        </div>
     </div>
 
     @cannot('admin')

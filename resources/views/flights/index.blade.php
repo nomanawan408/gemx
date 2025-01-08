@@ -7,7 +7,12 @@
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Buyers</h3>
+              @if(auth()->user()->hasRole('international_visitor'))
+              <h4 style="text-align: center; color: #d90000">
+                <strong>Please Provide us your flight details, so that we can facilitate you in terms of providing Transportation from Airport the Expo.</strong>
+              </h4>
+              @endif
+                <h3 class="fw-bold mb-3">Fights Details</h3>
                 {{-- <h6 class="op-7 mb-2">All visitors are here</h6> --}}
 
               </div>
@@ -35,6 +40,7 @@
                             <th>Pickup Terminal</th>
                             <th>Dropoff Terminal</th>
                             <th>Ticket File</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,6 +62,14 @@
                                     N/A
                                 @endif
                             </td>
+                            <td>
+                                <form action="{{ route('flight-details.destroy', $flight->id) }}" method="post" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this flight?')">Delete</button>
+                                </form>
+                            </td>
+                            
                             
                         </tr>
                         @endforeach

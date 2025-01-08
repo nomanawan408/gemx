@@ -328,7 +328,7 @@
                         alt="..."
                         class="avatar-img rounded-circle"
                       />
-                    </div> --}}
+                    </div> --}} 
                     <span class="profile-username">
                       <span class="op-7">Hi,</span>
                       <span class="fw-bold">{{ auth()->user()->name }}</span>
@@ -340,7 +340,7 @@
                         <div class="user-box">
                           <div class="avatar-lg">
                             <img
-                              src="assets/img/profile.jpg"
+                              src="{{ asset('storage/'.auth()->user()->attachment->personal_photo) ?? asset('assets/img/profile.jpg') }}"
                               alt="image profile"
                               class="avatar-img rounded"
                             />

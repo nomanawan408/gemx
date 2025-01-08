@@ -282,28 +282,28 @@
             @endcan
           
             @can('pkgjs sales')
-            <li class="nav-item {{ request()->routeIs('invitation.index') ? 'active' : '' }}">
-              <a href="{{ route('invitation.index') }}">
+            <li class="nav-item {{ request()->routeIs('floor-plan.index') ? 'active' : '' }}">
+              <a href="{{ route('floor-plan.index') }}">
                 <i class="fas fa-file-alt"></i>
                 <p>Floor Plan</p>
               </a>
             </li>
-              <li class="nav-item {{ request()->routeIs('invitation.index') ? 'active' : '' }}">
-                <a href="{{ route('invitation.index') }}">
+              <li class="nav-item {{ request()->routeIs('pkgjs-sales.index') ? 'active' : '' }}">
+                <a href="{{ route('pkgjs-sales.index') }}">
                   <i class="fas fa-file-alt"></i>
                   <p>PKGJS Sales</p>
                 </a>
               </li>
-              <li class="nav-item {{ request()->routeIs('invitation.index') ? 'active' : '' }}">
-                <a href="{{ route('invitation.index') }}">
+              <li class="nav-item {{ request()->routeIs('fbr-tax.index') ? 'active' : '' }}">
+                <a href="{{ route('fbr-tax.index') }}">
                   <i class="fas fa-file-alt"></i>
                   <p>FBR Tax</p>
                 </a>
               </li>
             @endcan
             @can('pkgjs purchase')
-              <li class="nav-item {{ request()->routeIs('invitation.index') ? 'active' : '' }}">
-                <a href="{{ route('invitation.index') }}">
+              <li class="nav-item {{ request()->routeIs('pkgjs-purchase.index') ? 'active' : '' }}">
+                <a href="{{ route('pkgjs-purchase.index') }}">
                   <i class="fas fa-file-alt"></i>
                   <p>PKGJS Purchase</p>
                 </a>
@@ -324,11 +324,11 @@
                         <span class="sub-item">View Profile</span>
                       </a>
                     </li>
-                    <li class="{{ request()->routeIs('profile.index') ? 'active' : '' }}">
+                    {{-- <li class="{{ request()->routeIs('profile.index') ? 'active' : '' }}">
                       <a href="{{ route('profile.index') }}">
                         <span class="sub-item">Change Password</span>
                       </a>
-                    </li>
+                    </li> --}}
                   </ul>
                 </div>
               </li>

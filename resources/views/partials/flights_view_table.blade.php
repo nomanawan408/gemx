@@ -29,11 +29,18 @@
                             </div>
                         </div>
                     </td>
-                    <td>{{ $flight->user->country }}</td>
-                    <td>{{ $flight->user->phone }}</td>
+                    <td>{{ $flight->airline_name }}</td>
+                    <td>{{ $flight->flight_no }}</td>
+                    <td>{{ $flight->seat_no }}</td>
+                    <td>{{ $flight->departure_date_time }}</td>
                     <td>{{ $flight->arrival_date_time }}</td>
-                    <td>{{ $flight->pickup_terminal }}</td>
-                    <td>{{ $flight->dropoff_terminal }}</td>
+                    <td>
+                        @if($flight->ticket_upload)
+                            <a href="{{ asset('storage/'.$flight->ticket_upload) }}" target="_blank">View Ticket</a>
+                        @else
+                            N/A
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>

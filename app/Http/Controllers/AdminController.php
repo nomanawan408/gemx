@@ -26,7 +26,12 @@ class AdminController extends Controller
             ->groupBy('country')
             ->get();
 
-        $recentUsers = User::orderBy('created_at', 'desc')->take(5)->get();
+            $recentUsers = User::whereDoesntHave('roles', function ($query) {
+                $query->whereIn('name', ['superadmin', 'hospitality', 'transport']);
+            })
+            ->orderBy('created_at', 'desc')
+            ->take(10)
+            ->get();
 
         return view('dashboard', compact('recentUsers', 'usersByCountry','superadmins', 'buyer', 'visitor','international_visitor', 'exhibitor'));    
     }

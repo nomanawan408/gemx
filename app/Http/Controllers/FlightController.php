@@ -177,13 +177,12 @@ class FlightController extends Controller
 
         $flight->update($validated);
 
-        return redirect()->route('flights.index')->with('success', 'Flight updated successfully.');
+        return redirect()->route('flight-details.index')->with('success', 'Flight updated successfully.');
     }
 
     public function destroy(Flight $flight)
     {
         $flight->delete();
-
-        return redirect()->route('flights.index')->with('success', 'Flight deleted successfully.');
+        return redirect()->route('flight-details.index')->with('success', 'Flight deleted successfully.');
     }
 }

@@ -15,6 +15,10 @@ use App\Http\Controllers\AccommodationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VisaController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\PKGJSSalesController;
+use App\Http\Controllers\PKGJSPurchaseController;
+use App\Http\Controllers\FloorPlanController;
+use App\Http\Controllers\FBRTaxController;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Middleware\CheckPendingStatus;
 
@@ -42,7 +46,7 @@ Route::middleware(['auth', CheckPendingStatus::class])->group(function () {
     Route::get('flight-details/visitors', [FlightController::class, 'visitorsDetails'])->name('flight-details.visitors');
     Route::get('flight-details/select-buyer', [FlightController::class, 'buyerSelection'])->name('flight-details.buyer_selection');
     
-    
+
     Route::get('flight-details/create', [FlightController::class, 'create'])->name('flight-details.create');
     Route::get('flight-details/self-create', [FlightController::class, 'selfcreate'])->name('flight-details.selfcreate');
     Route::post('flight-details/create-flight', [FlightController::class, 'createflight'])->name('flight-details.createflight');
@@ -95,6 +99,34 @@ Route::middleware(['auth', CheckPendingStatus::class])->group(function () {
     Route::post('/entry-pass', [InvitationController::class, 'entryPassStore'])->name('entry-pass.store');
     Route::get('/entry-pass/{id}', [InvitationController::class, 'entryPassShow'])->name('entry-pass.show');
     Route::delete('/entry-pass/{id}', [InvitationController::class, 'entryPassDestroy'])->name('entry-pass.destroy');
+
+    // PKGJS routes
+    Route::get('/pkgjs-sales', [PKGJSSalesController::class, 'index'])->name('pkgjs-sales.index');
+    Route::get('/pkgjs-sales/create', [PKGJSSalesController::class, 'create'])->name('pkgjs-sales.create');
+    Route::post('/pkgjs-sales', [PKGJSSalesController::class, 'store'])->name('pkgjs-sales.store');
+    Route::get('/pkgjs-sales/{id}', [PKGJSSalesController::class, 'show'])->name('pkgjs-sales.show');
+    Route::delete('/pkgjs-sales/{id}', [PKGJSSalesController::class, 'destroy'])->name('pkgjs-sales.destroy');
+
+    // Floor Plan routes
+    Route::get('/floor-plan', [FloorPlanController::class, 'index'])->name('floor-plan.index');
+    Route::get('/floor-plan/create', [FloorPlanController::class, 'create'])->name('floor-plan.create');
+    Route::post('/floor-plan', [FloorPlanController::class, 'store'])->name('floor-plan.store');
+    Route::get('/floor-plan/{id}', [FloorPlanController::class, 'show'])->name('floor-plan.show');
+    Route::delete('/floor-plan/{id}', [FloorPlanController::class, 'destroy'])->name('floor-plan.destroy');
+
+    // FBR Tax routes
+    Route::get('/fbr-tax', [FbrTaxController::class, 'index'])->name('fbr-tax.index');
+    Route::get('/fbr-tax/create', [FbrTaxController::class, 'create'])->name('fbr-tax.create');
+    Route::post('/fbr-tax', [FbrTaxController::class, 'store'])->name('fbr-tax.store');
+    Route::get('/fbr-tax/{id}', [FbrTaxController::class, 'show'])->name('fbr-tax.show');
+    Route::delete('/fbr-tax/{id}', [FbrTaxController::class, 'destroy'])->name('fbr-tax.destroy');
+
+// PKGJS Purchase routes
+Route::get('/pkgjs-purchase', [PKGJSPurchaseController::class, 'index'])->name('pkgjs-purchase.index');
+Route::get('/pkgjs-purchase/create', [PKGJSPurchaseController::class, 'create'])->name('pkgjs-purchase.create');
+Route::post('/pkgjs-purchase', [PKGJSPurchaseController::class, 'store'])->name('pkgjs-purchase.store');
+Route::get('/pkgjs-purchase/{id}', [PKGJSPurchaseController::class, 'show'])->name('pkgjs-purchase.show');
+Route::delete('/pkgjs-purchase/{id}', [PKGJSPurchaseController::class, 'destroy'])->name('pkgjs-purchase.destroy');
 
 
     Route::get('/invitation/download', function () {

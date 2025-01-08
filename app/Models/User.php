@@ -117,10 +117,15 @@ class User extends Authenticatable
         {
             return $this->hasOne(Attachment::class, 'user_id', 'id');
         }
-
-        public function flights()
+    
+        /**
+         * Get all of the flights for the User
+         *
+         * @return \Illuminate\Database\Eloquent\Relations\HasMany
+         */
+        public function flights(): HasMany
         {
-            return $this->hasMany(Flight::class);
+            return $this->hasOne(Flight::class);
         }
                 
         // relation for visa
