@@ -149,6 +149,54 @@
                                     <div class="col-md-12">
                                         <h5 class="fw-bold">Attachments</h5>
                                         <ul class="list-unstyled small">
+                                            @if (auth()->user()->hasRole('visitor') && auth()->user()->hasRole('international_visitor'))
+                                            <li><strong>Personal Photo:</strong> 
+                                                @if($user->attachment->personal_photo)
+                                                    <a href="{{ asset('storage/'.$user->attachment->personal_photo) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li>
+                                                <strong>Passport/CNIC File:</strong> 
+                                                @if($user->attachment->passport_cnic_file)
+                                                    <a href="{{ asset('storage/'.$user->attachment->passport_cnic_file) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            @endif
+                                            {{-- For Buyers --}}
+                                            @if (auth()->user()->hasRole('buyer'))
+                                            <li>
+                                                <strong>Passport/CNIC File:</strong> 
+                                                @if($user->attachment->passport_cnic_file)
+                                                    <a href="{{ asset('storage/'.$user->attachment->passport_cnic_file) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li><strong>Personal Photo:</strong> 
+                                                @if($user->attachment->personal_photo)
+                                                    <a href="{{ asset('storage/'.$user->attachment->personal_photo) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li><strong>Company Catalogue:</strong> 
+                                                @if($user->attachment->company_catalogue)
+                                                    <a href="{{ asset('storage/'.$user->attachment->company_catalogue) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li><strong>Bank Statement:</strong> 
+                                                @if($user->attachment->bank_statement)
+                                                    <a href="{{ asset('storage/'.$user->attachment->bank_statement) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
                                             <li><strong>Business Card:</strong> 
                                                 @if($user->attachment->business_card)
                                                     <a href="{{ asset('storage/'.$user->attachment->business_card) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
@@ -156,6 +204,134 @@
                                                     Not uploaded
                                                 @endif
                                             </li>
+                                            <li><strong>Company Certificate:</strong> 
+                                                @if($user->attachment->company_certificate)
+                                                    <a href="{{ asset('storage/'.$user->attachment->company_certificate) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li><strong>Chamber Association Certificate:</strong> 
+                                                @if($user->attachment->chamber_association_certificate)
+                                                    <a href="{{ asset('storage/'.$user->attachment->chamber_association_certificate) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            {{--  --}}
+                                            @endif
+
+                                            {{-- For Exhibitors --}}
+                                            @if (auth()->user()->hasRole('exhibitor'))
+                                            <li><strong>Bank Statement:</strong> 
+                                                @if($user->attachment->bank_statement)
+                                                    <a href="{{ asset('storage/'.$user->attachment->bank_statement) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li>
+                                                <strong>Passport/CNIC File:</strong> 
+                                                @if($user->attachment->passport_cnic_file)
+                                                    <a href="{{ asset('storage/'.$user->attachment->passport_cnic_file) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li><strong>Personal Photo:</strong> 
+                                                @if($user->attachment->personal_photo)
+                                                    <a href="{{ asset('storage/'.$user->attachment->personal_photo) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li><strong>Company Registration Number:</strong> 
+                                                @if($user->attachment->company_registration_number)
+                                                    {{ $user->attachment->company_registration_number }}
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li><strong>Company Logo:</strong> 
+                                                @if($user->attachment->company_logo)
+                                                    <a href="{{ asset('storage/'.$user->attachment->company_logo) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+
+                                            <li><strong>Company Catalogue:</strong> 
+                                                @if($user->attachment->company_catalogue)
+                                                    <a href="{{ asset('storage/'.$user->attachment->company_catalogue) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+
+                                            <li><strong>Business Card:</strong> 
+                                                @if($user->attachment->business_card)
+                                                    <a href="{{ asset('storage/'.$user->attachment->business_card) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li><strong>Chamber Association Certificate:</strong> 
+                                                @if($user->attachment->chamber_association_certificate)
+                                                    <a href="{{ asset('storage/'.$user->attachment->chamber_association_certificate) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li><strong>Pay Order Image:</strong> 
+                                                @if($user->attachment->pay_order_image)
+                                                    <a href="{{ asset('storage/'.$user->attachment->pay_order_image) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li>
+                                                <strong>Pay Order Draft Number:</strong> 
+                                                @if($user->attachment->pay_order_draft_no)
+                                                    {{ $user->attachment->pay_order_draft_no }}
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li><strong>Pay Order Amount:</strong> 
+                                                @if($user->attachment->pay_order_amount)
+                                                    {{ number_format($user->attachment->pay_order_amount, 2) }}
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li><strong>Pay Order Date:</strong> 
+                                                @if($user->attachment->pay_order_date)
+                                                    {{ $user->attachment->pay_order_date->format('d/m/Y') }}
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            <li><strong>Pay Order Bank Name:</strong> 
+                                                @if($user->attachment->pay_order_bank_name)
+                                                    {{ $user->attachment->pay_order_bank_name }}
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                           
+                                            <li><strong>Recommendation:</strong> 
+                                                @if($user->attachment->recommendation)
+                                                    <a href="{{ asset('storage/'.$user->attachment->recommendation) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                @else
+                                                    Not uploaded
+                                                @endif
+                                            </li>
+                                            {{--  --}}
+                                            @endif
+
+
+                                            
+{{--                                            
                                             <li><strong>Company Logo:</strong> 
                                                 @if($user->attachment->company_logo)
                                                     <a href="{{ asset('storage/'.$user->attachment->company_logo) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
@@ -212,48 +388,7 @@
                                                     Not uploaded
                                                 @endif
                                             </li>
-                                            <li><strong>Pay Order Draft Number:</strong> 
-                                                @if($user->attachment->pay_order_draft_no)
-                                                    {{ $user->attachment->pay_order_draft_no }}
-                                                @else
-                                                    Not uploaded
-                                                @endif
-                                            </li>
-                                            <li><strong>Pay Order Amount:</strong> 
-                                                @if($user->attachment->pay_order_amount)
-                                                    {{ number_format($user->attachment->pay_order_amount, 2) }}
-                                                @else
-                                                    Not uploaded
-                                                @endif
-                                            </li>
-                                            <li><strong>Pay Order Date:</strong> 
-                                                @if($user->attachment->pay_order_date)
-                                                    {{ $user->attachment->pay_order_date->format('d/m/Y') }}
-                                                @else
-                                                    Not uploaded
-                                                @endif
-                                            </li>
-                                            <li><strong>Pay Order Bank Name:</strong> 
-                                                @if($user->attachment->pay_order_bank_name)
-                                                    {{ $user->attachment->pay_order_bank_name }}
-                                                @else
-                                                    Not uploaded
-                                                @endif
-                                            </li>
-                                            <li><strong>Pay Order Image:</strong> 
-                                                @if($user->attachment->pay_order_image)
-                                                    <a href="{{ asset('storage/'.$user->attachment->pay_order_image) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
-                                                @else
-                                                    Not uploaded
-                                                @endif
-                                            </li>
-                                            <li><strong>Recommendation:</strong> 
-                                                @if($user->attachment->recommendation)
-                                                    <a href="{{ asset('storage/'.$user->attachment->recommendation) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
-                                                @else
-                                                    Not uploaded
-                                                @endif
-                                            </li>
+                                             --}}
                                         </ul>
                                     </div>
                                 </div>
