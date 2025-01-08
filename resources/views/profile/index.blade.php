@@ -133,18 +133,9 @@
                                 @endif
                                
                             </div>
-                            </div>
+                            
                             <div class="col-md-6">
-                                <div class="row mb-4">
-                                    <div class="col-md-12">
-                                        <h5 class="fw-bold">Skills</h5>
-                                        <ul class="list-unstyled small">
-                                            <li>Interactive UI/UX Design</li>
-                                            <li>Creative Graphic Design</li>
-                                            <li>Web Development</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                               
                                 <div class="row mb-4">
                                     <div class="col-md-12">
                                         <h5 class="fw-bold">Basic Information</h5>
