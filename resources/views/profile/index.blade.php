@@ -131,7 +131,22 @@
                                         </div>
                                     </div>
                                 @endif
-                               
+                                @if($user->stall)
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h5 class="fw-bold">Stall Information</h5>
+                                            <ul class="list-unstyled small">
+                                                <li><strong>Stall:</strong> {{ $user->stall->stall }}</li>
+                                                <li><strong>Stall Products:</strong> {{ $user->stall->stall_products }}</li>
+                                                <li><strong>Select Business:</strong> {{ $user->stall->selectbiz }}</li>
+                                                <li><strong>Booth Type:</strong> {{ $user->stall->booth_type }}</li>
+                                                <li><strong>Booth Size:</strong> {{ $user->stall->booth_size }}</li>
+                                                <li><strong>Other Booth Size:</strong> {{ $user->stall->other_booth_size }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                @endif
+
                             </div>
                             
                             <div class="col-md-6">
