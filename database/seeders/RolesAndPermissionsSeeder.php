@@ -144,7 +144,6 @@ class RolesAndPermissionsSeeder extends Seeder
             'transport' => [
                 'view flight details',
                 'view international visitors',
-                'view buyers',
                 'admin',
             ],
             'hospitality' => [
