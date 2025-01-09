@@ -50,9 +50,11 @@
     <div class="pt-4 container text-center" >
         <h1>Account Pending Approval</h1>
         <p>Your account is currently under review. Please wait while we process your request.</p>
+        @if(auth()->user()->status == 'approved')
         <div class="pb-5">
             <a href="{{ route('dashboard.index') }}" class="btn btn-primary mt-4">Go to Dashboard</a>
         </div>
+        @endif
     </div>
 
     @cannot('admin')

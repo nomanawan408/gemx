@@ -130,8 +130,8 @@ Route::get('/pkgjs-purchase/{id}', [PKGJSPurchaseController::class, 'show'])->na
 Route::delete('/pkgjs-purchase/{id}', [PKGJSPurchaseController::class, 'destroy'])->name('pkgjs-purchase.destroy');
 
 // Export CSV
-Route::get('/export-csv', [ExportController::class, 'exportCsv'])->name('export.csv');
 Route::get('/buyers-details/export-csv', [FlightController::class, 'exportBuyersCsv'])->name('buyers.export.csv');
+Route::get('/visitors-details/export-csv', [FlightController::class, 'exportVisitorsCsv'])->name('visitors.export.csv');
 
 
     Route::get('/invitation/download', function () {
