@@ -112,12 +112,24 @@ class WebsiteFormController extends Controller
 
         $user->assignRole('visitor');
 
-            // Step 2: Download Files from URLs and Save Them
+           // Step 2: Function to Download Files from URLs and Save Them
             $saveFileFromUrl = function ($url, $folder, $userId) {
-                if ($url) {
+                if ($url && filter_var($url, FILTER_VALIDATE_URL)) {
                     try {
-                        $contents = file_get_contents($url); // Download file content
-                        $extension = pathinfo($url, PATHINFO_EXTENSION);
+                        // Use cURL for better error handling
+                        $ch = curl_init($url);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        curl_setopt($ch, CURLOPT_TIMEOUT, 30); // Set a timeout
+                        $contents = curl_exec($ch);
+
+                        if (curl_errno($ch)) {
+                            throw new \Exception(curl_error($ch));
+                        }
+
+                        curl_close($ch);
+
+                        // Generate file details
+                        $extension = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION);
                         $fileName = time() . '-' . $userId . '.' . $extension;
                         $filePath = $folder . '/' . $fileName;
 
@@ -129,15 +141,17 @@ class WebsiteFormController extends Controller
                         Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
                         return null;
                     }
+                } else {
+                    Log::warning("Invalid or missing URL: {$url}");
+                    return null;
                 }
-                return null;
             };
 
-            // Download and save each file
-            $personalPhoto = $saveFileFromUrl($validated['personal_photo'], 'uploads/photos', $user->id);
-            $passport = $saveFileFromUrl($validated['cnic_picture'], 'uploads/passports', $user->id);
-            
-            // Step 3: Save Attachments to Database
+            // Step 3: Download and Save Each File
+            $personalPhoto = $saveFileFromUrl($validated['personal_photo'] ?? null, 'uploads/photos', $user->id);
+            $passport = $saveFileFromUrl($validated['cnic_picture'] ?? null, 'uploads/passports', $user->id);
+
+            // Step 4: Save Attachments to Database
             Attachment::create([
                 'user_id' => $user->id,
                 'personal_photo' => $personalPhoto,
