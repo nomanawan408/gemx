@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
                                 @endif
-                                @if($user->userParticipants->count() > 0)
+                                @if(isset($user->userParticipants) && $user->userParticipants->count() > 0)
                                     <div class="row">
                                         <div class="col-md-12">
                                             <h5 class="fw-bold">Participants Details</h5>
@@ -164,7 +164,8 @@
                                     <div class="col-md-12">
                                         <h5 class="fw-bold">Attachments</h5>
                                         <ul class="list-unstyled small">
-                                            @if (auth()->user()->hasRole('visitor') && auth()->user()->hasRole('international_visitor'))
+                                            
+                                            @if (auth()->user()->can('view visitor attachment') || auth()->user()->can('view international attachment'))
                                             <li><strong>Personal Photo:</strong> 
                                                 @if($user->attachment->personal_photo)
                                                     <a href="{{ asset('storage/'.$user->attachment->personal_photo) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
@@ -181,8 +182,9 @@
                                                 @endif
                                             </li>
                                             @endif
+
                                             {{-- For Buyers --}}
-                                            @if (auth()->user()->hasRole('buyer'))
+                                            @if (auth()->user()->can('view buyer attachment') )
                                             <li>
                                                 <strong>Passport/CNIC File:</strong> 
                                                 @if($user->attachment->passport_cnic_file)
@@ -237,7 +239,7 @@
                                             @endif
 
                                             {{-- For Exhibitors --}}
-                                            @if (auth()->user()->hasRole('exhibitor'))
+                                            @if (auth()->user()->can('view exhibitor attachment') )
                                             <li><strong>Bank Statement:</strong> 
                                                 @if($user->attachment->bank_statement)
                                                     <a href="{{ asset('storage/'.$user->attachment->bank_statement) }}" target="_blank" class="btn btn-primary btn-sm">View</a>

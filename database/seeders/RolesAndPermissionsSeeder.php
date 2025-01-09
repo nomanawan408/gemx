@@ -80,6 +80,12 @@ class RolesAndPermissionsSeeder extends Seeder
             //
             'admin',
             
+            //
+            'view exhibitor attachments',
+            'view buyer attachments',
+            'view visitor attachments',
+            'view international attachments',
+            
         ];
 
         // Create Permissions
@@ -102,6 +108,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view invitation letter',
                 'view entry pass',
                 'pkgjs purchase',
+                'view buyer attachments',
             ],
 
             'visitor' => [
@@ -110,6 +117,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view invitation letter',
                 'view entry pass',
                 'pkgjs purchase',
+                'view visitor attachments',
             ],
 
             'international_visitor' => [
@@ -130,6 +138,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view invitation letter',
                 'view entry pass',
                 'pkgjs purchase',
+                'view international attachments',
             ],
 
             'exhibitor' => [
@@ -139,6 +148,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view entry pass',
                 'pkgjs sales',
                 'admin',
+                'view exhibitor attachments',
             ],
 
             'transport' => [
@@ -164,6 +174,10 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view status',
                 'admin',
 
+                'view exhibitor attachments',
+                'view buyer attachments',
+                'view visitor attachments',
+                'view international attachments',
             ],
 
            'superadmin' => [
@@ -209,6 +223,12 @@ class RolesAndPermissionsSeeder extends Seeder
                 'manage accomodation details',
                 //
                 'upload demand draft',
+
+                //
+                'view exhibitor attachments',
+                'view buyer attachments',
+                'view visitor attachments',
+                'view international attachments',
             ],
            
 
