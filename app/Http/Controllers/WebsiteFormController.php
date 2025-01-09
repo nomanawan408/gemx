@@ -15,7 +15,7 @@ use App\Models\Stall;
 use App\Models\UserParticipant;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\DB;
 
 
 class WebsiteFormController extends Controller
@@ -619,11 +619,11 @@ class WebsiteFormController extends Controller
     
     public function submit_exhibitor_form(Request $request)
     {
+        DB::beginTransaction(); // Start a transaction to ensure atomicity
 
-        try{
-            
+        try {
             \Log::info($request->all()); // Log for debugging
-            //
+    
             $data = json_decode($request->getContent(), true);
 
             $validated = $request->validate([
@@ -746,58 +746,69 @@ class WebsiteFormController extends Controller
 
         $user->assignRole('exhibitor');
 
-            // Step 2: Download Files from URLs and Save Them
-            $saveFileFromUrl = function ($url, $folder, $userId) {
-                if ($url) {
-                    try {
-                        $contents = file_get_contents($url); // Download file content
-                        $extension = pathinfo($url, PATHINFO_EXTENSION);
-                        $fileName = time() . '-' . $userId . '.' . $extension;
-                        $filePath = $folder . '/' . $fileName;
+                    // Step 2: Download Files from URLs and Save Them
+        $saveFileFromUrl = function ($url, $folder, $userId) {
+            if ($url && filter_var($url, FILTER_VALIDATE_URL)) {
+                try {
+                    $contents = file_get_contents($url); // Download file content
+                    $extension = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION);
+                    $fileName = time() . '-' . $userId . '.' . $extension;
+                    $filePath = $folder . '/' . $fileName;
 
-                        // Save file to public storage
-                        Storage::disk('public')->put($filePath, $contents);
+                    // Save file to public storage
+                    Storage::disk('public')->put($filePath, $contents);
 
-                        return $filePath;
-                    } catch (\Exception $e) {
-                        Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
-                        return null;
-                    }
+                    Log::info("File downloaded and saved: {$filePath}");
+                    return $filePath;
+                } catch (\Exception $e) {
+                    Log::error("Failed to download file from URL: {$url}. Error: " . $e->getMessage());
+                    return null;
                 }
+            } else {
+                Log::warning("Invalid URL provided: {$url}");
                 return null;
-            };
+            }
+        };
 
-           // Download and save each file
-            $personalPhoto = $saveFileFromUrl($validated['personal_photo'], 'uploads/photos', $user->id);
-            $companyRegistration = $saveFileFromUrl($validated['company_registration_copy'], 'uploads/registrations', $user->id);
-            $companyLogo = $saveFileFromUrl($validated['company_logo'], 'uploads/logos', $user->id);
-            $companyCatalog = $saveFileFromUrl($validated['company_catalog'], 'uploads/catalogs', $user->id);
-            $businessCard = $saveFileFromUrl($validated['business_card'], 'uploads/cards', $user->id);
-            $chamberCertificate = $saveFileFromUrl($validated['chamber_membership_certificate'], 'uploads/certificates', $user->id);
-            $cnicFile = $saveFileFromUrl($validated['cnic_file'], 'uploads/passports', $user->id);
-            $bankStatement = $saveFileFromUrl($validated['bank_statement'], 'uploads/bank_statements', $user->id);
-            $payOrderCopy = $saveFileFromUrl($validated['pay_order_copy'], 'uploads/pay_orders', $user->id);
-            
+        // Define an array of files to process
+        $filesToSave = [
+            'personal_photo' => ['field' => 'personal_photo', 'folder' => 'uploads/photos'],
+            'company_registration_number' => ['field' => 'company_registration_copy', 'folder' => 'uploads/registrations'],
+            'company_logo' => ['field' => 'company_logo', 'folder' => 'uploads/logos'],
+            'company_catalogue' => ['field' => 'company_catalog', 'folder' => 'uploads/catalogs'],
+            'business_card' => ['field' => 'business_card', 'folder' => 'uploads/cards'],
+            'chamber_association_certificate' => ['field' => 'chamber_membership_certificate', 'folder' => 'uploads/certificates'],
+            'passport_cnic_file' => ['field' => 'cnic_file', 'folder' => 'uploads/passports'],
+            'bank_statement' => ['field' => 'bank_statement', 'folder' => 'uploads/bank_statements'],
+            'pay_order_image' => ['field' => 'pay_order_copy', 'folder' => 'uploads/pay_orders'],
+        ];
 
-            // Save Attachments to Database
-            Attachment::create([
-                'user_id' => $user->id,
-                'personal_photo' => $personalPhoto,
-                'company_registration_number' => $companyRegistration,
-                'company_logo' => $companyLogo,
-                'company_catalogue' => $companyCatalog,
-                'business_card' => $businessCard,
-                'chamber_association_certificate' => $chamberCertificate,
-                'passport_cnic_file' => $cnicFile,
-                'bank_statement' => $bankStatement,
-                'pay_order_image' => $payOrderCopy,
-                'pay_order_draft_no' => $validated['pay_order'] ?? null,
-                'pay_order_amount' => $validated['amount'] ?? null,
-                'pay_order_date' => $validated['pay_date'] ?? null,
-                'pay_order_bank_name' => $validated['bank_name'] ?? null,
-                'recommendation' => $validated['recommendation'],
-                ]);
+        // Download and save each file
+        $attachments = [];
+        foreach ($filesToSave as $key => $fileInfo) {
+            $attachments[$key] = $saveFileFromUrl($validated[$fileInfo['field']] ?? null, $fileInfo['folder'], $user->id);
+        }
 
+        // Save Attachments to Database
+        Attachment::create([
+            'user_id' => $user->id,
+            'personal_photo' => $attachments['personal_photo'],
+            'company_registration_number' => $attachments['company_registration_number'],
+            'company_logo' => $attachments['company_logo'],
+            'company_catalogue' => $attachments['company_catalogue'],
+            'business_card' => $attachments['business_card'],
+            'chamber_association_certificate' => $attachments['chamber_association_certificate'],
+            'passport_cnic_file' => $attachments['passport_cnic_file'],
+            'bank_statement' => $attachments['bank_statement'],
+            'pay_order_image' => $attachments['pay_order_image'],
+            'pay_order_draft_no' => $validated['pay_order'] ?? null,
+            'pay_order_amount' => $validated['amount'] ?? null,
+            'pay_order_date' => $validated['pay_date'] ?? null,
+            'pay_order_bank_name' => $validated['bank_name'] ?? null,
+            'recommendation' => $validated['recommendation'],
+        ]);
+
+        Log::info("All attachments successfully saved for user ID: {$user->id}");
             // Step 4: Save Business Details
             Business::create([
                 'user_id' => $user->id,
@@ -844,6 +855,8 @@ class WebsiteFormController extends Controller
 
 
             Log::info("User {$user->id} and attachments saved successfully.");
+
+            DB::commit(); // Commit transaction
 
             return response()->json([
                 'success' => true,
