@@ -328,13 +328,13 @@
                               <div class="card-list py-4">
                                 @foreach ($recentUsers as $user)
                                   <div class="item-list">
-                                    <div class="avatar">
+                                    {{-- <div class="avatar">
                                       <img
                                         src="{{ asset('storage/'.$user->attachment->personal_photo ?? "") }}"
                                         alt="{{ $user->name }}"
                                         class="avatar-img rounded-circle"
                                       />
-                                    </div>
+                                    </div> --}}
                                     <div class="info-user ms-3">
                                       <div class="username">{{ $user->name }}</div>
                                       <div class="status">{{ $user->role }}</div>
