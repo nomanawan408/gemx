@@ -48,12 +48,15 @@
 </head>
 <body >
     <div class="pt-4 container text-center" >
-        <h1>Account Pending Approval</h1>
-        <p>Your account is currently under review. Please wait while we process your request.</p>
+        
         @if(auth()->user()->status == 'approved')
+        <h1 style="color: green;">Account Approved</h1>
         <div class="pb-5">
-            <a href="{{ route('dashboard.index') }}" class="btn btn-primary mt-4">Go to Dashboard</a>
+            <a href="{{ route('dashboard.index') }}" class="btn btn-success mt-4">Go to Dashboard</a>
         </div>
+        @else
+        <h1 style="color: rgb(218, 120, 0);">Account Pending Approval</h1>
+        <p style="color: #666;" >Your account is currently under review. Please wait while we process your request.</p>
         @endif
     </div>
 
