@@ -92,9 +92,9 @@ class User extends Authenticatable
         /**
          * Get the user participants associated with the user.
          */
-        public function userParticipants()
+        public function userParticipant()
         {
-            return $this->hasMany(UserParticipant::class);
+            return $this->hasOne(UserParticipant::class, 'user_id');
         }
     
         /**

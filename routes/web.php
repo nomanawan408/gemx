@@ -19,6 +19,7 @@ use App\Http\Controllers\PKGJSSalesController;
 use App\Http\Controllers\PKGJSPurchaseController;
 use App\Http\Controllers\FloorPlanController;
 use App\Http\Controllers\FBRTaxController;
+use App\Http\Controllers\ExportController;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Middleware\CheckPendingStatus;
 
@@ -127,6 +128,10 @@ Route::get('/pkgjs-purchase/create', [PKGJSPurchaseController::class, 'create'])
 Route::post('/pkgjs-purchase', [PKGJSPurchaseController::class, 'store'])->name('pkgjs-purchase.store');
 Route::get('/pkgjs-purchase/{id}', [PKGJSPurchaseController::class, 'show'])->name('pkgjs-purchase.show');
 Route::delete('/pkgjs-purchase/{id}', [PKGJSPurchaseController::class, 'destroy'])->name('pkgjs-purchase.destroy');
+
+// Export CSV
+Route::get('/export-csv', [ExportController::class, 'exportCsv'])->name('export.csv');
+Route::get('/buyers-details/export-csv', [FlightController::class, 'exportBuyersCsv'])->name('buyers.export.csv');
 
 
     Route::get('/invitation/download', function () {

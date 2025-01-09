@@ -8,6 +8,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\FlightCreated;
+use Illuminate\Support\Facades\Response;
+
 
 class FlightController extends Controller
 {
@@ -52,9 +54,13 @@ class FlightController extends Controller
     
     public function buyerSelection()
     {
-        $buyers = User::role('buyer')->get();        
-        return view('flights.select_buyer', compact('buyers'));   
-     }
+        // Fetch buyers along with their single userParticipant
+        $buyers = User::role('buyer')
+            ->with('userParticipant') // Eager load the single userParticipant relationship
+            ->get();
+    
+        return view('flights.select_buyer', compact('buyers'));
+    }
     
      public function store(Request $request)
      {
@@ -96,7 +102,7 @@ class FlightController extends Controller
          Mail::to($flight->user->email)->send(new FlightCreated($flight));
      
          // Redirect to the flight details page with a success message
-         return redirect()->route('flight-details.index')->with('success', 'Flight created successfully.');
+         return redirect()->route('flight-details.buyers')->with('success', 'Flight created successfully.');
      }
      
     public function buyersDetails()
@@ -185,4 +191,54 @@ class FlightController extends Controller
         $flight->delete();
         return redirect()->route('flight-details.index')->with('success', 'Flight deleted successfully.');
     }
+
+
+
+    public function exportBuyersCsv()
+{
+    // Filter flights for buyers
+    $flights = Flight::whereHas('user', function ($query) {
+        $query->whereHas('roles', function ($query) {
+            $query->where('name', 'buyer');
+        });
+    })->with('user')->get();
+
+    // Define CSV header
+    $csvHeader = [
+        'Name', 'Email', 'Airline Name', 'Flight No', 'Seat No', 'Departure Date/Time', 
+        'Arrival Date/Time', 'Ticket Link'
+    ];
+
+    // Generate CSV data rows
+    $csvData = $flights->map(function ($flight) {
+        $user = $flight->user;
+
+        return [
+            '"' . $user->name . '"', // Name
+            '"' . $user->email . '"', // Email
+            '"' . $flight->airline_name . '"', // Airline Name
+            '"' . $flight->flight_no . '"', // Flight No
+            '"' . $flight->seat_no . '"', // Seat No
+            '"' . $flight->departure_date_time . '"', // Departure Date/Time
+            '"' . $flight->arrival_date_time . '"', // Arrival Date/Time
+            $flight->ticket_upload 
+                ? '"' . asset('storage/' . $flight->ticket_upload) . '"' // Ticket Link
+                : 'N/A', // Handle missing ticket upload
+        ];
+    });
+
+    // Convert the header and data to a CSV string
+    $csvContent = implode(',', $csvHeader) . "\n";
+    foreach ($csvData as $row) {
+        $csvContent .= implode(',', $row) . "\n";
+    }
+
+    // Use the response() helper to return the CSV file
+    return response($csvContent, 200, [
+        'Content-Type' => 'text/csv',
+        'Content-Disposition' => 'attachment; filename="buyers_flight_details.csv"',
+    ]);
+}
+
+    
 }

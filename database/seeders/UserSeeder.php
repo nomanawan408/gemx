@@ -134,6 +134,32 @@ class UserSeeder extends Seeder
     );
     // assign role
     $newUser->assignRole('buyer');
+    
+        // add participants for this buyer
+        \App\Models\UserParticipant::create([
+            'user_id' => $newUser->id,
+            'firstname' => 'John',
+            'lastname' => 'Doe',
+            'father_firstname' => 'James',
+            'father_lastname' => 'Doe',
+            'gender' => 'Male',
+            'phone' => '+923001234567',
+            'mobile' => '+923001234567',
+            'whatsapp' => '+923001234567',
+            'email' => 'john.doe@app.com',
+            'facebook' => 'https://www.facebook.com/johndoe',
+            'linkedin' => 'https://www.linkedin.com/in/johndoe',
+            'instagram' => 'john_doe_instagram',
+            'telegram' => 'john_doe_telegram',
+            'wechat' => 'john_doe_wechat',
+            'imo' => 'john_doe_imo',
+            'passport_no' => '1234567890',
+            'passport_issue' => '2020-01-01',
+            'passport_expiry' => '2030-01-01',
+            'passport_type' => 'Ordinary',
+            'passport_file' => 'uploads/passports/johndoe_passport.png',
+            'previous_trips' => 'Yes',
+        ]);
 
     // Create Business Details for Buyer
     $buyerBusiness = \App\Models\Business::create([

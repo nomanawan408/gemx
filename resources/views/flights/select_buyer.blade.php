@@ -46,9 +46,14 @@
                                         <input type="tel" class="form-control" id="phone" readonly name="phone" value="">
                                     </div>
                                     <!-- Email Address -->
-                                    <div class="col-md-12 mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <label for="email" class="form-label">Email Address</label>
                                         <input type="email" class="form-control" id="email" readonly name="email" value="">
+                                    </div>
+                                    <!-- Participant Name -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="participant_name" class="form-label">Participant Name</label>
+                                        <input type="text" class="form-control" id="participant_name" readonly name="participant_name" value="">
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +81,6 @@
         const buyerSelect = document.getElementById('select_buyer');
         const buyerForm = document.getElementById('buyer-details-form');
         const formTitle = document.getElementById('form-title');
-        const companyFields = document.getElementById('company-fields');
 
         buyerSelect.addEventListener('change', function () {
             const selectedBuyerId = this.value;
@@ -104,23 +108,17 @@
                 document.getElementById('phone').value = selectedBuyer.phone || '';
                 document.getElementById('email').value = selectedBuyer.email || '';
 
-                // Show/Hide company fields
-                if (selectedBuyer.type === 'company') {
-                    companyFields.style.display = 'block';
-                    document.getElementById('company_name').value = selectedBuyer.company_name || '';
-                    document.getElementById('company_registration').value = selectedBuyer.company_registration || '';
-                    document.getElementById('company_address').value = selectedBuyer.company_address || '';
-                    document.getElementById('contact_person').value = selectedBuyer.contact_person || '';
-                    document.getElementById('contact_phone').value = selectedBuyer.contact_phone || '';
-                } else {
-                    companyFields.style.display = 'none';
-                }
+                // Check and set participant name if available
+                const participant = selectedBuyer.user_participants?.[0]?.firstname 
+                    ? selectedBuyer.user_participants[0].firstname + ' ' + selectedBuyer.user_participants[0].lastname 
+                    : 'No participant found';
+                document.getElementById('participant_name').value = participant;
             }
         });
 
         // Reset form fields
         function resetFormFields() {
-            document.querySelectorAll('input, textarea').forEach(input => input.value = '');
+            document.querySelectorAll('input').forEach(input => input.value = '');
         }
     });
 </script>

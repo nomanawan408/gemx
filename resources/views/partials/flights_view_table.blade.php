@@ -18,7 +18,7 @@
                         <div class="d-flex align-items-center">
                             <div class="avatar me-2">
                                 @if($flight->user->attachment && $flight->user->attachment->personal_photo)
-                                    <img src="{{ asset($flight->user->attachment->personal_photo) }}" alt="Profile" class="rounded-circle" width="40" height="40">
+                                    <img src="{{ asset('storage/'.$flight->user->attachment->personal_photo) }}" alt="Profile" class="rounded-circle" width="40" height="40">
                                 @else
                                     <div class="avatar-initial rounded-circle bg-label-primary">{{ strtoupper(substr($flight->user->name, 0, 1)) }}</div>
                                 @endif

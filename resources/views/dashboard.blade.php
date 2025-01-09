@@ -49,7 +49,7 @@
 
 @section('content')
 <div class="container">
-          <div class="page-inner">
+          <div class="page-inner pb-0 mb-0">
             <div
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
@@ -444,7 +444,7 @@
                  </div>
           </div>
 
-            <div class="p-0 m-0">
+            <div style="background: red">
             <div class="owl-carousel owl-theme">
               <div class="item" style="width:250px">
                 <img src="{{ asset('assets/img/logos/1.png') }}" alt="">
@@ -467,10 +467,8 @@
               <div class="item" style="width:250px">
                 <img src="{{ asset('assets/img/logos/7.png') }}" alt="">
               </div>
-
-              
             </div>
-            </div>
+          </div>
 
 
         @endcan

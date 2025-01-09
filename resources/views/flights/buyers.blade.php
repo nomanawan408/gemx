@@ -14,6 +14,8 @@
               <div class="ms-md-auto py-2 py-md-0">
                 <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
                 {{-- <a href="#" class="btn btn-primary btn-round">Add Buyers</a> --}}
+                <a href="{{ route('buyers.export.csv') }}" class="btn btn-primary mb-3">Export CSV</a>
+
               </div>
             </div>
   
