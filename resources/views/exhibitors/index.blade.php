@@ -15,10 +15,10 @@
    @can('admin')
    <ul class="nav nav-tabs" id="userTabs" role="tablist">
     <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="all-users-tab" data-bs-toggle="tab" data-bs-target="#all-users" type="button" role="tab" aria-controls="all-users" aria-selected="true">All users</button>
+      <button class="nav-link " id="all-users-tab" data-bs-toggle="tab" data-bs-target="#all-users" type="button" role="tab" aria-controls="all-users" aria-selected="true">All users</button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" id="approved-users-tab" data-bs-toggle="tab" data-bs-target="#approved-users" type="button" role="tab" aria-controls="approved-users" aria-selected="false">Approved</button>
+      <button class="nav-link active" id="approved-users-tab" data-bs-toggle="tab" data-bs-target="#approved-users" type="button" role="tab" aria-controls="approved-users" aria-selected="false">Approved</button>
     </li>
     <li class="nav-item" role="presentation">
       <button class="nav-link" id="rejected-users-tab" data-bs-toggle="tab" data-bs-target="#rejected-users" type="button" role="tab" aria-controls="rejected-users" aria-selected="false">Rejected</button>
@@ -116,6 +116,7 @@
       @endcan
       </div>
 
+
       <!-- Approved users Tab -->
       <div class="tab-pane fade show active" id="approved-users" role="tabpanel" aria-labelledby="approved-users-tab">
         <div class="card mt-4">
@@ -198,9 +199,7 @@
               </div>
           </div>
       </div>
-      
-      </div>
-    </div>
+
 
     @can('admin')
        <div class="tab-pane fade" id="rejected-users" role="tabpanel" aria-labelledby="rejected-users-tab">
