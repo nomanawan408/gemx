@@ -8,7 +8,7 @@
                 <div class="row">
                     <!-- Profile Picture Section -->
                     <div class="col-md-3 text-center bg-dark pt-4 text-light">
-                        <img src="{{ asset('storage/'.$user->attachment->personal_photo) }}" style="height: 200px;width:200px" alt="Profile Picture" class="img-fluid rounded-circle mb-3 border border-3 border-primary">
+                        {{-- <img src="{{ asset('storage/'.$user->attachment->personal_photo) }}" style="height: 200px;width:200px" alt="Profile Picture" class="img-fluid rounded-circle mb-3 border border-3 border-primary"> --}}
                         <h3 class="fw-bold text-light">{{ $user->name }}</h3>
                         <p class="text-light">{{ $user->getRoleNames()->first()}}</p>
                         
