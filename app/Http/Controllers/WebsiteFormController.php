@@ -115,10 +115,9 @@ class WebsiteFormController extends Controller
         $saveFileFromUrl = function ($url, $folder, $userId) {
             if ($url && filter_var($url, FILTER_VALIDATE_URL)) {
                 try {
-                    // Use cURL for better error handling
                     $ch = curl_init($url);
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($ch, CURLOPT_TIMEOUT, 30); // Set a timeout
+                    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
                     $contents = curl_exec($ch);
         
                     if (curl_errno($ch)) {
@@ -126,19 +125,28 @@ class WebsiteFormController extends Controller
                     }
         
                     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                    if ($httpCode !== 200) {
-                        throw new \Exception("Unexpected HTTP status code: $httpCode");
+                    $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+        
+                    if ($httpCode !== 200 || !$contents) {
+                        throw new \Exception("Invalid HTTP status code: $httpCode or empty content.");
                     }
         
-                    curl_close($ch);
+                    $extension = match ($contentType) {
+                        'image/jpeg' => 'jpg',
+                        'image/png' => 'png',
+                        'application/pdf' => 'pdf',
+                        default => pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION),
+                    };
         
-                    // Generate file details
-                    $extension = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION) ?: 'jpg';
                     $fileName = time() . '-' . $userId . '.' . $extension;
                     $filePath = $folder . '/' . $fileName;
         
-                    // Save file to public storage
                     Storage::disk('public')->put($filePath, $contents);
+        
+                    $savedFileSize = Storage::disk('public')->size($filePath);
+                    if (!$savedFileSize || $savedFileSize <= 0) {
+                        throw new \Exception("File saved is empty or corrupted. File path: $filePath");
+                    }
         
                     return $filePath;
                 } catch (\Exception $e) {
@@ -149,7 +157,7 @@ class WebsiteFormController extends Controller
                 Log::warning("Invalid or missing URL: {$url}");
                 return null;
             }
-        };
+        };       
         
 
             // Step 3: Download and Save Each File
