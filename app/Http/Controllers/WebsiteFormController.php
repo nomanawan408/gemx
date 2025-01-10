@@ -15,6 +15,8 @@ use App\Models\Stall;
 use App\Models\UserParticipant;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
+
 
 
 
@@ -112,73 +114,52 @@ class WebsiteFormController extends Controller
 
         $user->assignRole('visitor');
 
-        $saveFileFromUrl = function ($url, $folder, $userId) {
-            if ($url && filter_var($url, FILTER_VALIDATE_URL)) {
-                try {
-                    $ch = curl_init($url);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow redirects
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, ['User-Agent: Laravel-cURL']); // Optional: Set headers
-                    
-                    $contents = curl_exec($ch);
-        
-                    if (curl_errno($ch)) {
-                        throw new \Exception('cURL error: ' . curl_error($ch));
+
+            $saveFileFromUrl = function ($url, $folder, $userId) {
+                if ($url && filter_var($url, FILTER_VALIDATE_URL)) {
+                    try {
+                        $response = Http::timeout(30)->get($url);
+
+                        // Check if the response is successful
+                        if (!$response->successful()) {
+                            throw new \Exception("Failed to fetch the file. HTTP status: " . $response->status());
+                        }
+
+                        $contents = $response->body();
+                        $contentType = $response->header('Content-Type');
+
+                        // Determine the file extension
+                        $extension = match ($contentType) {
+                            'image/jpeg' => 'jpg',
+                            'image/png' => 'png',
+                            'application/pdf' => 'pdf',
+                            default => pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION),
+                        };
+
+                        $fileName = time() . '-' . $userId . '.' . $extension;
+                        $filePath = $folder . '/' . $fileName;
+
+                        // Save the file to the public storage
+                        Storage::disk('public')->put($filePath, $contents);
+
+                        $savedFileSize = Storage::disk('public')->size($filePath);
+                        if (!$savedFileSize || $savedFileSize <= 0) {
+                            throw new \Exception("File saved is empty or corrupted. File path: $filePath");
+                        }
+
+                        Log::info("File saved successfully: $filePath, Size: $savedFileSize bytes");
+
+                        return $filePath;
+                    } catch (\Exception $e) {
+                        Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
+                        return null;
                     }
-        
-                    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                    $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-        
-                    curl_close($ch);
-        
-                    if ($httpCode !== 200 || !$contents) {
-                        throw new \Exception("Invalid HTTP status code: $httpCode or empty content.");
-                    }
-        
-                    Log::info("Content-Type: {$contentType}");
-        
-                    // Validate content based on type
-                    if (str_contains($contentType, 'image') && !@imagecreatefromstring($contents)) {
-                        throw new \Exception("Invalid image content.");
-                    }
-        
-                    if (str_contains($contentType, 'application/pdf') && strpos($contents, '%PDF') !== 0) {
-                        throw new \Exception("Invalid PDF content.");
-                    }
-        
-                    // Determine extension
-                    $extension = match ($contentType) {
-                        'image/jpeg' => 'jpg',
-                        'image/png' => 'png',
-                        'application/pdf' => 'pdf',
-                        default => pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION),
-                    };
-        
-                    $fileName = time() . '-' . $userId . '.' . $extension;
-                    $filePath = $folder . '/' . $fileName;
-        
-                    // Save the file
-                    Storage::disk('public')->put($filePath, $contents);
-        
-                    $savedFileSize = Storage::disk('public')->size($filePath);
-                    if (!$savedFileSize || $savedFileSize <= 0) {
-                        throw new \Exception("File saved is empty or corrupted. File path: $filePath");
-                    }
-        
-                    Log::info("File saved successfully: $filePath, Size: $savedFileSize bytes");
-        
-                    return $filePath;
-                } catch (\Exception $e) {
-                    Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
+                } else {
+                    Log::warning("Invalid or missing URL: {$url}");
                     return null;
                 }
-            } else {
-                Log::warning("Invalid or missing URL: {$url}");
-                return null;
-            }
-        };
-        
+            };
+
         
 
             // Step 3: Download and Save Each File
