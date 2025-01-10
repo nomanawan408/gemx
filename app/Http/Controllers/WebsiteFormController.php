@@ -113,109 +113,119 @@ class WebsiteFormController extends Controller
         ]);
 
         $user->assignRole('visitor');
-        
-            $saveFileFromUrl = function ($url, $folder, $userId) {
-                if ($url && filter_var($url, FILTER_VALIDATE_URL)) {
-                    try {
-                        $response = Http::timeout(30)->get($url);
+            
+        $saveFileFromUrl = function ($url, $folder, $userId) {
+            if ($url && filter_var($url, FILTER_VALIDATE_URL)) {
+                try {
+                    $response = Http::withOptions([
+                        'allow_redirects' => true, 
+                    ])
+                    ->timeout(30)
+                    ->accept('*/*')
+                    ->get($url);
 
-                        // Check if the response is successful
-                        if (!$response->successful()) {
-                            throw new \Exception("Failed to fetch the file. HTTP status: " . $response->status());
-                        }
-
-                        $contents = $response->body();
-                        $contentType = $response->header('Content-Type');
-
-                        // Determine the file extension
-                        $extension = match ($contentType) {
-                            'image/jpeg' => 'jpg',
-                            'image/png' => 'png',
-                            'application/pdf' => 'pdf',
-                            default => pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION),
-                        };
-
-                        $fileName = time() . '-' . $userId . '.' . $extension;
-                        $filePath = $folder . '/' . $fileName;
-
-                        // Save the file to the public storage
-                        Storage::disk('public')->put($filePath, $contents);
-
-                        $savedFileSize = Storage::disk('public')->size($filePath);
-                        if (!$savedFileSize || $savedFileSize <= 0) {
-                            throw new \Exception("File saved is empty or corrupted. File path: $filePath");
-                        }
-
-                        Log::info("File saved successfully: $filePath, Size: $savedFileSize bytes");
-
-                        return $filePath;
-                    } catch (\Exception $e) {
-                        Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
-                        return null;
+                    // Check status
+                    if (!$response->successful()) {
+                        throw new \Exception("Failed to fetch the file. HTTP status: " . $response->status());
                     }
-                } else {
-                    Log::warning("Invalid or missing URL: {$url}");
+
+                    $contents = $response->body();
+                    $contentType = strtolower(explode(';', $response->header('Content-Type'))[0]);
+                    
+                    Log::info("HTTP Status: " . $response->status());
+                    Log::info("Content-Type: " . $contentType);
+                    Log::info("File content preview: " . substr($contents, 0, 200));
+
+                    // Determine file extension
+                    $extension = match ($contentType) {
+                        'image/jpeg' => 'jpg',
+                        'image/png'  => 'png',
+                        'application/pdf' => 'pdf',
+                        default => pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION),
+                    };
+
+                    $fileName = time() . '-' . $userId . '.' . $extension;
+                    $filePath = $folder . '/' . $fileName;
+
+                    // Save to public disk
+                    Storage::disk('public')->put($filePath, $contents);
+
+                    // Check file size to confirm successful save
+                    $savedFileSize = Storage::disk('public')->size($filePath);
+                    if (!$savedFileSize || $savedFileSize <= 0) {
+                        throw new \Exception("File saved is empty or corrupted. File path: $filePath");
+                    }
+
+                    Log::info("File saved successfully: $filePath, Size: $savedFileSize bytes");
+
+                    return $filePath;
+                } catch (\Exception $e) {
+                    Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
                     return null;
                 }
-            };
+            } else {
+                Log::warning("Invalid or missing URL: {$url}");
+                return null;
+            }
+        };
 
         
 
-            // Step 3: Download and Save Each File
-            $personalPhoto = $saveFileFromUrl($validated['personal_photo'] ?? null, 'uploads/photos', $user->id);
-            $passport = $saveFileFromUrl($validated['cnic_picture'] ?? null, 'uploads/passports', $user->id);
+        // Step 3: Download and Save Each File
+        $personalPhoto = $saveFileFromUrl($validated['personal_photo'] ?? null, 'uploads/photos', $user->id);
+        $passport = $saveFileFromUrl($validated['cnic_picture'] ?? null, 'uploads/passports', $user->id);
 
-            // Step 4: Save Attachments to Database
-            Attachment::create([
+        // Step 4: Save Attachments to Database
+        Attachment::create([
+            'user_id' => $user->id,
+            'personal_photo' => $personalPhoto,
+            'passport_cnic_file' => $passport,
+        ]);
+
+        // Step 4: Save Business Information if applicable
+        if ($validated['business'] === 'Yes') {
+            Business::create([
                 'user_id' => $user->id,
-                'personal_photo' => $personalPhoto,
-                'passport_cnic_file' => $passport,
+                'company_name' => $validated['company_name'],
+                'address' => $validated['company_address'],
+                'company_phone' => $validated['company_phone'],
+                'company_mobile' => $validated['business_mobile'],
+                'position' => $validated['position'],
+                'website_url' => $validated['url'],
+                'main_export_items' => $validated['export_items'],
+                'main_import_countries' => $validated['import_countries'],
+                'main_export_countries' => $validated['export_country'],
+                'annual_turnover' => $validated['annual_turnover'],
+                'national_sale' => $validated['national_sale'],
+                'annual_import_export' => $validated['annual_export'],
             ]);
-
-            // Step 4: Save Business Information if applicable
-            if ($validated['business'] === 'Yes') {
-                Business::create([
-                    'user_id' => $user->id,
-                    'company_name' => $validated['company_name'],
-                    'address' => $validated['company_address'],
-                    'company_phone' => $validated['company_phone'],
-                    'company_mobile' => $validated['business_mobile'],
-                    'position' => $validated['position'],
-                    'website_url' => $validated['url'],
-                    'main_export_items' => $validated['export_items'],
-                    'main_import_countries' => $validated['import_countries'],
-                    'main_export_countries' => $validated['export_country'],
-                    'annual_turnover' => $validated['annual_turnover'],
-                    'national_sale' => $validated['national_sale'],
-                    'annual_import_export' => $validated['annual_export'],
-                ]);
-            }
-            
-
-            Log::info("User {$user->id} and attachments saved successfully.");
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Form submitted and files saved successfully.',
-                'user_id' => $user->id,
-            ], 200);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            Log::error('Validation Error:', $e->errors());
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed.',
-                'errors' => $e->errors(),
-            ], 422);
-        } catch (\Exception $e) {
-            Log::error('Server Error:', ['message' => $e->getMessage()]);
-            return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong. Please try again later.',
-                'error' => $e->getMessage(),
-            ], 500);
         }
+        
+
+        Log::info("User {$user->id} and attachments saved successfully.");
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Form submitted and files saved successfully.',
+            'user_id' => $user->id,
+        ], 200);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        Log::error('Validation Error:', $e->errors());
+        return response()->json([
+            'success' => false,
+            'message' => 'Validation failed.',
+            'errors' => $e->errors(),
+        ], 422);
+    } catch (\Exception $e) {
+        Log::error('Server Error:', ['message' => $e->getMessage()]);
+        return response()->json([
+            'success' => false,
+            'message' => 'Something went wrong. Please try again later.',
+            'error' => $e->getMessage(),
+        ], 500);
     }
-    
+}
+
     public function submit_international_visitor_form(Request $request)
     {
         //
