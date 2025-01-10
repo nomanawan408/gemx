@@ -113,8 +113,7 @@ class WebsiteFormController extends Controller
         ]);
 
         $user->assignRole('visitor');
-
-
+        
             $saveFileFromUrl = function ($url, $folder, $userId) {
                 if ($url && filter_var($url, FILTER_VALIDATE_URL)) {
                     try {
