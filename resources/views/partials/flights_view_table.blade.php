@@ -5,10 +5,12 @@
                 <th>Name</th>
                 <th>Flight Name</th>
                 <th>Flight No</th>
-                <th>Seat No</th>
-                <th>Departute Time</th>
-                <th>Arrival Time</th>
+                <th>Departute Time Your Country</th>
+                <th>Arrival Time from Pakistan</th>
                 <th>Ticket File</th>
+                @if (auth()->user()->can('admin'))
+                    <th>Action</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -31,7 +33,6 @@
                     </td>
                     <td>{{ $flight->airline_name }}</td>
                     <td>{{ $flight->flight_no }}</td>
-                    <td>{{ $flight->seat_no }}</td>
                     <td>{{ $flight->departure_date_time }}</td>
                     <td>{{ $flight->arrival_date_time }}</td>
                     <td>
@@ -40,6 +41,13 @@
                         @else
                             N/A
                         @endif
+                    </td>
+                    <td>
+                        <form action="{{ route('flight-details.destroy', $flight->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this flight?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

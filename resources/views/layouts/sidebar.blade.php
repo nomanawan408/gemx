@@ -46,6 +46,13 @@
                       </a>
                     </li>
                     @endcan
+                    @if(auth()->user()->can('view purchase') || auth()->user()->can('manage sale_purchase'))
+                    <li class="nav-item {{ request()->routeIs('sale-purchase.purchase') ? 'active' : '' }}">
+                     <a href="{{ route('sale-purchase.purchase') }}">
+                       <span class="sub-item">View PKGJS Purchase</span>
+                     </a>
+                   </li>
+                    @endif
                     @can('create flights details')
                     <li class="{{ request()->routeIs('flight-details.buyer_selection') ? 'active' : '' }}">
                       <a href="{{ route('flight-details.buyer_selection') }}">
@@ -81,6 +88,7 @@
                       <span class="sub-item">View Flight Details</span>
                     </a>
                   </li>
+                  
                    @endcan
                    
                   </ul>
@@ -112,8 +120,8 @@
                         </a>
                       </li>
                       @can('view visa')
-                         <li class="{{ request()->routeIs('visa.show') ? 'active' : '' }}">
-                        <a href="{{ route('visa.show', auth()->user()->id) }}">
+                         <li class="{{ request()->routeIs('visa.index') ? 'active' : '' }}">
+                        <a href="{{ route('visa.index') }}">
                           <span class="sub-item">View Visa Details</span>
                         </a>
                       </li>
@@ -271,11 +279,13 @@
                         <span class="sub-item">All Exhibitors</span>
                       </a>
                     </li>
-                    {{-- <li class="{{ request()->routeIs('exhibitors.create') ? 'active' : '' }}">
-                      <a href="{{ route('exhibitors.create') }}">
-                        <span class="sub-item">Add New Exhibitor</span>
-                      </a>
-                    </li> --}}
+                    @if(auth()->user()->can('view sale') || auth()->user()->can('manage sale_purchase'))
+                    <li class="nav-item {{ request()->routeIs('sale-purchase.sales') ? 'active' : '' }}">
+                     <a href="{{ route('sale-purchase.sales') }}">
+                       <span class="sub-item">View PKGJS Sales</span>
+                     </a>
+                   </li>
+                   @endif
                   </ul>
                 </div>
               </li>
@@ -319,16 +329,24 @@
                 </a>
                 <div class="collapse" id="profile">
                   <ul class="nav nav-collapse">
+                    @if (auth()->user()->can('admin'))
+                    <li class="{{ request()->routeIs('profile.personal') ? 'active' : '' }}">
+                      <a href="{{ route('profile.personal') }}">
+                        <span class="sub-item">View Profile</span>
+                      </a>
+                    </li>
+                    @else
                     <li class="{{ request()->routeIs('profile.index') ? 'active' : '' }}">
                       <a href="{{ route('profile.index') }}">
                         <span class="sub-item">View Profile</span>
                       </a>
                     </li>
-                    {{-- <li class="{{ request()->routeIs('profile.index') ? 'active' : '' }}">
-                      <a href="{{ route('profile.index') }}">
+                    @endif
+                    <li class="{{ request()->routeIs('auth.password.change') ? 'active' : '' }}">
+                      <a href="{{ route('auth.password.change') }}">
                         <span class="sub-item">Change Password</span>
                       </a>
-                    </li> --}}
+                    </li>
                   </ul>
                 </div>
               </li>

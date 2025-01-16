@@ -339,11 +339,16 @@
                       <li>
                         <div class="user-box">
                           <div class="avatar-lg">
-                            <img
-                              src="{{ asset('storage/'.auth()->user()->attachment->personal_photo) ?? asset('assets/img/profile.jpg') }}"
-                              alt="image profile"
-                              class="avatar-img rounded"
-                            />
+                            @if(auth()->user()->attachment && auth()->user()->attachment->personal_photo)
+                              <img
+                                src="{{ asset('storage/'.auth()->user()->attachment->personal_photo) ?? asset('assets/img/profile.jpg') }}"
+                                alt="image profile"
+                                class="avatar-img rounded"
+                              />
+                            @else
+                              <div style="background-color: {{ '#'.str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT) }}; width: 40px; height: 40px;" class="avatar-initial rounded-circle d-flex align-items-center justify-content-center">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
+                            @endif
+
                           </div>
                           <div class="u-text">
                             <h4>{{ auth()->user()->name }}</h4>

@@ -9,8 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Role;
-
-
+use App\Models\UserParticipant;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -92,17 +91,19 @@ class User extends Authenticatable
         /**
          * Get the user participants associated with the user.
          */
-        public function userParticipant()
-        {
-            return $this->hasOne(UserParticipant::class, 'user_id');
-        }
     
+        public function participant()
+        {
+            // hasOne( RelatedModel::class, 'foreign_key', 'local_key' )
+            return $this->hasOne(UserParticipant::class, 'user_id', 'id');
+        }
+        
         /**
          * Get the exhibitions associated with the user.
          */
-        public function exhibitions()
+        public function exhibition()
         {
-            return $this->hasMany(Exhibition::class);
+            return $this->hasOne(Exhibition::class, 'user_id', 'id');
         }
     
         /**
@@ -117,6 +118,7 @@ class User extends Authenticatable
         {
             return $this->hasOne(Attachment::class, 'user_id', 'id');
         }
+        
     
         /**
          * Get all of the flights for the User

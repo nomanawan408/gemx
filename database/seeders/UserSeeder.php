@@ -50,9 +50,9 @@ class UserSeeder extends Seeder
         $hospitalityUser = User::firstOrCreate(
             ['email' => 'hospitality@app.com'],
             [
-            'name' => 'Hospitality User',
+            'name' => 'Hospitality Admin',
             'first_name' => 'Hospitality',
-            'last_name' => 'User',
+            'last_name' => 'Admin',
             'username' => 'hospitality',
             'password' => bcrypt('password'),
             ]
@@ -62,7 +62,6 @@ class UserSeeder extends Seeder
         $hospitalityAttachments = [
             [
             'user_id' => $hospitalityUser->id,
-            'passport_cnic_file' => 'uploads/passports/hospitality_passport.png',
             'personal_photo' => 'uploads/photos/admin-avatar.jpg',
             ],
         ];
@@ -75,9 +74,9 @@ class UserSeeder extends Seeder
         $transportUser = User::firstOrCreate(
             ['email' => 'transport@app.com'],
             [
-            'name' => 'Transport User',
+            'name' => 'Transport Admin',
             'first_name' => 'Transport',
-            'last_name' => 'User',
+            'last_name' => 'Admin',
             'username' => 'transport',
             'password' => bcrypt('password'),
             ]
@@ -87,7 +86,6 @@ class UserSeeder extends Seeder
         $transportAttachments = [
             [
             'user_id' => $transportUser->id,
-            'passport_cnic_file' => 'uploads/passports/transport_passport.png',
             'personal_photo' => 'uploads/photos/admin-avatar.jpg',
             ],
         ];
@@ -96,13 +94,198 @@ class UserSeeder extends Seeder
             \App\Models\Attachment::create($attachment);
         }
 
+        
     // Create buyer role
     $buyerRole = Role::firstOrCreate(['name' => 'buyer']);
     $visitorRole = Role::firstOrCreate(['name' => 'visitor']);
     $internationalRole = Role::firstOrCreate(['name' => 'international_visitor']);
     $exhibitorRole = Role::firstOrCreate(['name' => 'exhibitor']);
+    
+    $buyerAdminRole = Role::firstOrCreate(['name' => 'buyer_admin']);
+    $visitorAdminRole = Role::firstOrCreate(['name' => 'visitor_admin']);
+    $exhibitorAdminRole = Role::firstOrCreate(['name' => 'exhibitor_admin']);
+    $salePurchaseAdminRole = Role::firstOrCreate(['name' => 'sale_purchase_admin']);
 
-    // Create the new user
+
+    // ////////////////////// ---- ADMIN BUYER ---- /////////////////////////////////////////////////
+
+    // Create Buyer Admin user
+    $buyerAdminUser = User::firstOrCreate(
+        ['email' => 'buyeradmin@app.com'],
+        [
+            'username' => 'buyeradmin321',
+            'password' => bcrypt('password'),
+            'name' => 'Buyer Admin',
+            'first_name' => 'Admin',
+            'last_name' => 'Buyer',
+            'father_first_name' => 'John',
+            'father_last_name' => 'NewBuyer',
+            'gender' => 'Female',
+            'profession' => 'Jewelry Designer',
+            'address' => '456 NewBuyer Avenue',
+            'country' => 'Italy',
+            'phone' => '+921234567890',
+            'mobile' => '+921234567890',
+            'whatsapp' => '+921234567890',
+            'fb_url' => 'https://www.facebook.com/newbuyeradmin',
+            'linkedin' => 'https://www.linkedin.com/in/newbuyeradmin',
+            'instagram' => 'new_buyer_admin',
+            'telegram' => 'new_buyer_admin_telegram',
+            'wechat' => 'new_buyer_admin_wechat',
+            'imo' => 'new_buyer_admin_imo',
+            'cnic_passport_no' => '1440321456789',
+            'date_of_issue' => '2021-05-15',
+            'date_of_expiry' => '2031-05-15',
+            'invited_way' => 'Trade Show',
+        ]
+    );
+
+    // Assign Buyer Admin role to the user
+    $buyerAdminUser->assignRole($buyerAdminRole);
+
+    // Attachments
+    $attachments = [
+        [
+        'user_id' => $buyerAdminUser->id,
+        'personal_photo' => 'uploads/photos/profile2.jpg',
+        ],
+    ];
+// //////////////////////////////////////////////////////////////////////////////////////
+// ////////////////////// ---- ADMIN VISITOR ---- /////////////////////////////////////////////////
+
+    // Create VISITOR Admin user
+    $visitorAdminUser = User::firstOrCreate(
+        ['email' => 'visitoradmin@app.com'],
+        [
+            'username' => 'visitoradmin123',
+            'password' => bcrypt('password'),
+            'name' => 'Visitor Admin',
+            'first_name' => 'Admin',
+            'last_name' => 'Visitor',
+            'father_first_name' => 'Michael',
+            'father_last_name' => 'Visitor',
+            'gender' => 'Female',
+            'profession' => 'Art Curator',
+            'address' => '456 Visitor Lane',
+            'country' => 'Italy',
+            'phone' => '+390101234567',
+            'mobile' => '+390101234567',
+            'whatsapp' => '+390101234567',
+            'fb_url' => 'https://www.facebook.com/janevisitor',
+            'linkedin' => 'https://www.linkedin.com/in/janevisitor',
+            'instagram' => 'jane_visitor',
+            'telegram' => 'jane_visitor_telegram',
+            'wechat' => 'jane_visitor_wechat',
+            'imo' => 'jane_visitor_imo',
+            'cnic_passport_no' => '1440212345678',
+            'date_of_issue' => '2021-02-01',
+            'date_of_expiry' => '2031-02-01',
+            'invited_way' => 'Museum Expo',
+        ]
+    );
+
+    // Assign Buyer Admin role to the user
+    $visitorAdminUser->assignRole($visitorAdminRole);
+
+    // Attachments
+    $attachments = [
+        [
+        'user_id' => $visitorAdminUser->id,
+        'personal_photo' => 'uploads/photos/profile2.jpg',
+        ],
+    ];
+// //////////////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////// ---- ADMIN Sale Purchase Admin Role ---- /////////////////////////////////////////////////
+
+    // Create Sale Purchase Admin user
+    $salePurchaseAdminUser = User::firstOrCreate(
+        ['email' => 'salepurchaseadmin@app.com'],
+        [
+            'username' => 'salepurchaseadmin123',
+            'password' => bcrypt('password'),
+            'name' => 'Sale Purchase Admin',
+            'first_name' => 'Admin',
+            'last_name' => 'Sale Purchase',
+            'father_first_name' => 'John',
+            'father_last_name' => 'Sale Purchase',
+            'gender' => 'Male',
+            'profession' => 'Jewelry Designer',
+            'address' => '456 Sale Purchase Street',
+            'country' => 'Japan',
+            'phone' => '+923001234567',
+            'mobile' => '+923001234567',
+            'whatsapp' => '+923001234567',
+            'fb_url' => 'https://www.facebook.com/johnsalepurchase',
+            'linkedin' => 'https://www.linkedin.com/in/johnsalepurchase',
+            'instagram' => 'john_salepurchase',
+            'telegram' => 'john_salepurchase_telegram',
+            'wechat' => 'john_salepurchase_wechat',
+            'imo' => 'john_salepurchase_imo',
+            'cnic_passport_no' => '1330212345678',
+            'date_of_issue' => '2020-01-01',
+            'date_of_expiry' => '2030-01-01',
+            'invited_way' => 'Sale Purchase Association',
+        ]
+    );
+
+   // Assign Buyer Admin role to the user
+   $salePurchaseAdminUser->assignRole($salePurchaseAdminRole);
+
+   // Attachments
+   $attachments = [
+       [
+       'user_id' => $salePurchaseAdminUser->id,
+       'personal_photo' => 'uploads/photos/profile2.jpg',
+       ],
+   ];
+// ////////////////////// ---- ADMIN Exhibitor ---- /////////////////////////////////////////////////
+
+    // Create Exhibitor Admin user
+    $exhibitorAdminUser = User::firstOrCreate(
+        ['email' => 'exhibitoradmin@app.com'],
+        [
+            'username' => 'exhibitoradmin123',
+            'password' => bcrypt('password'),
+            'name' => 'Exhibitor Admin',
+            'first_name' => 'Admin',
+            'last_name' => 'Exhibitor',
+            'father_first_name' => 'James',
+            'father_last_name' => 'Exhibitor',
+            'gender' => 'Male',
+            'profession' => 'Gems Trader',
+            'address' => '123 Exhibitor Street',
+            'country' => 'France',
+            'phone' => '+923001234567',
+            'mobile' => '+923001234567',
+            'whatsapp' => '+923001234567',
+            'fb_url' => 'https://www.facebook.com/johnexhibitor',
+            'linkedin' => 'https://www.linkedin.com/in/johnexhibitor',
+            'instagram' => 'john_exhibitor',
+            'telegram' => 'john_exhibitor_telegram',
+            'wechat' => 'john_exhibitor_wechat',
+            'imo' => 'john_exhibitor_imo',
+            'cnic_passport_no' => '1330212345678',
+            'date_of_issue' => '2020-01-01',
+            'date_of_expiry' => '2030-01-01',
+            'invited_way' => 'RCCI',
+        ]
+    );
+
+    // Assign Buyer Admin role to the user
+    $exhibitorAdminUser->assignRole($exhibitorAdminRole);
+
+    // Attachments
+    $attachments = [
+        [
+        'user_id' => $exhibitorAdminUser->id,
+        'personal_photo' => 'uploads/photos/profile2.jpg',
+        ],
+    ];
+// //////////////////////////////////////////////////////////////////////////////////////
+
+
+// Create the new user
     $newUser = User::firstOrCreate(
         ['email' => 'buyer@app.com'],
         [

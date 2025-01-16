@@ -79,13 +79,23 @@ class RolesAndPermissionsSeeder extends Seeder
 
             //
             'admin',
-            
             //
             'view exhibitor attachments',
             'view buyer attachments',
             'view visitor attachments',
             'view international attachments',
-            
+            //
+            'manage buyers',
+            'manage visitors',
+            'manage exhibitors',
+
+            //
+            'add sales',
+            'add purchase',
+            'manage sale_purchase',
+            'view sale_purchase',
+            'view sale',
+            'view purchase',
         ];
 
         // Create Permissions
@@ -95,7 +105,52 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Define Roles
         $roles = [
+            
+            'sale_purchase_admin' => [
+                'add sales',
+                'add purchase',
+                'manage sale_purchase',
+                'view sale_purchase',
+                'view sale',
+                'view purchase',
+                'view buyers',
+                'view visitors',
+                'view international visitors',
+                'view exhibitors',
+            ],
+           
+            'buyer_admin' => [
+                'manage buyers',
+                'admin',
+                'view buyers',
+                'can approve',
+                'can reject',
+
+                'create flights details',
+                'create accomodation details',
+                'view accomodation details',
+                'view visa',
+                'view flight details',
+            ],
+            'visitor_admin' => [
+                'manage visitors',
+                'admin',
+                'view visitors',
+                'view international visitors',
+                'view visa',
+                'view flight details',
+                'can approve',
+                'can reject',
+            ],
+            'exhibitor_admin' => [
+                'view exhibitors',
+                'manage exhibitors',
+                'admin',
+                'can approve',
+                'can reject',
+            ],
             'buyer' => [
+                'view purchase',
                 'view exhibitors',
                 'create visa',
                 'update visa',
@@ -142,12 +197,12 @@ class RolesAndPermissionsSeeder extends Seeder
             ],
 
             'exhibitor' => [
+                'view sale',
                 'upload demand draft',
                 'view reports',
                 'view exhibitor invitation letter',
                 'view entry pass',
                 'pkgjs sales',
-                'admin',
                 'view exhibitor attachments',
             ],
 
@@ -178,6 +233,10 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view buyer attachments',
                 'view visitor attachments',
                 'view international attachments',
+
+                'manage buyers',
+                'manage visitors',
+                'manage exhibitors',
             ],
 
            'superadmin' => [
@@ -229,6 +288,12 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view buyer attachments',
                 'view visitor attachments',
                 'view international attachments',
+                //
+                'manage buyers',
+                'manage visitors',
+                'manage exhibitors',
+                //
+                'manage sale_purchase',
             ],
            
 

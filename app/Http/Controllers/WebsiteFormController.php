@@ -418,6 +418,12 @@ class WebsiteFormController extends Controller
                 'paid_father_firstname' => 'nullable|string|max:255',
                 'paid_father_lastname' => 'nullable|string|max:255',
                 'paid_gender' => 'nullable|string|max:255',
+                'paid_gender' => 'nullable|string|max:255',
+
+                'paid_country' => 'nullable|string|max:255',
+                'paid_nationality' => 'nullable|string|max:255',
+                'paid_address' => 'nullable|string|max:255',
+
                 'paid_phone' => 'nullable|string|max:20',
                 'paid_mobile' => 'nullable|string|max:20',
                 'paid_whatsapp' => 'nullable|string|max:20',
@@ -506,6 +512,9 @@ class WebsiteFormController extends Controller
                 'last_name' => $validated['paid_lastname'],
                 'father_first_name' => $validated['paid_father_firstname'],
                 'father_last_name' => $validated['paid_father_lastname'],
+                'country' => $validated['paid_country'],
+                'nationality' => $validated['paid_nationality'],
+                'address' => $validated['paid_address'],
                 'gender' => $validated['paid_gender'],
                 'mobile' => $validated['paid_mobile'],
                 'phone' => $validated['paid_phone'],

@@ -28,6 +28,7 @@ return new class extends Migration
             $table->date('pay_order_date')->nullable();
             $table->string('pay_order_bank_name')->nullable();
             $table->string('pay_order_image')->nullable();
+            $table->string('sale_purchase')->nullable();
             $table->string('recommendation')->nullable();
             $table->timestamps();
         });

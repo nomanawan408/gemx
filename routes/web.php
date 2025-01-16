@@ -20,6 +20,9 @@ use App\Http\Controllers\PKGJSPurchaseController;
 use App\Http\Controllers\FloorPlanController;
 use App\Http\Controllers\FBRTaxController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\SalePurchaseController;
+use App\Http\Controllers\ChangePasswordController;
+
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Middleware\CheckPendingStatus;
 
@@ -33,6 +36,8 @@ Route::middleware(['auth', CheckPendingStatus::class])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard.index');
 
     Route::get('/profile/{id?}', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/personal-profile', [ProfileController::class, 'personalProfile'])->name('profile.personal');
+
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     
     Route::resource('visitors', VisitorsController::class);
@@ -59,6 +64,7 @@ Route::middleware(['auth', CheckPendingStatus::class])->group(function () {
     Route::get('flight-details/{flight_detail}/edit', [FlightController::class, 'edit'])->name('flight-details.edit');
     Route::put('flight-details/{flight_detail}', [FlightController::class, 'update'])->name('flight-details.update');
     Route::delete('flight-details/{flight_detail}', [FlightController::class, 'destroy'])->name('flight-details.destroy');
+
     
     // Accommodation
     Route::get('accommodation', [AccommodationController::class, 'index'])->name('accommodation.index');
@@ -122,16 +128,24 @@ Route::middleware(['auth', CheckPendingStatus::class])->group(function () {
     Route::get('/fbr-tax/{id}', [FbrTaxController::class, 'show'])->name('fbr-tax.show');
     Route::delete('/fbr-tax/{id}', [FbrTaxController::class, 'destroy'])->name('fbr-tax.destroy');
 
-// PKGJS Purchase routes
-Route::get('/pkgjs-purchase', [PKGJSPurchaseController::class, 'index'])->name('pkgjs-purchase.index');
-Route::get('/pkgjs-purchase/create', [PKGJSPurchaseController::class, 'create'])->name('pkgjs-purchase.create');
-Route::post('/pkgjs-purchase', [PKGJSPurchaseController::class, 'store'])->name('pkgjs-purchase.store');
-Route::get('/pkgjs-purchase/{id}', [PKGJSPurchaseController::class, 'show'])->name('pkgjs-purchase.show');
-Route::delete('/pkgjs-purchase/{id}', [PKGJSPurchaseController::class, 'destroy'])->name('pkgjs-purchase.destroy');
+    // PKGJS Purchase routes
+    Route::get('/pkgjs-purchase', [PKGJSPurchaseController::class, 'index'])->name('pkgjs-purchase.index');
+    Route::get('/pkgjs-purchase/create', [PKGJSPurchaseController::class, 'create'])->name('pkgjs-purchase.create');
+    Route::post('/pkgjs-purchase', [PKGJSPurchaseController::class, 'store'])->name('pkgjs-purchase.store');
+    Route::get('/pkgjs-purchase/{id}', [PKGJSPurchaseController::class, 'show'])->name('pkgjs-purchase.show');
+    Route::delete('/pkgjs-purchase/{id}', [PKGJSPurchaseController::class, 'destroy'])->name('pkgjs-purchase.destroy');
 
-// Export CSV
-Route::get('/buyers-details/export-csv', [FlightController::class, 'exportBuyersCsv'])->name('buyers.export.csv');
-Route::get('/visitors-details/export-csv', [FlightController::class, 'exportVisitorsCsv'])->name('visitors.export.csv');
+    // Export CSV
+    Route::get('/buyers-details/export-csv', [FlightController::class, 'exportBuyersCsv'])->name('buyers.export.csv');
+    Route::get('/visitors-details/export-csv', [FlightController::class, 'exportVisitorsCsv'])->name('visitors.export.csv');
+
+    // Sale Purchase Controller
+    Route::get('sale-purchase', [SalePurchaseController::class, 'index'])->name('sale-purchase.index');
+    Route::get('sale-purchase/sales', [SalePurchaseController::class, 'viewSales'])->name('sale-purchase.sales');
+    Route::get('sale-purchase/purchases', [SalePurchaseController::class, 'viewPurchase'])->name('sale-purchase.purchase');
+    Route::get('sale-purchase/{id}/upload', [SalePurchaseController::class, 'create'])->name('sale-purchase.create');
+    Route::post('sale-purchase/store', [SalePurchaseController::class, 'store'])->name('sale-purchase.store');
+    Route::delete('sale-purchase/destroy', [SalePurchaseController::class, 'deleteSalePurchase'])->name('sale-purchase.delete');
 
 
     Route::get('/invitation/download', function () {
@@ -149,7 +163,10 @@ Route::get('/visitors-details/export-csv', [FlightController::class, 'exportVisi
     
 });
 
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/change-password/form', [ChangePasswordController::class, 'index'])->name('auth.password.change');
+    Route::put('/change-password/update', [ChangePasswordController::class, 'update'])->name('auth.password.update');
+});
 
 Route::get('/logout', function () {
     auth()->logout();

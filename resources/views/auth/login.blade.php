@@ -68,10 +68,10 @@
         </form>
 
         <!-- Divider -->
-        <div class="mt-6 text-center text-gray-500 text-sm">
+        {{-- <div class="mt-6 text-center text-gray-500 text-sm">
             Don't have an account? 
             <a href="{{ route('register') }}" class="text-[#02381b] hover:underline font-semibold">Sign Up</a>
-        </div>
+        </div> --}}
     </div>
 </body>
 </html>

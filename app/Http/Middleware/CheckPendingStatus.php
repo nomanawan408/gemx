@@ -29,7 +29,7 @@ class CheckPendingStatus
 
         // Redirect pending users to the pending page unless excluded
         if ($user && $user->status === 'pending' 
-            && !$user->hasAnyRole(['hospitality', 'transport', 'superadmin']) 
+            && !$user->hasAnyRole(['hospitality', 'transport', 'superadmin','buyer_admin','visitor_admin','exhibitor_admin','sale_purchase_admin']) 
             && !$this->isExcludedRoute($request)) {
             return redirect()->route('pending.default');
         }

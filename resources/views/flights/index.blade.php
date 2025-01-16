@@ -14,11 +14,20 @@
               @endif
                 <h3 class="fw-bold mb-3">Fights Details</h3>
                 {{-- <h6 class="op-7 mb-2">All visitors are here</h6> --}}
-
               </div>
             
             </div>
-  
+            @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
@@ -33,14 +42,15 @@
                             <th>Name</th>
                             <th>Flight Number</th>
                             <th>Airline Name</th>
-                            <th>Seat Number</th>
                             <th>Number of Persons</th>
                             <th>Departure Date & Time</th>
                             <th>Arrival Date & Time</th>
                             <th>Pickup Terminal</th>
                             <th>Dropoff Terminal</th>
                             <th>Ticket File</th>
-                            <th>Action</th>
+                            @if (auth()->user()->hasRole('international_visitor'))
+                              <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -49,7 +59,6 @@
                             <td>{{ $flight->user->name }}</td>
                             <td>{{ $flight->flight_no ?? 'N/A' }}</td>
                             <td>{{ $flight->airline_name ?? 'N/A' }}</td>
-                            <td>{{ $flight->seat_no ?? 'N/A' }}</td>
                             <td>{{ $flight->no_of_persons ?? 'N/A' }}</td>
                             <td>{{ $flight->departure_date_time ? \Carbon\Carbon::parse($flight->departure_date_time)->format('d-m-Y H:i A') : 'N/A' }}</td>
                             <td>{{ \Carbon\Carbon::parse($flight->arrival_date_time)->format('d-m-Y H:i A') }}</td>
@@ -62,13 +71,15 @@
                                     N/A
                                 @endif
                             </td>
-                            <td>
-                                <form action="{{ route('flight-details.destroy', $flight->id) }}" method="post" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this flight?')">Delete</button>
-                                </form>
+                           @if (auth()->user()->hasRole('international_visitor'))
+                           <td>
+                            <form action="{{ route('flight-details.destroy', $flight->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this flight?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
                             </td>
+                           @endif
                             
                             
                         </tr>

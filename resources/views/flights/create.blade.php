@@ -59,13 +59,13 @@
                             </div>
                         
                             <div class="row">
-                                <div class="col-md-6 mb-3">
+                                {{-- <div class="col-md-6 mb-3">
                                     <label for="seat_no" class="form-label">Seat Number</label>
                                     <input type="text" class="form-control @error('seat_no') is-invalid @enderror" id="seat_no" name="seat_no" placeholder="Enter seat number">
                                     @error('seat_no')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> --}}
                                 @if (!auth()->user()->hasRole('international_visitor'))
                                     <div class="col-md-6 mb-3">
                                         <label for="no_of_persons" class="form-label">Number of Persons</label>
@@ -79,14 +79,14 @@
                         
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="departure_date_time" class="form-label">Departure Date & Time</label>
+                                    <label for="departure_date_time" class="form-label">Departure From Your Counrty</label>
                                     <input type="datetime-local" class="form-control @error('departure_date_time') is-invalid @enderror" id="departure_date_time" name="departure_date_time">
                                     @error('departure_date_time')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="arrival_date_time" class="form-label">Arrival Date & Time<span style="color: red;">*</span></label>
+                                    <label for="arrival_date_time" class="form-label">Departure From Pakistan<span style="color: red;">*</span></label>
                                     <input type="datetime-local" class="form-control @error('arrival_date_time') is-invalid @enderror" id="arrival_date_time" name="arrival_date_time" required>
                                     @error('arrival_date_time')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -98,14 +98,14 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="pickup_terminal" class="form-label">Pickup Location<span style="color: red;">*</span></label>
-                                    <textarea class="form-control @error('pickup_terminal') is-invalid @enderror" id="pickup_terminal" name="pickup_terminal" rows="3" placeholder="Enter pickup terminal or location"></textarea>
+                                    <textarea class="form-control @error('pickup_terminal') is-invalid @enderror" id="pickup_terminal" name="pickup_terminal" rows="1" readonly placeholder="Enter pickup terminal or location">Islamabad International Airport</textarea>
                                     @error('pickup_terminal')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="dropoff_terminal" class="form-label">Dropoff Location<span style="color: red;">*</span></label>
-                                    <textarea class="form-control @error('dropoff_terminal') is-invalid @enderror" id="dropoff_terminal" name="dropoff_terminal" rows="3" placeholder="Enter dropoff terminal or location" required></textarea>
+                                    <textarea class="form-control @error('dropoff_terminal') is-invalid @enderror" id="dropoff_terminal" name="dropoff_terminal" rows="1" placeholder="Enter dropoff terminal or location" readonly required>Sarena Hotel</textarea>
                                     @error('dropoff_terminal')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

@@ -33,7 +33,13 @@
                                 <!-- Hotel Name -->
                                 <div class="col-md-6 mb-3">
                                     <label for="hotel_name" class="form-label">Hotel Name<span style="color: red;">*</span></label>
-                                    <input type="text" class="form-control" id="hotel_name" name="hotel_name" required>
+                                    <select class="form-select" id="hotel_name" name="hotel_name" required>
+                                        <option value="" selected disabled>Select Hotel</option>
+                                        <option value="Serena Hotel">Serena Hotel</option>
+                                        <option value="Best Western Hotel">Best Western Hotel</option>
+                                        <option value="Marriott Hotel">Marriott Hotel</option>
+                                        <option value="Ramada Hotel">Ramada Hotel</option>
+                                    </select>
                                 </div>
                                 <!-- Room Number -->
                                 <div class="col-md-6 mb-3">
@@ -46,12 +52,12 @@
                                 
                                 <!-- Check-in Time -->
                                 <div class="col-md-6 mb-3">
-                                    <label for="check_in_time" class="form-label">Check-in Time</label>
-                                    <input type="time" class="form-control" id="check_in_time" name="check_in_time">
+                                    <label for="check_in_time" class="form-label">Check-in Date & Time </label>
+                                    <input type="datetime-local" class="form-control" id="check_in_time" name="check_in_time">
                                 </div>
                                 <!-- Accommodation Pass -->
                                 <div class="col-md-6 mb-3">
-                                    <label for="accommodation_pass" class="form-label">Accommodation Pass</label>
+                                    <label for="accommodation_pass" class="form-label">Booking Voucher</label>
                                     <input type="file" class="form-control" id="accommodation_pass" name="accommodation_pass">
                                 </div>
                             </div>

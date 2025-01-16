@@ -6,13 +6,18 @@
     <!-- Header Section -->
     <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
       <div>
-        <h3 class="fw-bold mb-3">users</h3>
+        <h3 class="fw-bold mb-3">Visitors </h3>
       </div>
       <div class="ms-md-auto py-2 py-md-0">
-        <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
+        <a href="{{ url()->previous() }}" class="btn btn-label-info btn-round me-2">Go Back</a>
       </div>
     </div>
-
+    @if(auth()->user()->hasRole('sale_purchase_admin'))
+    <!-- Approved users Tab -->
+    <div class="tab-pane fade show active" id="approved-users" role="tabpanel" aria-labelledby="approved-users-tab">
+      @include('partials.user_table', ['users' => $users->where('status', 'approved'), 'tableId' => 'approvedusersTable'])
+    </div>
+    @else
     <!-- Tabs Navigation -->
     <ul class="nav nav-tabs" id="userTabs" role="tablist">
       <li class="nav-item" role="presentation">
@@ -43,6 +48,7 @@
         @include('partials.user_table', ['users' => $users->where('status', 'rejected'), 'tableId' => 'rejectedusersTable'])
       </div>
     </div>
+    @endif
 
     <!-- user Detail Modals -->
     @foreach($users as $user)

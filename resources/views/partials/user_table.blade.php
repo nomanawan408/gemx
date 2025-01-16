@@ -8,7 +8,7 @@
                         <th>Profession</th>
                         <th>Address</th>
                         <th>Phone</th>
-                        <th>CNIC No</th>
+                        <th>Passport/CNIC</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -25,7 +25,7 @@
                                             {{-- <img src="{{ asset('storage/' . $user->attachment->personal_photo) }}" alt="Profile" class="rounded-circle" width="40" height="40"> --}}
                                             <img src="{{ asset('storage/'.$user->attachment->personal_photo) }}" alt="Profile" class="rounded-circle" width="40" height="40">
                                         @else
-                                            <div class="avatar-initial rounded-circle bg-label-primary">{{ strtoupper(substr($user->name, 0, 1)) }}</div>
+                                            <div style="background-color: {{ '#'.str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT) }}; width: 40px; height: 40px;" class="avatar-initial rounded-circle d-flex align-items-center justify-content-center">{{ strtoupper(substr($user->name, 0, 1)) }}</div>
                                         @endif
                                     </div>
                                     <div class="d-flex flex-column">
@@ -75,9 +75,15 @@
                             </td>                                  
                             <!-- Action -->
                             <td>
-                                <a href="{{ route('profile.index', $user->id) }}" class="btn btn-link btn-primary btn-lg">
-                                    <i class="fa fa-eye"></i>
-                                </a>
+                                @if(auth()->user()->can('manage sale_purchase'))
+                                    <a title="Upload Sale/Purchase" href="{{ route('sale-purchase.create', $user->id) }}" class="btn btn-link btn-primary btn-lg">
+                                        <i class="fa fa-upload"></i>
+                                    </a>
+                                @else
+                                    <a title="View Details" href="{{ route('profile.index', $user->id) }}" class="btn btn-link btn-primary btn-lg">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

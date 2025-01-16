@@ -58,6 +58,11 @@
         <h1 style="color: rgb(218, 120, 0);">Account Pending Approval</h1>
         <p style="color: #666;" >Your account is currently under review. Please wait while we process your request.</p>
         @endif
+        <form class="pb-5" action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button class="btn btn-secondary mt-4" type="submit">Logout</button>
+        </form>
+        
     </div>
 
     @cannot('admin')

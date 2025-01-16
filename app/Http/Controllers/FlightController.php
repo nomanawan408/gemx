@@ -56,7 +56,7 @@ class FlightController extends Controller
     {
         // Fetch buyers along with their single userParticipant
         $buyers = User::role('buyer')
-            ->with('userParticipant') // Eager load the single userParticipant relationship
+            ->with('participant') // Eager load the single userParticipant relationship
             ->get();
     
         return view('flights.select_buyer', compact('buyers'));
@@ -69,9 +69,9 @@ class FlightController extends Controller
              'user_id' => 'required|exists:users,id',
              'flight_no' => 'nullable|string',
              'airline_name' => 'nullable|string',
-             'seat_no' => 'nullable|string',
+            //  'seat_no' => 'nullable|string',
              'no_of_persons' => 'nullable|integer',
-             'ticket_upload' => 'nullable|file|mimes:jpeg,png,pdf', // Allow image or PDF files
+             'ticket_upload' => 'nullable|file|mimes:jpeg,jpg,png,pdf', // Allow image or PDF files
              'departure_date_time' => 'nullable|date',
              'arrival_date_time' => 'required|date',
              'pickup_terminal' => 'required|string',
@@ -89,7 +89,7 @@ class FlightController extends Controller
              'user_id' => $validated['user_id'],
              'flight_no' => $validated['flight_no'] ?? null,
              'airline_name' => $validated['airline_name'] ?? null,
-             'seat_no' => $validated['seat_no'] ?? null,
+            //  'seat_no' => $validated['seat_no'] ?? null,
              'no_of_persons' => $validated['no_of_persons'] ?? null,
              'ticket_upload' => $ticketPath,
              'departure_date_time' => $validated['departure_date_time'] ?? null,
@@ -100,7 +100,10 @@ class FlightController extends Controller
      
          // Send notification email
          Mail::to($flight->user->email)->send(new FlightCreated($flight));
-     
+         
+         if (auth()->user()->hasRole('international_visitor')) {
+            return redirect()->route('flight-details.index');
+         }
          // Redirect to the flight details page with a success message
          return redirect()->route('flight-details.buyers')->with('success', 'Flight created successfully.');
      }
@@ -186,10 +189,18 @@ class FlightController extends Controller
         return redirect()->route('flight-details.index')->with('success', 'Flight updated successfully.');
     }
 
-    public function destroy(Flight $flight)
+    public function destroy(Flight $flight_detail)
     {
-        $flight->delete();
-        return redirect()->route('flight-details.index')->with('success', 'Flight deleted successfully.');
+        try {
+            // Delete the flight
+            $flight_detail->delete();
+
+            // Return a success response
+            return redirect()->back()->with('success', 'Flight deleted successfully!');
+        } catch (\Exception $e) {
+            // Handle exceptions
+            return redirect()->back()->with('error', 'Failed to delete the flight: ' . $e->getMessage());
+        }
     }
 
 
