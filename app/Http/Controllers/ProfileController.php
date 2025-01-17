@@ -15,7 +15,7 @@ class ProfileController extends Controller
 {
     public function index($id = null)
     {
-        $users = User::with('participant', 'exhibition')->get();
+        $users = User::with('participant', 'exhibition','stall')->get();
         $user = $id ? $users->firstWhere('id', $id) : $users->firstWhere('id', Auth::user()->id);
         if (Auth::user()->hasRole('exhibitor')) {
             $user->load('exhibition');

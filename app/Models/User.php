@@ -111,9 +111,9 @@ class User extends Authenticatable
         /**
          * Get the stalls associated with the user.
          */
-        public function stalls()
+        public function stall()
         {
-            return $this->hasMany(Stall::class);
+            return $this->hasOne(Stall::class, 'user_id', 'id');
         }
     
         public function attachment()

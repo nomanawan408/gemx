@@ -15,5 +15,12 @@ class Stall extends Model
             'booth_type',
             'booth_size'
         ];
+   
     
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    
+
 }
