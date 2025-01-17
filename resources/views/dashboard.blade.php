@@ -67,74 +67,74 @@
             {{-- //////////////////////////////////////////////////////////////////////////// --}}
 
             <div class="row">
-              @if (auth()->user()->hasRole('buyer_admin'))
-                <div class="col-sm-6 col-md-3">
-                    <div class="card card-stats card-round">
-                        <div class="card-body">
-                            <a href="{{ route('buyers.index') }}" class="text-decoration-none">
-                                <div class="row align-items-center">
-                                    <div class="col-icon">
-                                        <div class="icon-big text-center icon-info bubble-shadow-small">
-                                            <i class="fas fa-user-check"></i>
+                @if (auth()->user()->hasRole('buyer_admin'))
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <a href="{{ route('buyers.index') }}" class="text-decoration-none">
+                                    <div class="row align-items-center">
+                                        <div class="col-icon">
+                                            <div class="icon-big text-center icon-info bubble-shadow-small">
+                                                <i class="fas fa-user-check"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col col-stats ms-3 ms-sm-0">
+                                            <div class="numbers">
+                                                <p class="card-category">Buyers</p>
+                                                <h4 class="card-title">{{ count($buyer) }}</h4>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col col-stats ms-3 ms-sm-0">
-                                        <div class="numbers">
-                                            <p class="card-category">Buyers</p>
-                                            <h4 class="card-title">{{ count($buyer) }}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
                 @if (auth()->user()->hasRole('exhibitor_admin'))
-                <div class="col-sm-6 col-md-3">
-                    <div class="card card-stats card-round">
-                        <div class="card-body">
-                            <a href="{{ route('exhibitors.index') }}" class="text-decoration-none">
-                                <div class="row align-items-center">
-                                    <div class="col-icon">
-                                        <div class="icon-big text-center icon-success bubble-shadow-small">
-                                            <i class="fas fa-luggage-cart"></i>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <a href="{{ route('exhibitors.index') }}" class="text-decoration-none">
+                                    <div class="row align-items-center">
+                                        <div class="col-icon">
+                                            <div class="icon-big text-center icon-success bubble-shadow-small">
+                                                <i class="fas fa-luggage-cart"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col col-stats ms-3 ms-sm-0">
+                                            <div class="numbers">
+                                                <p class="card-category">Exhibitors</p>
+                                                <h4 class="card-title">{{ count($exhibitor) }}</h4>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col col-stats ms-3 ms-sm-0">
-                                        <div class="numbers">
-                                            <p class="card-category">Exhibitors</p>
-                                            <h4 class="card-title">{{ count($exhibitor) }}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
                 @if (auth()->user()->hasRole('visitor_admin'))
-                <div class="col-sm-6 col-md-3">
-                    <div class="card card-stats card-round">
-                        <div class="card-body">
-                            <a href="{{ route('international-visitors.index') }}" class="text-decoration-none">
-                                <div class="row align-items-center">
-                                    <div class="col-icon">
-                                        <div class="icon-big text-center icon-secondary bubble-shadow-small">
-                                            <i class="far fa-check-circle"></i>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <a href="{{ route('international-visitors.index') }}" class="text-decoration-none">
+                                    <div class="row align-items-center">
+                                        <div class="col-icon">
+                                            <div class="icon-big text-center icon-secondary bubble-shadow-small">
+                                                <i class="far fa-check-circle"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col col-stats ms-3 ms-sm-0">
+                                            <div class="numbers">
+                                                <p class="card-category">International Visitors</p>
+                                                <h4 class="card-title">{{ count($international_visitor) }}</h4>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col col-stats ms-3 ms-sm-0">
-                                        <div class="numbers">
-                                            <p class="card-category">International Visitors</p>
-                                            <h4 class="card-title">{{ count($international_visitor) }}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
                 @if (auth()->user()->hasRole('visitor_admin'))
                     <div class="col-sm-6 col-md-3">
@@ -392,7 +392,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-6">
+                                    <div class="col-md-6">
                                         <div class="card-body">
                                             <div class="card-head-row card-tools-still-right">
                                                 <div class="card-title">New Customers</div>
@@ -415,13 +415,17 @@
                                             <div class="card-list py-4">
                                                 @foreach ($recentUsers as $user)
                                                     <div class="item-list">
-                                                        {{-- <div class="avatar">
-                                      <img
-                                        src="{{ asset('storage/'.$user->attachment->personal_photo ?? "") }}"
-                                        alt="{{ $user->name }}"
-                                        class="avatar-img rounded-circle"
-                                      />
-                                    </div> --}}
+                                                        <div class="avatar">
+                                                            @if ($user->attachment && $user->attachment->personal_photo)
+                                                                <img src="{{ asset('storage/' . $user->attachment->personal_photo) }}"
+                                                                    alt="{{ $user->name }}"
+                                                                    class="avatar-img rounded-circle" />
+                                                            @else
+                                                                <div style="background-color: {{ '#' . str_pad(dechex(mt_rand(0, 0xffffff)), 6, '0', STR_PAD_LEFT) }}; width: 40px; height: 40px;"
+                                                                    class="avatar-initial rounded-circle d-flex align-items-center justify-content-center">
+                                                                    {{ strtoupper(substr($user->name, 0, 1)) }}</div>
+                                                            @endif
+                                                        </div>
                                                         <div class="info-user ms-3">
                                                             <div class="username">{{ $user->name }}</div>
                                                             <div class="status">{{ $user->role }}</div>
@@ -430,20 +434,13 @@
                                                             class="btn btn-icon btn-link op-8 me-1">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
-                                                        {{-- <button class="btn btn-icon btn-link btn-danger op-8">
-                                      <i class="fas fa-ban"></i>
-                                    </button> --}}
+
                                                     </div>
                                                 @endforeach
 
                                             </div>
                                         </div>
-                                        {{-- MAPS --}}
-                                        {{-- <div class="col-md-6">
-                            <div class="mapcontainer">
-                                <div id="world-map" class="w-100" style="height: 300px"></div>
-                            </div>
-                        </div> --}}
+
                                     </div>
                                 </div>
                             </div>

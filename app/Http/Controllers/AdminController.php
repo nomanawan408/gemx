@@ -27,10 +27,10 @@ class AdminController extends Controller
             ->get();
 
             $recentUsers = User::whereDoesntHave('roles', function ($query) {
-                $query->whereIn('name', ['superadmin', 'hospitality', 'transport']);
+                $query->whereIn('name', ['superadmin', 'hospitality', 'transport','buyer_admin', 'exhibitor_admin', 'visitor_admin','sale_purchase_admin','onspot_admin']);
             })
             ->orderBy('created_at', 'desc')
-            ->take(10)
+            ->take(6)
             ->get();
 
         return view('dashboard', compact('recentUsers', 'usersByCountry','superadmins', 'buyer', 'visitor','international_visitor', 'exhibitor'));    

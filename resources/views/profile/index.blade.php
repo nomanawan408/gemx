@@ -394,27 +394,31 @@
                                             <ul class="list-unstyled small">
 
                                                 @if (auth()->user()->can('view visitor attachments') || auth()->user()->can('view international attachments'))
-                                                    <li><strong>Personal Photo:</strong>
-                                                        @if (isset($user->attachment->personal_photo))
-                                                            <a href="{{ $user->attachment && $user->attachment->personal_photo ? asset('storage/' . $user->attachment->personal_photo) : asset('storage/uploads/photos/avatar.png') }}"
-                                                                target="_blank" class="btn btn-primary btn-sm">View</a>
-                                                        @else
-                                                            Not uploaded
-                                                        @endif
-                                                    </li>
-                                                    <li>
-                                                        <strong>Passport/CNIC File:</strong>
-                                                        @if (isset($user->attachment->passport_cnic_file))
-                                                            <a href="{{ asset('storage/' . $user->attachment->passport_cnic_file) }}"
-                                                                target="_blank" class="btn btn-primary btn-sm">View</a>
-                                                        @else
-                                                            Not uploaded
-                                                        @endif
-                                                    </li>
+                                                    
+                                                    @if($user->hasRole('visitor') || $user->hasRole('international_visitor'))
+                                                        <li><strong>Personal Photo:</strong>
+                                                            @if (isset($user->attachment->personal_photo))
+                                                                <a href="{{ $user->attachment && $user->attachment->personal_photo ? asset('storage/' . $user->attachment->personal_photo) : asset('storage/uploads/photos/avatar.png') }}"
+                                                                    target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                            @else
+                                                                Not uploaded
+                                                            @endif
+                                                        </li>
+                                                        <li>
+                                                            <strong>Passport/CNIC File:</strong>
+                                                            @if (isset($user->attachment->passport_cnic_file))
+                                                                <a href="{{ asset('storage/' . $user->attachment->passport_cnic_file) }}"
+                                                                    target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                            @else
+                                                                Not uploaded
+                                                            @endif
+                                                        </li>
+                                                    @endif
                                                 @endif
 
                                                 {{-- For Buyers --}}
                                                 @if (auth()->user()->can('view buyer attachments'))
+                                                    @if($user->hasRole('buyer'))
                                                     <li>
                                                         <strong>Passport/CNIC File:</strong>
                                                         @if (isset($user->attachment->passport_cnic_file))
@@ -473,10 +477,12 @@
                                                         @endif
                                                     </li>
                                                     {{--  --}}
+                                                    @endif
                                                 @endif
 
                                                 {{-- For Exhibitors --}}
                                                 @if (auth()->user()->can('view exhibitor attachments'))
+                                                    @if($user->hasRole('exhibitor'))
                                                     <li><strong>Bank Statement:</strong>
                                                         @if (isset($user->attachment->bank_statement))
                                                             <a href="{{ asset('storage/' . $user->attachment->bank_statement) }}"
@@ -568,7 +574,7 @@
                                                     </li>
                                                     <li><strong>Pay Order Date:</strong>
                                                         @if (isset($user->attachment->pay_order_date))
-                                                            {{ $user->attachment->pay_order_date->format('d/m/Y') }}
+                                                            {{ $user->attachment->pay_order_date }}
                                                         @else
                                                             Not uploaded
                                                         @endif
@@ -590,6 +596,7 @@
                                                         @endif
                                                     </li>
                                                     {{--  --}}
+                                                    @endif
                                                 @endif
                                             </ul>
                                         </div>
