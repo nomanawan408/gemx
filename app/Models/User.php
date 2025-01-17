@@ -53,7 +53,9 @@ class User extends Authenticatable
         'provider',
         'access_token',
         'invited_way',
-        'avatar'    
+        'avatar',
+        'status',
+        'is_onspot',    
     ];
 
     /**

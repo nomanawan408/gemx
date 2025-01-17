@@ -22,6 +22,7 @@ use App\Http\Controllers\FBRTaxController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\SalePurchaseController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\OnspotEntryController;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Middleware\CheckPendingStatus;
@@ -36,7 +37,7 @@ Route::middleware(['auth', CheckPendingStatus::class])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard.index');
 
     Route::get('/profile/{id?}', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('/personal-profile', [ProfileController::class, 'personalProfile'])->name('profile.personal');
+    Route::get('/personal-profile/{id?}', [ProfileController::class, 'personalProfile'])->name('profile.personal');
 
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     
@@ -147,6 +148,12 @@ Route::middleware(['auth', CheckPendingStatus::class])->group(function () {
     Route::post('sale-purchase/store', [SalePurchaseController::class, 'store'])->name('sale-purchase.store');
     Route::delete('sale-purchase/destroy', [SalePurchaseController::class, 'deleteSalePurchase'])->name('sale-purchase.delete');
 
+    // Onspot Entry
+    Route::get('/onspot-users', [OnspotEntryController::class, 'index'])->name('onspot-entry.index');
+    Route::get('/onspot-users/create', [OnspotEntryController::class, 'create'])->name('onspot-entry.create');
+    Route::post('/onspot-users', [OnspotEntryController::class, 'store'])->name('onspot-entry.store');
+    Route::get('/onspot-users/{id}', [OnspotEntryController::class, 'show'])->name('onspot-entry.show');
+    Route::delete('onspot-users/{id}', [OnspotEntryController::class, 'destroy'])->name('users.delete');
 
     Route::get('/invitation/download', function () {
         $pdf = Pdf::loadView('invitation.index'); // 'invitation' is your Blade file

@@ -96,7 +96,7 @@ class UserSeeder extends Seeder
 
         
     // Create buyer role
-    $buyerRole = Role::firstOrCreate(['name' => 'buyer']);
+    $buyerRole = Role::firstOrCreate(['name' => 'buyer']); 
     $visitorRole = Role::firstOrCreate(['name' => 'visitor']);
     $internationalRole = Role::firstOrCreate(['name' => 'international_visitor']);
     $exhibitorRole = Role::firstOrCreate(['name' => 'exhibitor']);
@@ -105,7 +105,54 @@ class UserSeeder extends Seeder
     $visitorAdminRole = Role::firstOrCreate(['name' => 'visitor_admin']);
     $exhibitorAdminRole = Role::firstOrCreate(['name' => 'exhibitor_admin']);
     $salePurchaseAdminRole = Role::firstOrCreate(['name' => 'sale_purchase_admin']);
+    $onspotAdminRole = Role::firstOrCreate(['name' => 'onspot_admin']);
 
+
+    // ////////////////////// ---- ADMIN ONSPOT ---- /////////////////////////////////////////////////
+
+    // Create Onspot Admin user
+    $onspotAdminUser = User::firstOrCreate(
+        ['email' => 'onspotadmin@app.com'],
+        [
+            'username' => 'onspotadmin321',
+            'password' => bcrypt('password'),
+            'name' => 'Onspot Admin',
+            'first_name' => 'Admin',
+            'last_name' => 'Onspot',
+            'father_first_name' => 'John',
+            'father_last_name' => 'NewOnspot',
+            'gender' => 'Male',
+            'profession' => 'Event Manager',
+            'address' => '789 Onspot Avenue',
+            'country' => 'Spain',
+            'phone' => '+921234567890',
+            'whatsapp' => '+921234567890',
+            'cnic_passport_no' => '1440321456789',
+            'date_of_issue' => '2022-06-20',
+            'date_of_expiry' => '2032-06-20',
+            'mobile' => '+921234567890',
+            'fb_url' => 'https://www.facebook.com/newonspotadmin',
+            'linkedin' => 'https://www.linkedin.com/in/newonspotadmin',
+            'instagram' => 'new_onspot_admin',
+            'telegram' => 'new_onspot_admin_telegram',
+            'wechat' => 'new_onspot_admin_wechat',
+            'imo' => 'new_onspot_admin_imo',
+            
+            'invited_way' => 'Conference',
+        ]
+    );
+
+    // Assign Onspot Admin role to the user
+    $onspotAdminUser->assignRole($onspotAdminRole);
+
+    // Attachments
+    $attachments = [
+        [
+        'user_id' => $onspotAdminUser->id,
+        'personal_photo' => 'uploads/photos/profile2.jpg',
+        ],
+    ];
+// //////////////////////////////////////////////////////////////////////////////////////
 
     // ////////////////////// ---- ADMIN BUYER ---- /////////////////////////////////////////////////
 

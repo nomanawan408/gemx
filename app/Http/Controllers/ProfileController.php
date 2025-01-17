@@ -23,9 +23,11 @@ class ProfileController extends Controller
         return view('profile.index', compact('user'));
     }
 
-    public function personalProfile()
+    public function personalProfile($id = null)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
+        $users = User::all();
+        $user = $id ? $users->firstWhere('id', $id) : $users->firstWhere('id', Auth::user()->id);
         return view('profile.personal_profile', compact('user'));
     }
 

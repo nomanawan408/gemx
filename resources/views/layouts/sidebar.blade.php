@@ -285,7 +285,7 @@
                        <span class="sub-item">View PKGJS Sales</span>
                      </a>
                    </li>
-                   @endif
+                   @endif 
                   </ul>
                 </div>
               </li>
@@ -350,7 +350,27 @@
                   </ul>
                 </div>
               </li>
-
+              <li class="nav-item {{ request()->is('onspot-entry*') ? 'active' : '' }}">
+                <a data-bs-toggle="collapse" href="#onspot-entry">
+                  <i class="fas fa-keyboard"></i>
+                  <p>Onspot Users</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="onspot-entry">
+                  <ul class="nav nav-collapse">
+                    <li class="{{ request()->routeIs('onspot-entry.index') ? 'active' : '' }}">
+                      <a href="{{ route('onspot-entry.index') }}">
+                        <span class="sub-item">View All Onspot Users</span>
+                      </a>
+                    </li>
+                    <li class="{{ request()->routeIs('onspot-entry.create') ? 'active' : '' }}">
+                      <a href="{{ route('onspot-entry.create') }}">
+                        <span class="sub-item">Add Onspot User</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
 
               {{-- @can('view transport')
               <li class="nav-item {{ request()->is('transports*') ? 'active' : '' }}">

@@ -38,34 +38,34 @@
                                 <div class="col-md-6">
                                     <div class="p-0 m-0">
                                         <p class="p-0 m-0 font-monospace text-decoration-underline text-light">Email:</p>
-                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->email }}</p>
+                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->email ?? '-'}}</p>
                                     </div>
                                     <div class="p-0 m-0">
                                         <p class="p-0 m-0 font-monospace text-decoration-underline text-light">Phone:</p>
-                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->phone }}</p>
+                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->phone ?? '-'}}</p>
                                     </div>
                                     <div class="p-0 m-0">
                                         <p class="p-0 m-0 font-monospace text-decoration-underline text-light">Mobile:</p>
-                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->mobile }}</p>
+                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->mobile ?? '-'}}</p>
                                     </div>
                                     <div class="p-0 m-0">
                                         <p class="p-0 m-0 font-monospace text-decoration-underline text-light">Profession:</p>
-                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->profession }}</p>
+                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->profession ?? '-'}}</p>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="p-0 m-0">
                                         <p class="p-0 m-0 font-monospace text-decoration-underline text-light">WhatsApp:</p>
-                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->whatsapp }}</p>
+                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->whatsapp ?? '-'}}</p>
                                     </div>
                                     <div class="p-0 m-0">
                                         <p class="p-0 m-0 font-monospace text-decoration-underline text-light">Address:</p>
-                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->address }}</p>
+                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->address ?? '-'}}</p>
                                     </div>
                                     <div class="p-0 m-0">
                                         <p class="p-0 m-0 font-monospace text-decoration-underline text-light">Gender:</p>
-                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->gender }}</p>
+                                        <p class="ps-2 m-0 font-monospace text-light">{{ $user->gender ?? '-'}}</p>
                                     </div>
                                     
                                 </div>
