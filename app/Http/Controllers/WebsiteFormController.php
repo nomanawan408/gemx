@@ -795,57 +795,57 @@ class WebsiteFormController extends Controller
 
         // $user->assignRole('exhibitor');
 
-        //     // Step 2: Download Files from URLs and Save Them
-        //     $saveFileFromUrl = function ($url, $folder, $userId) {
-        //         if ($url) {
-        //             try {
-        //                 $contents = file_get_contents($url); // Download file content
-        //                 $extension = pathinfo($url, PATHINFO_EXTENSION);
-        //                 $fileName = time() . '-' . $userId . '.' . $extension;
-        //                 $filePath = $folder . '/' . $fileName;
+            // Step 2: Download Files from URLs and Save Them
+            $saveFileFromUrl = function ($url, $folder, $userId) {
+                if ($url) {
+                    try {
+                        $contents = file_get_contents($url); // Download file content
+                        $extension = pathinfo($url, PATHINFO_EXTENSION);
+                        $fileName = time() . '-' . $userId . '.' . $extension;
+                        $filePath = $folder . '/' . $fileName;
 
-        //                 // Save file to public storage
-        //                 Storage::disk('public')->put($filePath, $contents);
+                        // Save file to public storage
+                        Storage::disk('public')->put($filePath, $contents);
 
-        //                 return $filePath;
-        //             } catch (\Exception $e) {
-        //                 Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
-        //                 return null;
-        //             }
-        //         }
-        //         return null;
-        //     };
+                        return $filePath;
+                    } catch (\Exception $e) {
+                        Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
+                        return null;
+                    }
+                }
+                return null;
+            };
 
-        //    // Download and save each file
-        //     $personalPhoto = $saveFileFromUrl($validated['personal_photo'], 'uploads/photos', $user->id);
-        //     $companyRegistration = $saveFileFromUrl($validated['company_registration_copy'], 'uploads/registrations', $user->id);
-        //     $companyLogo = $saveFileFromUrl($validated['company_logo'], 'uploads/logos', $user->id);
-        //     $companyCatalog = $saveFileFromUrl($validated['company_catalog'], 'uploads/catalogs', $user->id);
-        //     $businessCard = $saveFileFromUrl($validated['business_card'], 'uploads/cards', $user->id);
-        //     $chamberCertificate = $saveFileFromUrl($validated['chamber_membership_certificate'], 'uploads/certificates', $user->id);
-        //     $cnicFile = $saveFileFromUrl($validated['cnic_file'], 'uploads/passports', $user->id);
-        //     $bankStatement = $saveFileFromUrl($validated['bank_statement'], 'uploads/bank_statements', $user->id);
-        //     $payOrderCopy = $saveFileFromUrl($validated['pay_order_copy'], 'uploads/pay_orders', $user->id);
+           // Download and save each file
+            $personalPhoto = $saveFileFromUrl($validated['personal_photo'], 'uploads/photos', $user->id);
+            $companyRegistration = $saveFileFromUrl($validated['company_registration_copy'], 'uploads/registrations', $user->id);
+            $companyLogo = $saveFileFromUrl($validated['company_logo'], 'uploads/logos', $user->id);
+            $companyCatalog = $saveFileFromUrl($validated['company_catalog'], 'uploads/catalogs', $user->id);
+            $businessCard = $saveFileFromUrl($validated['business_card'], 'uploads/cards', $user->id);
+            $chamberCertificate = $saveFileFromUrl($validated['chamber_membership_certificate'], 'uploads/certificates', $user->id);
+            $cnicFile = $saveFileFromUrl($validated['cnic_file'], 'uploads/passports', $user->id);
+            $bankStatement = $saveFileFromUrl($validated['bank_statement'], 'uploads/bank_statements', $user->id);
+            $payOrderCopy = $saveFileFromUrl($validated['pay_order_copy'], 'uploads/pay_orders', $user->id);
             
 
-        //     // Save Attachments to Database
-        //     Attachment::create([
-        //         'user_id' => $user->id,
-        //         'personal_photo' => $personalPhoto,
-        //         'company_registration_number' => $companyRegistration,
-        //         'company_logo' => $companyLogo,
-        //         'company_catalogue' => $companyCatalog,
-        //         'business_card' => $businessCard,
-        //         'chamber_association_certificate' => $chamberCertificate,
-        //         'passport_cnic_file' => $cnicFile,
-        //         'bank_statement' => $bankStatement,
-        //         'pay_order_image' => $payOrderCopy,
-        //         'pay_order_draft_no' => $validated['pay_order'] ?? null,
-        //         'pay_order_amount' => $validated['amount'] ?? null,
-        //         'pay_order_date' => $validated['pay_date'] ?? null,
-        //         'pay_order_bank_name' => $validated['bank_name'] ?? null,
-        //         'recommendation' => $validated['recommendation'],
-        //         ]);
+            // Save Attachments to Database
+            Attachment::create([
+                'user_id' => $user->id,
+                'personal_photo' => $personalPhoto,
+                'company_registration_number' => $companyRegistration,
+                'company_logo' => $companyLogo,
+                'company_catalogue' => $companyCatalog,
+                'business_card' => $businessCard,
+                'chamber_association_certificate' => $chamberCertificate,
+                'passport_cnic_file' => $cnicFile,
+                'bank_statement' => $bankStatement,
+                'pay_order_image' => $payOrderCopy,
+                'pay_order_draft_no' => $validated['pay_order'] ?? null,
+                'pay_order_amount' => $validated['amount'] ?? null,
+                'pay_order_date' => $validated['pay_date'] ?? null,
+                'pay_order_bank_name' => $validated['bank_name'] ?? null,
+                'recommendation' => $validated['recommendation'],
+                ]);
 
             // Step 4: Save Business Details
             Business::create([
