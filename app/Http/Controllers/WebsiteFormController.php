@@ -539,28 +539,28 @@ class WebsiteFormController extends Controller
             $user->assignRole('buyer');
 
             // Step 2: Download Files from URLs and Save Them
-            // $saveFileFromUrl = function ($url, $folder, $userId) {
-            //     if ($url) {
-            //         try {
-            //             $contents = file_get_contents($url); // Download file content
-            //             $extension = pathinfo($url, PATHINFO_EXTENSION);
-            //             $fileName = time() . '-' . $userId . '.' . $extension;
-            //             $filePath = $folder . '/' . $fileName;
+            $saveFileFromUrl = function ($url, $folder, $userId) {
+                if ($url) {
+                    try {
+                        $contents = file_get_contents($url); // Download file content
+                        $extension = pathinfo($url, PATHINFO_EXTENSION);
+                        $fileName = time() . '-' . $userId . '.' . $extension;
+                        $filePath = $folder . '/' . $fileName;
 
-            //             // Save file to public storage
-            //             Storage::disk('public')->put($filePath, $contents);
+                        // Save file to public storage
+                        Storage::disk('public')->put($filePath, $contents);
 
-            //             return $filePath;
-            //         } catch (\Exception $e) {
-            //             Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
-            //             return null;
-            //         }
-            //     }
-            //     return null;
-            // };
+                        return $filePath;
+                    } catch (\Exception $e) {
+                        Log::error("Failed to download file: {$url}, Error: " . $e->getMessage());
+                        return null;
+                    }
+                }
+                return null;
+            };
 
             // For Participants
-            // $participantPassport = $saveFileFromUrl($request->input('paid_participant_passport'), 'uploads/participants/passports', $user->id);
+            $participantPassport = $saveFileFromUrl($request->input('paid_participant_passport'), 'uploads/participants/passports', $user->id);
             
             if ($request->filled('paid_participant_firstname')) {
                 UserParticipant::create([
@@ -621,25 +621,25 @@ class WebsiteFormController extends Controller
             ]);
             
             // Download and save each file
-            // $personalPhoto = $saveFileFromUrl($request->input('paid_personal_photo'), 'uploads/photos', $user->id);
-            // $companyCatalog = $saveFileFromUrl($request->input('paid_company_catalog'), 'uploads/catalogs', $user->id);
-            // $bankStatement = $saveFileFromUrl($request->input('bank_statment'), 'uploads/statements', $user->id);
-            // $businessCard = $saveFileFromUrl($request->input('paid_business_card'), 'uploads/cards', $user->id);
-            // $companyCertificate = $saveFileFromUrl($request->input('paid_company_certificate'), 'uploads/certificates', $user->id);
-            // $chamberCertificate = $saveFileFromUrl($request->input('chamber_certificate'), 'uploads/certificates', $user->id);
-            // $passport = $saveFileFromUrl($request->input('paid_passport'), 'uploads/passports', $user->id);
+            $personalPhoto = $saveFileFromUrl($request->input('paid_personal_photo'), 'uploads/photos', $user->id);
+            $companyCatalog = $saveFileFromUrl($request->input('paid_company_catalog'), 'uploads/catalogs', $user->id);
+            $bankStatement = $saveFileFromUrl($request->input('bank_statment'), 'uploads/statements', $user->id);
+            $businessCard = $saveFileFromUrl($request->input('paid_business_card'), 'uploads/cards', $user->id);
+            $companyCertificate = $saveFileFromUrl($request->input('paid_company_certificate'), 'uploads/certificates', $user->id);
+            $chamberCertificate = $saveFileFromUrl($request->input('chamber_certificate'), 'uploads/certificates', $user->id);
+            $passport = $saveFileFromUrl($request->input('paid_passport'), 'uploads/passports', $user->id);
 
             // // Step 3: Save Attachments to Database
-            // Attachment::create([
-            //     'user_id' => $user->id,
-            //     'personal_photo' => $personalPhoto,
-            //     'company_catalogue' => $companyCatalog,
-            //     'bank_statement' => $bankStatement,
-            //     'business_card' => $businessCard,
-            //     'company_certificate' => $companyCertificate,
-            //     'chamber_association_certificate' => $chamberCertificate,
-            //     'passport_cnic_file' => $passport,
-            // ]);
+            Attachment::create([
+                'user_id' => $user->id,
+                'personal_photo' => $personalPhoto,
+                'company_catalogue' => $companyCatalog,
+                'bank_statement' => $bankStatement,
+                'business_card' => $businessCard,
+                'company_certificate' => $companyCertificate,
+                'chamber_association_certificate' => $chamberCertificate,
+                'passport_cnic_file' => $passport,
+            ]);
 
             Log::info("User {$user->id} and attachments saved successfully.");
 
