@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('lastname')->nullable();
             $table->string('father_firstname')->nullable();
             $table->string('father_lastname')->nullable();
-            $table->enum('gender', ['Male', 'Female', 'Other'])->nullable();
+            $table->enum('gender', ['Male', 'Female', 'Preferred Not To Say'])->nullable();
             $table->string('phone')->nullable();
             $table->string('mobile')->nullable();
             $table->string('whatsapp')->nullable();
