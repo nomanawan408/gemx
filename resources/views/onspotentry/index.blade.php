@@ -27,6 +27,7 @@
                                         <th>Email</th>
                                         <th>Phone</th>
                                         <th>CNIC/Passport No</th>
+                                        <th>Role</th>
                                         @if (auth()->user()->can('manage users'))
                                             <th>Action</th>
                                         @endif
@@ -36,13 +37,14 @@
                                     @foreach ($users as $user)
                                     <tr>
                                         <td>
-                                            <a href="{{ route('profile.index', $user->id) }}">
+                                            <a href="{{ route('profile.personal', $user->id) }}">
                                                 {{ $user->name }}
                                             </a>
                                         </td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->phone }}</td>
                                         <td>{{ $user->cnic_passport_no }}</td>
+                                        <td>{{ $user->getRoleNames()->implode(', ') }}</td>
                                         @if (auth()->user()->can('manage users'))
                                             <td>
                                                 <form action="{{ route('users.delete', $user->id) }}" method="POST" style="display:inline-block;">
