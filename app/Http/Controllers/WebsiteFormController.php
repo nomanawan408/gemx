@@ -793,7 +793,7 @@ class WebsiteFormController extends Controller
             'status' => 'pending'        
         ]);        
 
-        // $user->assignRole('exhibitor');
+        $user->assignRole('exhibitor');
 
             // Step 2: Download Files from URLs and Save Them
             $saveFileFromUrl = function ($url, $folder, $userId) {
