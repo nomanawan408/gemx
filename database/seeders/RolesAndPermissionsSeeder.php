@@ -293,7 +293,8 @@ class RolesAndPermissionsSeeder extends Seeder
                 'manage visitors',
                 'manage exhibitors',
                 //
-                'manage sale_purchase',
+                'add sales',
+                'add purchase',
             ],
            
 
