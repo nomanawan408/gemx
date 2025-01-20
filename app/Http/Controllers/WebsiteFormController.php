@@ -34,7 +34,7 @@ class WebsiteFormController extends Controller
     {
         try {
         
-        \Log::info('Request Data:', $request->all());
+        // \Log::info('Request Data:', $request->all());
 
         // Remove json_decode since data is already available in $request
         $validated = $request->validate([
@@ -229,7 +229,7 @@ class WebsiteFormController extends Controller
     public function submit_international_visitor_form(Request $request)
     {
         //
-        \Log::info($request->all()); // Log for debugging
+        // \Log::info($request->all()); // Log for debugging
 
         try {
         $data = json_decode($request->getContent(), true);
@@ -408,7 +408,7 @@ class WebsiteFormController extends Controller
     public function submit_buyer_form(Request $request)
     {
         try {
-            \Log::info('Request Data:', $request->all());
+            // \Log::info('Request Data:', $request->all());
     
             // **Handle File Uploads** and Validation Rules
             $validated = $request->validate([
