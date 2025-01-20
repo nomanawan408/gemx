@@ -128,7 +128,7 @@
                                                    
 
                                                     {{------------------------ For Exhibitors -----------------}}
-                                                    @if (auth()->user()->hasRole('exhibitor') || auth()->user()->can('admin'))
+                                                    @if($user->hasRole('exhibitor'))
                                                         <li><strong>Chamber/Association Membership:</strong>
                                                             {{ $user->business->chamber_association_membership }}</li>
                                                         <li><strong>Nature of Business:</strong>
@@ -146,13 +146,13 @@
                                                         <li><strong>Chamber/Association Membership No:</strong>
                                                             {{ $user->business->chamber_association_no }}</li>
                                                         <li><strong>Annual Turnover (PKR):</strong>
-                                                            {{ $user->business->annual_turnover_pkr }}</li>
+                                                            {{ $user->business->annual_turnover }}</li>
                                                         <li><strong>Annual Export (USD):</strong>
-                                                            {{ $user->business->annual_export_usd }}</li>
+                                                            {{ $user->business->annual_import_export }}</li>
                                                     @endif
 
                                                     {{------------------------ For International Visitors -----------------}}
-                                                    @if (auth()->user()->hasRole('international_visitor') || auth()->user()->can('admin'))
+                                                    @if($user->hasRole('international_visitor'))
                                                     <li><strong>Type of Business:</strong>
                                                         {{ $user->business->type_of_business }}</li>
                                                     <li><strong>Main Business Items:</strong>
@@ -170,7 +170,7 @@
                                                     @endif
 
                                                     {{------------------------ For Visitors -----------------}}
-                                                    @if (auth()->user()->hasRole('visitor') || auth()->user()->can('admin'))
+                                                    @if($user->hasRole('visitor'))
                                                         <li><strong>Main Export Items:</strong>
                                                             {{ $user->business->main_export_items }}</li>
                                                             <li><strong>Annual Turnover (PKR):</strong>
@@ -183,14 +183,13 @@
                                                     @endif
 
                                                     {{---------------------------- For Buyers -------------------------}}
-                                                    @if (auth()->user()->hasRole('buyer') || auth()->user()->can('admin'))
-                                                        <li><strong>Company Registration No:</strong> <a
-                                                                href="{{ $user->business->chamber_association_member }}"
-                                                                target="_blank">{{ $user->business->website_url }}</a></li>
+                                                    @if($user->hasRole('buyer'))
+                                                        <li><strong>Company Registration No:</strong> 
+                                                              {{$user->business->company_registered_number }}</li>
                                                         <li><strong>Company VAT/TAX No:</strong>
-                                                            {{ $user->business->export_items }}</li>
-                                                        <li><strong>Chamber/Association Membership:</strong>
-                                                            {{ $user->business->export_items }}</li>
+                                                            {{ $user->business->vat_tax_number }}</li>
+                                                        <li><strong>Chamber/Association Membership Number:</strong>
+                                                            {{ $user->business->chamber_association_no }}</li>
                                                         <li><strong>Type of Business:</strong>
                                                             {{ $user->business->type_of_business }}</li>
                                                         <li><strong>Main Bussiness Items:</strong>
@@ -217,7 +216,7 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    @if (isset($user->participant) && $user->participant->count() > 0)
+                                    @if (isset($user->participant))
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <h5 class="fw-bold">Participants Details</h5>
@@ -315,7 +314,7 @@
                                                     </li>
                                                     <li>
                                                         <strong>Exhibition Date:</strong>
-                                                        {{ \Carbon\Carbon::parse($user->exhibition->exhibition_date)->format('d M, Y') }}
+                                                        {{ \Carbon\Carbon::parse($user->exhibition->exhibition_date) }}
                                                     </li>
                                                     <li>
                                                         <strong>Exhibition Type:</strong>
@@ -341,7 +340,7 @@
                                                     <li><strong>Stall:</strong> {{ $user->stall->stall }}</li>
                                                     <li><strong>Stall Products:</strong> {{ $user->stall->stall_products }}
                                                     </li>
-                                                    <li><strong>Select Business:</strong> {{ $user->stall->selectbiz }}
+                                                    {{-- <li><strong>Select Business:</strong> {{ $user->stall->selectbiz }} --}}
                                                     </li>
                                                     <li><strong>Booth Type:</strong> {{ $user->stall->booth_type }}</li>
                                                     <li><strong>Booth Size:</strong> {{ $user->stall->booth_size }}</li>
@@ -510,7 +509,8 @@
                                                     </li>
                                                     <li><strong>Company Registration Number:</strong>
                                                         @if (isset($user->attachment->company_registration_number))
-                                                            {{ $user->attachment->company_registration_number }}
+                                                            <a href="{{ asset('storage/' . $user->attachment->company_registration_number) }}"
+                                                                target="_blank" class="btn btn-primary btn-sm">View</a>
                                                         @else
                                                             Not uploaded
                                                         @endif

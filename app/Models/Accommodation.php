@@ -16,6 +16,7 @@ class Accommodation extends Model
         'room_no',
         'check_in_time',
         'description',
+        'accommodation_pass',
     ];
 
     public function user()

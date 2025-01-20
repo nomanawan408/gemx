@@ -25,6 +25,7 @@
                                         <th>Room No</th>
                                         <th>Check-in Time</th>
                                         <th>Description</th>
+                                        <th>Accommodation Pass</th>
                                        @can('admin')
                                        <th>Actions</th>
                                        @endcan
@@ -53,6 +54,13 @@
                                             <td>{{ $accommodation->room_no }}</td>
                                             <td>{{ $accommodation->check_in_time }}</td>
                                             <td>{{ $accommodation->description }}</td>
+                                            <td>
+                                                @if($accommodation->accommodation_pass)
+                                                    <a href="{{ asset('storage/'.$accommodation->accommodation_pass) }}" target="_blank" class="btn btn-sm btn-primary">View</a>
+                                                @else
+                                                    <span class="badge bg-label-danger">No File</span>
+                                                @endif
+                                            </td>
                                             @can('admin')
                                         
                                             <td>

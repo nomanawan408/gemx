@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OnSpotUserRegistration;    
 
 class OnspotEntryController extends Controller
 {
@@ -68,7 +70,8 @@ class OnspotEntryController extends Controller
 
         // Assign the user_type role
         $user->assignRole($validated['user_type']);
-
+        // Send the email
+        Mail::to($user->email)->send(new OnSpotUserRegistration($user));
         // Redirect with success message
         return redirect()->route('onspot-entry.index')->with('success', 'User created and role assigned successfully.');
     }

@@ -26,8 +26,8 @@ class AccommodationController extends Controller
         return view('accommodations.create', compact('user'));
     }
 
-    public function select_user(){
-        $users = User::role('buyer')->get();    
+    public function select_user() {
+        $users = User::role('buyer')->where('status', 'approved')->get();
         return view('accommodations.select_user', compact('users'));
     }
 
@@ -38,12 +38,18 @@ class AccommodationController extends Controller
             'user_id' => 'required|exists:users,id',
             'hotel_name' => 'required|string|max:255',
             'room_no' => 'required|integer|min:1',
-            'check_in_time' => 'nullable|date_format:H:i',
+            'check_in_time' => 'nullable|date',
             'description' => 'nullable|string',
+            'accommodation_pass' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
-    
+        
         // Retrieve user details
         $user = User::find($request->user_id);
+        
+        $filename = null;
+        if ($request->hasFile('accommodation_pass')) {
+            $filename = $request->file('accommodation_pass')->store('uploads/accommodation_pass', 'public');
+        }
         
         // Create the accommodation record
         $accommodation = Accommodation::create([
@@ -52,6 +58,7 @@ class AccommodationController extends Controller
             'room_no' => $request->room_no,
             'check_in_time' => $request->check_in_time,
             'description' => $request->description,
+            'accommodation_pass' => $filename,
         ]);
             
         Mail::to($user->email)->send(new AccommodationCreated($accommodation));

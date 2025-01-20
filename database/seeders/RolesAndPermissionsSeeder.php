@@ -96,6 +96,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'view sale_purchase',
             'view sale',
             'view purchase',
+
+            //
+            'add onspot entry',
+            'view onspot entry',
         ];
 
         // Create Permissions
@@ -105,7 +109,11 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Define Roles
         $roles = [
-            
+            'onspot_admin' => [
+                'admin',
+                'add onspot entry',
+                'view onspot entry',
+            ],
             'sale_purchase_admin' => [
                 'add sales',
                 'add purchase',
@@ -208,6 +216,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
             'transport' => [
                 'view flight details',
+                'view buyers',
                 'view international visitors',
                 'admin',
             ],
@@ -295,6 +304,9 @@ class RolesAndPermissionsSeeder extends Seeder
                 //
                 'add sales',
                 'add purchase',
+                //
+                'add onspot entry',
+                'view onspot entry',
             ],
            
 

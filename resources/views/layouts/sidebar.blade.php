@@ -350,6 +350,7 @@
                   </ul>
                 </div>
               </li>
+              @if (auth()->user()->can('view onspot entry'))
               <li class="nav-item {{ request()->is('onspot-entry*') ? 'active' : '' }}">
                 <a data-bs-toggle="collapse" href="#onspot-entry">
                   <i class="fas fa-keyboard"></i>
@@ -358,19 +359,24 @@
                 </a>
                 <div class="collapse" id="onspot-entry">
                   <ul class="nav nav-collapse">
+                    @can('view onspot entry')
                     <li class="{{ request()->routeIs('onspot-entry.index') ? 'active' : '' }}">
                       <a href="{{ route('onspot-entry.index') }}">
                         <span class="sub-item">View All Onspot Users</span>
                       </a>
                     </li>
+                    @endcan
+                    @can('add onspot entry')
                     <li class="{{ request()->routeIs('onspot-entry.create') ? 'active' : '' }}">
                       <a href="{{ route('onspot-entry.create') }}">
                         <span class="sub-item">Add Onspot User</span>
                       </a>
                     </li>
+                    @endcan
                   </ul>
                 </div>
               </li>
+              @endif
 
               {{-- @can('view transport')
               <li class="nav-item {{ request()->is('transports*') ? 'active' : '' }}">

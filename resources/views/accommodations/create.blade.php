@@ -13,7 +13,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('accommodation.store') }}" method="POST">
+                        <form action="{{ route('accommodation.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="user_id" value="{{ $user->id }}">
                             
@@ -27,24 +27,33 @@
                                 <!-- Passport Number -->
                                 <div class="col-md-6 mb-3">
                                     <label for="passport_no" class="form-label">Passport Number<span style="color: red;">*</span></label>
-                                    <input type="text" readonly value="{{ $user->cnic_passport_no }}" class="form-control" id="passport_no" name="passport_no" required>
+                                    <input type="text" readonly value="{{ $user->cnic_passport_no }}" class="form-control @error('passport_no') is-invalid @enderror" id="passport_no" name="passport_no" required>
+                                    @error('passport_no')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <!-- Hotel Name -->
                                 <div class="col-md-6 mb-3">
                                     <label for="hotel_name" class="form-label">Hotel Name<span style="color: red;">*</span></label>
-                                    <select class="form-select" id="hotel_name" name="hotel_name" required>
-                                        <option value="" selected disabled>Select Hotel</option>
+                                    <select class="form-select @error('hotel_name') is-invalid @enderror" id="hotel_name" name="hotel_name" required>
+                                        <option value="" selected disabled>- Select Hotel -</option>
                                         <option value="Serena Hotel">Serena Hotel</option>
                                         <option value="Best Western Hotel">Best Western Hotel</option>
                                         <option value="Marriott Hotel">Marriott Hotel</option>
                                         <option value="Ramada Hotel">Ramada Hotel</option>
                                     </select>
+                                    @error('hotel_name')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <!-- Room Number -->
                                 <div class="col-md-6 mb-3">
                                     <label for="room_no" class="form-label">Room Number<span style="color: red;">*</span></label>
-                                    <input type="number" class="form-control" id="room_no" name="room_no" required>
+                                    <input type="number" class="form-control @error('room_no') is-invalid @enderror" id="room_no" name="room_no" required>
+                                    @error('room_no')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         
@@ -53,12 +62,18 @@
                                 <!-- Check-in Time -->
                                 <div class="col-md-6 mb-3">
                                     <label for="check_in_time" class="form-label">Check-in Date & Time </label>
-                                    <input type="datetime-local" class="form-control" id="check_in_time" name="check_in_time">
+                                    <input type="datetime-local" class="form-control @error('check_in_time') is-invalid @enderror" id="check_in_time" name="check_in_time">
+                                    @error('check_in_time')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <!-- Accommodation Pass -->
                                 <div class="col-md-6 mb-3">
                                     <label for="accommodation_pass" class="form-label">Booking Voucher</label>
-                                    <input type="file" class="form-control" id="accommodation_pass" name="accommodation_pass">
+                                    <input type="file" class="form-control @error('accommodation_pass') is-invalid @enderror" id="accommodation_pass" name="accommodation_pass">
+                                    @error('accommodation_pass')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         
@@ -67,7 +82,10 @@
                                 <!-- Description -->
                                 <div class="col-md-12 mb-3">
                                     <label for="description" class="form-label">Description</label>
-                                    <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4"></textarea>
+                                    @error('description')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         

@@ -221,13 +221,23 @@
 
                                                         </td>
                                                     @endcan
-                                                    <!-- Action -->
-                                                    <td>
-                                                        <a href="{{ route('profile.index', $user->id) }}"
-                                                            class="btn btn-link btn-primary btn-lg">
-                                                            <i class="fa fa-eye"></i>
-                                                        </a>
-                                                    </td>
+                                                   <!-- Action -->
+                                                        <td class="g-4">
+                                                            @if (auth()->user()->can('manage sale_purchase'))
+                                                                <a class="p-2" title="Upload Sale/Purchase"
+                                                                    href="{{ route('sale-purchase.create', $user->id) }}"
+                                                                    class="btn btn-link btn-primary btn-lg">
+                                                                    <i class="fa fa-upload"></i>
+                                                                </a>
+                                                            @endif
+                                                            @can('admin')
+                                                                <a title="View Details" class="p-2"
+                                                                    href="{{ route('profile.index', $user->id) }}"
+                                                                    class="btn btn-link btn-primary btn-lg">
+                                                                    <i class="fa fa-eye"></i>
+                                                                </a>
+                                                            @endcan
+                                                        </td>
 
                                                 </tr>
                                             @endforeach
@@ -419,11 +429,21 @@
 
                                                         </td>
                                                         <!-- Action -->
-                                                        <td>
-                                                            <a href="{{ route('profile.index', $user->id) }}"
-                                                                class="btn btn-link btn-primary btn-lg">
-                                                                <i class="fa fa-eye"></i>
-                                                            </a>
+                                                        <td class="g-4">
+                                                            @if (auth()->user()->can('manage sale_purchase'))
+                                                                <a class="p-2" title="Upload Sale/Purchase"
+                                                                    href="{{ route('sale-purchase.create', $user->id) }}"
+                                                                    class="btn btn-link btn-primary btn-lg">
+                                                                    <i class="fa fa-upload"></i>
+                                                                </a>
+                                                            @endif
+                                                            @can('admin')
+                                                                <a title="View Details" class="p-2"
+                                                                    href="{{ route('profile.index', $user->id) }}"
+                                                                    class="btn btn-link btn-primary btn-lg">
+                                                                    <i class="fa fa-eye"></i>
+                                                                </a>
+                                                            @endcan
                                                         </td>
                                                     @endcan
                                                 </tr>

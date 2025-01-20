@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('room_no');
             $table->time('check_in_time')->nullable();
             $table->text('description')->nullable();
+            $table->string('accommodation_pass')->nullable();
+            
             $table->timestamps();
         });
     }

@@ -55,10 +55,9 @@ class FlightController extends Controller
     public function buyerSelection()
     {
         // Fetch buyers along with their single userParticipant
-        $buyers = User::role('buyer')
+        $buyers = User::role('buyer')->where('status', 'approved')
             ->with('participant') // Eager load the single userParticipant relationship
             ->get();
-    
         return view('flights.select_buyer', compact('buyers'));
     }
     
