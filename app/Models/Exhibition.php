@@ -9,10 +9,10 @@ class Exhibition extends Model
     //
     protected $fillable = [
             'user_id',
+            'exhibition_name',
             'exhibition_date',
             'type',
             'country',
-            'exhibition_name'
         ];
     
     

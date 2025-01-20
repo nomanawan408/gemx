@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('stall')->nullable();
             $table->string('stall_products')->nullable();
             $table->string('selectbiz')->nullable();
-            $table->string('booth_type')->default('Gems & Jewellery');
-            $table->string('booth_size')->default('Any Special Request');
-            $table->string('other_booth_size')->default('5x5');
+            $table->string('booth_type')->nullable();
+            $table->string('booth_size')->nullable();
+            $table->string('other_booth_size')->nullable();
             $table->timestamps();        
         });
     }

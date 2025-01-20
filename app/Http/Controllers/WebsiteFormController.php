@@ -671,7 +671,7 @@ class WebsiteFormController extends Controller
 
         try{
             
-            \Log::info($request->all()); // Log for debugging
+            // \Log::info($request->all()); // Log for debugging
             //
             $data = json_decode($request->getContent(), true);
 
@@ -871,14 +871,15 @@ class WebsiteFormController extends Controller
                 'chamber_association_no' => $validated['chamber_member_number'] ?? null,
             ]);
             // Save Exhibition Details
-            Exhibition::create([
+            $exhibitionData = [
                 'user_id' => $user->id,
                 'exhibition_name' => $validated['exhibition_name'] ?? null,
                 'exhibition_date' => $validated['exhibition_date'] ?? null,
                 'type' => $validated['exhibition_type'] ?? null,
                 'country' => $validated['exhibition_country'] ?? null,
-            ]);
-        
+            ];
+
+            Exhibition::create($exhibitionData);
 
             // Step 5: Save Stall Details
             Stall::create([
