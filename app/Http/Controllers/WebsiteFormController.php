@@ -727,7 +727,7 @@ class WebsiteFormController extends Controller
                 'annual_export' => 'nullable|string',
                 'bank_statement' => 'nullable',
                 'exhibition' => 'nullable|string',
-                'exhibition_date' => 'nullable|date',
+                'exhibition_date' => 'nullable',
                 'exhibition_type' => 'nullable|string',
                 'exhibition_country' => 'nullable|string',
                 'exhibition_name' => 'nullable|string',
@@ -871,16 +871,13 @@ class WebsiteFormController extends Controller
                 'chamber_association_no' => $validated['chamber_member_number'] ?? null,
             ]);
             // Save Exhibition Details
-            $exhibitionData = [
+            Exhibition::create([
                 'user_id' => $user->id,
                 'exhibition_name' => $validated['exhibition_name'] ?? null,
                 'exhibition_date' => $validated['exhibition_date'] ?? null,
                 'type' => $validated['exhibition_type'] ?? null,
                 'country' => $validated['exhibition_country'] ?? null,
-            ];
-
-            Exhibition::create($exhibitionData);
-
+            ]);
             // Step 5: Save Stall Details
             Stall::create([
                 'user_id' => $user->id,

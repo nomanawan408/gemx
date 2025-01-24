@@ -131,8 +131,6 @@
                                                             <i class="fa fa-eye"></i>
                                                         </a>
                                                     </td>
-
-
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -221,23 +219,23 @@
 
                                                         </td>
                                                     @endcan
-                                                   <!-- Action -->
-                                                        <td class="g-4">
-                                                            @if (auth()->user()->can('manage sale_purchase'))
-                                                                <a class="p-2" title="Upload Sale/Purchase"
-                                                                    href="{{ route('sale-purchase.create', $user->id) }}"
-                                                                    class="btn btn-link btn-primary btn-lg">
-                                                                    <i class="fa fa-upload"></i>
-                                                                </a>
-                                                            @endif
-                                                            @can('admin')
-                                                                <a title="View Details" class="p-2"
-                                                                    href="{{ route('profile.index', $user->id) }}"
-                                                                    class="btn btn-link btn-primary btn-lg">
-                                                                    <i class="fa fa-eye"></i>
-                                                                </a>
-                                                            @endcan
-                                                        </td>
+                                                    <!-- Action -->
+                                                    <td class="g-4">
+                                                        @if (auth()->user()->can('manage sale_purchase'))
+                                                            <a class="p-2" title="Upload Sale/Purchase"
+                                                                href="{{ route('sale-purchase.create', $user->id) }}"
+                                                                class="btn btn-link btn-primary btn-lg">
+                                                                <i class="fa fa-upload"></i>
+                                                            </a>
+                                                        @endif
+                                                        @can('admin')
+                                                            <a title="View Details" class="p-2"
+                                                                href="{{ route('profile.index', $user->id) }}"
+                                                                class="btn btn-link btn-primary btn-lg">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                        @endcan
+                                                    </td>
 
                                                 </tr>
                                             @endforeach
@@ -348,7 +346,7 @@
                         </div>
                     @endcan
                 @else
-                    <!-- Approved users Tab -->
+                    <!-- Approved users Tab (MY EXHIBITORS  ) -->
                     <div class="tab-pane fade show active" id="approved-users" role="tabpanel"
                         aria-labelledby="approved-users-tab">
                         <div class="card mt-4">
@@ -397,8 +395,8 @@
                                                     <td>{{ $user->profession }}</td>
                                                     <td>{{ $user->business->stall_products ?? 'N/A' }}</td>
                                                     <!-- Status -->
-                                                    <td>
-                                                        @can('can approve')
+                                                    @can('can approve')
+                                                        <td>
                                                             @if ($user->status == 'pending')
                                                                 <div>
                                                                     <form action="{{ route('users.approve', $user->id) }}"
@@ -426,26 +424,25 @@
                                                                 class="badge bg-{{ $user->status == 'approved' ? 'success' : 'danger' }}">
                                                                 {{ ucfirst($user->status) }}
                                                             </span>
-
-                                                        </td>
-                                                        <!-- Action -->
-                                                        <td class="g-4">
-                                                            @if (auth()->user()->can('manage sale_purchase'))
-                                                                <a class="p-2" title="Upload Sale/Purchase"
-                                                                    href="{{ route('sale-purchase.create', $user->id) }}"
-                                                                    class="btn btn-link btn-primary btn-lg">
-                                                                    <i class="fa fa-upload"></i>
-                                                                </a>
-                                                            @endif
-                                                            @can('admin')
-                                                                <a title="View Details" class="p-2"
-                                                                    href="{{ route('profile.index', $user->id) }}"
-                                                                    class="btn btn-link btn-primary btn-lg">
-                                                                    <i class="fa fa-eye"></i>
-                                                                </a>
-                                                            @endcan
                                                         </td>
                                                     @endcan
+                                                    <!-- Action -->
+                                                    <td class="g-4">
+                                                        @if (auth()->user()->can('manage sale_purchase'))
+                                                            <a class="p-2" title="Upload Sale/Purchase"
+                                                                href="{{ route('sale-purchase.create', $user->id) }}"
+                                                                class="btn btn-link btn-primary btn-lg">
+                                                                <i class="fa fa-upload"></i>
+                                                            </a>
+                                                        @endif
+                                                        @can('admin')
+                                                            <a title="View Details" class="p-2"
+                                                                href="{{ route('profile.index', $user->id) }}"
+                                                                class="btn btn-link btn-primary btn-lg">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                        @endcan
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -455,10 +452,7 @@
                         </div>
                     </div>
                 @endif
-
             </div>
-        </div>
-    </div>
 
     <!-- user Detail Modals -->
     @foreach ($users as $user)
