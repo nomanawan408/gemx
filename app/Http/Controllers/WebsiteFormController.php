@@ -492,6 +492,7 @@ class WebsiteFormController extends Controller
                 'paid_invited_by' => 'nullable|string|max:255',
                 'paid_invited_by_other' => 'nullable|string|max:255',
                 'paid_amount' => 'nullable|string|max:255',
+                
         
                 // Files and Attachments
                 'paid_personal_photo' => 'nullable|url',
@@ -527,6 +528,7 @@ class WebsiteFormController extends Controller
                 'instagram' => $validated['paid_instagram'],
                 'wechat' => $validated['paid_wechat'],
                 'imo' => $validated['paid_imo'],
+                'trip_to_pak' => $validated['paid_previous_trips'],
                 'cnic_passport_no' => $validated['paid_passport_no'],
                 'passport_type' => $validated['paid_passport_type'],
                 'date_of_issue' => $validated['paid_passport_issue'],

@@ -55,10 +55,13 @@
                                 <p class="p-0 m-0 font-monospace text-decoration-underline">Gender:</p>
                                 <p class="ps-2 m-0 font-monospace">{{ $user->gender ?? '-' }}</p>
                             </div>
-                            <div class="p-0 m-0">
-                                <p class="p-0 m-0 font-monospace text-decoration-underline">Profession:</p>
-                                <p class="ps-2 m-0 font-monospace">{{ $user->profession }}</p>
-                            </div>
+                            @if (!$user->hasRole('buyer'))
+                                <div class="p-0 m-0">
+                                    <p class="p-0 m-0 font-monospace text-decoration-underline">Profession:</p>
+                                    <p class="ps-2 m-0 font-monospace">{{ $user->profession }}</p>
+                                </div>
+                            @endif
+                           
                             <hr>
                         </div>
 
@@ -73,12 +76,20 @@
                                             <ul class="list-unstyled small">
                                                 <li><strong>Father Name:</strong> <span>{{ $user->father_first_name }}
                                                         {{ $user->father_last_name }}</span> </li>
-                                                <li><strong>Any Prevoius Trips to Pakistan:</strong>
-                                                    {{ $user->trip_to_pak == 0 ? 'No' : 'Yes' }}</li>
+                                               
                                                 <li><strong>Passport/CNIC No:</strong> {{ $user->cnic_passport_no ?? '-'}}</li>
                                                 <li><strong>Date of issue:</strong> {{ $user->date_of_issue ?? '-'}}</li>
                                                 <li><strong>Date of Expiry:</strong> {{ $user->date_of_expiry ?? '-' }}</li>
+                                                @if ($user->hasRole('buyer') || $user->hasRole('international_visitor') )
+                                                <li><strong>Any Prevoius Trips to Pakistan:</strong>
+                                                    {{ $user->trip_to_pak == 0 ? 'No' : 'Yes' }}</li>
                                                 <li><strong>Type of Passport:</strong> {{ $user->passport_type ?? '-' }}</li>
+                                                <li><strong>Product Interest:</strong>
+                                                    {{ isset($user->business->product_interest) ? $user->business->product_interest : 'Not Set' }}
+                                                </li>
+                                                <li><strong>Expected Budget for PKGJS 2025:</strong> {{ $user->business->amount ?? '-'}}
+                                                </li>
+                                                @endif
                                                 {{-- <li><strong>View Passport:</strong>
                                                     @if ($user->attachment->passport_cnic_file)
                                                         <a href="{{ asset('storage/' . $user->attachment->passport_cnic_file) }}"
@@ -89,13 +100,10 @@
                                                 </li> --}}
                                                 <li><strong>Country:</strong> {{ $user->country ?? '-'}}</li>
                                                 <li><strong>Nationality:</strong> {{ $user->nationality ?? '-'}}</li>
-                                                <li><strong>Product Interest:</strong>
-                                                    {{ isset($user->business->product_interest) ? $user->business->product_interest : 'Not Set' }}
-                                                </li>
+                                                
                                                 <li><strong>Which way you are invited:</strong> {{ $user->invited_way ?? '-'}}
                                                 </li>
-                                                <li><strong>Expected Budget for PKGJS 2025:</strong> {{ $user->amount ?? '-'}}
-                                                </li>
+                                                
 
                                             </ul>
                                             <hr>
@@ -110,12 +118,15 @@
                                                     </li>
                                                     <li><strong>Company Address:</strong> {{ $user->business->address }}
                                                     </li>
-                                                    <li><strong>Company Email:</strong> {{ $user->business->email }}</li>
+                                                    <li><strong>Company Email:</strong> {{ $user->business->company_email }}</li>
                                                     <li><strong>Position:</strong> {{ $user->business->position }}</li>
                                                     <li><strong>Company Phone:</strong>
                                                         {{ $user->business->company_phone }}</li>
-                                                    <li><strong>Company Mobile:</strong>
-                                                        {{ $user->business->company_mobile }}</li>
+                                                    @if (!$user->hasRole('exhibitor'))
+                                                        <li><strong>Company Mobile:</strong>
+                                                            {{ $user->business->company_mobile }}</li>
+                                                    @endif
+                                                   
                                                     <li><strong>Website URL:</strong> <a
                                                             href="{{ $user->business->website_url }}"
                                                             target="_blank">{{ $user->business->website_url }}</a></li>
@@ -138,7 +149,7 @@
                                                         <li><strong>Main Export Items:</strong>
                                                             {{ $user->business->main_export_items }}</li>
                                                         <li><strong>Business Registered:</strong>
-                                                            {{ $user->business->business_registered }}</li>
+                                                            {{ $user->business->company_registered_number }}</li>
                                                         <li><strong>NTN:</strong>
                                                             {{ $user->business->ntn }}</li>
                                                         <li><strong>GST:</strong>
@@ -176,7 +187,7 @@
                                                             <li><strong>Annual Turnover (PKR):</strong>
                                                                 {{ $user->business->annual_turnover }}</li>
                                                         <li><strong>Annual National Sales (PKR):</strong>
-                                                            {{ $user->business->annual_national_sales }}</li>
+                                                            {{ $user->business->national_sale }}</li>
                                                         <li><strong>Annual Export (USD):</strong>
                                                             {{ number_format($user->business->annual_import_export, 2) }}
                                                         </li>
