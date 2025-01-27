@@ -60,6 +60,9 @@
                                                     <th>Status</th>
                                                     <th>Actions</th>
                                                 @endcan
+                                                @can('manage sale_purchase')
+                                                    <th>Actions</th>
+                                                @endcan
                                             </tr>
                                         </thead>
 
