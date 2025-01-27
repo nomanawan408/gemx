@@ -38,7 +38,7 @@ class AccommodationController extends Controller
             'user_id' => 'required|exists:users,id',
             'hotel_name' => 'required|string|max:255',
             'room_no' => 'required|integer|min:1',
-            'check_in_time' => 'nullable|date',
+            'check_in_time' => 'nullable|date_format:Y-m-d\TH:i',
             'description' => 'nullable|string',
             'accommodation_pass' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
@@ -56,7 +56,7 @@ class AccommodationController extends Controller
             'user_id' => $request->user_id,
             'hotel_name' => $request->hotel_name,
             'room_no' => $request->room_no,
-            'check_in_time' => $request->check_in_time,
+            'check_in_time' => $request->check_in_time ? date('Y-m-d H:i', strtotime($request->check_in_time)) : null,
             'description' => $request->description,
             'accommodation_pass' => $filename,
         ]);

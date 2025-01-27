@@ -52,7 +52,7 @@
                                             
                                             <td>{{ $accommodation->hotel_name }}</td>
                                             <td>{{ $accommodation->room_no }}</td>
-                                            <td>{{ $accommodation->check_in_time }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($accommodation->check_in_time)->format('d-m-Y H:i A') }}</td>
                                             <td>{{ $accommodation->description }}</td>
                                             <td>
                                                 @if($accommodation->accommodation_pass)
