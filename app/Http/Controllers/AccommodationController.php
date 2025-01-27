@@ -13,7 +13,11 @@ class AccommodationController extends Controller
     //
     public function index()
     {
-        $accommodations = Accommodation::all();
+        if (auth()->user()->can('admin')) {
+            $accommodations = Accommodation::all();
+        } else {
+            $accommodations = Accommodation::where('user_id', auth()->user()->id)->get();
+        }
         return view('accommodations.index', compact('accommodations'));
     }
 
