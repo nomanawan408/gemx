@@ -12,7 +12,7 @@ class ExhibitorsController extends Controller
      */
     public function index()
     {
-        $users = User::role('exhibitor')->orderByDesc('id')->get();
+        $users = User::role('exhibitor')->latest()->get();
         return view('exhibitors.index', compact('users'));
     }
 
