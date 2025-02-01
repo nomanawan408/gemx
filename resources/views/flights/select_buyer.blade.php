@@ -54,11 +54,11 @@
                                         <label for="email" class="form-label">Email Address</label>
                                         <input type="email" class="form-control" id="email" readonly name="email" value="">
                                     </div>
-                                    <!-- Participant Name -->
+                                    {{-- <!-- Participant Name -->
                                     <div class="col-md-6 mb-3">
                                         <label for="participant_name" class="form-label">Participant Name</label>
                                         <input type="text" class="form-control" id="participant_name" readonly name="participant_name" value="">
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
 

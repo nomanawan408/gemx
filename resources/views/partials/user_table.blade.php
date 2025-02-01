@@ -12,6 +12,7 @@
                         @can('admin')
                             <th>Status</th>
                         @endcan
+                        <th>Date/Time</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -81,6 +82,14 @@
                                     </span>
                                 </td>
                             @endcan
+
+                            <!-- Date/Time -->
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span class="me-2">{{ \Carbon\Carbon::parse($user->created_at)->format('d-m-Y') }}
+                                    </span>
+                                    <span>{{ \Carbon\Carbon::parse($user->created_at)->format('h:i A') }}</span>
+                                </div>
                             <!-- Action -->
                             <td class="g-4">
                                 @if (auth()->user()->can('manage sale_purchase'))
