@@ -12,7 +12,7 @@ class ExhibitorsController extends Controller
      */
     public function index()
     {
-        $users = User::role('exhibitor')->get(); // Fetch users with 'buyer' role
+        $users = User::role('exhibitor')->orderByDesc('id')->get();
         return view('exhibitors.index', compact('users'));
     }
 

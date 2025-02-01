@@ -12,7 +12,7 @@ class VisitorsController extends Controller
      */
     public function index()
     {
-        $users = User::role('visitor')->get();
+        $users = User::role('visitor')->orderByDesc('id')->get();
                 return view('visitors.index', compact('users'));
     }
 

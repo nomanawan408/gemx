@@ -11,7 +11,7 @@ class SalePurchaseController extends Controller
     {
         $users = User::role(['exhibitor','buyer'])->whereHas('attachment', function($query) {
             $query->whereNotNull('sale_purchase');
-        })->get();
+        })->orderByDesc('id')->get();
         return view('sale_purchase.index', compact('users'));
     }
     public function viewSales()

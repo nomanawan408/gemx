@@ -420,7 +420,6 @@ class WebsiteFormController extends Controller
                 'paid_father_firstname' => 'nullable|string|max:255',
                 'paid_father_lastname' => 'nullable|string|max:255',
                 'paid_gender' => 'nullable|string|max:255',
-                'paid_gender' => 'nullable|string|max:255',
 
                 'paid_country' => 'nullable|string|max:255',
                 'paid_nationality' => 'nullable|string|max:255',

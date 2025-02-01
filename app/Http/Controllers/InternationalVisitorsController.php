@@ -12,7 +12,7 @@ class InternationalVisitorsController extends Controller
      */
      public function index()
      {
-         $users = User::role('international_visitor')->get(); // Fetch users with 'buyer' role
+         $users = User::role('international_visitor')->orderByDesc('id')->get();
          return view('international_visitors.index', compact('users'));
      }
  
