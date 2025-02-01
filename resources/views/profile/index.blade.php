@@ -41,7 +41,7 @@
                             </div>
                             <div class="p-0 m-0">
                                 <p class="p-0 m-0 font-monospace text-decoration-underline">Mobile:</p>
-                                <p class="ps-2 m-0 font-monospace">{{ $user->mobile ?? '-'}}</p>
+                                <p class="ps-2 m-0 font-monospace">{{ $user->mobile ?? '-' }}</p>
                             </div>
                             <div class="p-0 m-0">
                                 <p class="p-0 m-0 font-monospace text-decoration-underline">WhatsApp:</p>
@@ -61,7 +61,7 @@
                                     <p class="ps-2 m-0 font-monospace">{{ $user->profession }}</p>
                                 </div>
                             @endif
-                           
+
                             <hr>
                         </div>
 
@@ -76,19 +76,23 @@
                                             <ul class="list-unstyled small">
                                                 <li><strong>Father Name:</strong> <span>{{ $user->father_first_name }}
                                                         {{ $user->father_last_name }}</span> </li>
-                                               
-                                                <li><strong>Passport/CNIC No:</strong> {{ $user->cnic_passport_no ?? '-'}}</li>
-                                                <li><strong>Date of issue:</strong> {{ $user->date_of_issue ?? '-'}}</li>
-                                                <li><strong>Date of Expiry:</strong> {{ $user->date_of_expiry ?? '-' }}</li>
-                                                @if ($user->hasRole('buyer') || $user->hasRole('international_visitor') )
-                                                <li><strong>Any Prevoius Trips to Pakistan:</strong>
-                                                    {{ $user->trip_to_pak == 0 ? 'No' : 'Yes' }}</li>
-                                                <li><strong>Type of Passport:</strong> {{ $user->passport_type ?? '-' }}</li>
-                                                <li><strong>Product Interest:</strong>
-                                                    {{ isset($user->business->product_interest) ? $user->business->product_interest : 'Not Set' }}
+
+                                                <li><strong>Passport/CNIC No:</strong> {{ $user->cnic_passport_no ?? '-' }}
                                                 </li>
-                                                <li><strong>Expected Budget for PKGJS 2025:</strong> {{ $user->business->amount ?? '-'}}
+                                                <li><strong>Date of issue:</strong> {{ $user->date_of_issue ?? '-' }}</li>
+                                                <li><strong>Date of Expiry:</strong> {{ $user->date_of_expiry ?? '-' }}
                                                 </li>
+                                                @if ($user->hasRole('buyer') || $user->hasRole('international_visitor'))
+                                                    <li><strong>Any Prevoius Trips to Pakistan:</strong>
+                                                        {{ $user->trip_to_pak == 0 ? 'No' : 'Yes' }}</li>
+                                                    <li><strong>Type of Passport:</strong>
+                                                        {{ $user->passport_type ?? '-' }}</li>
+                                                    <li><strong>Product Interest:</strong>
+                                                        {{ isset($user->business->product_interest) ? $user->business->product_interest : 'Not Set' }}
+                                                    </li>
+                                                    <li><strong>Expected Budget for PKGJS 2025:</strong>
+                                                        {{ $user->business->amount ?? '-' }}
+                                                    </li>
                                                 @endif
                                                 {{-- <li><strong>View Passport:</strong>
                                                     @if ($user->attachment->passport_cnic_file)
@@ -98,12 +102,13 @@
                                                         Not uploaded
                                                     @endif
                                                 </li> --}}
-                                                <li><strong>Country:</strong> {{ $user->country ?? '-'}}</li>
-                                                <li><strong>Nationality:</strong> {{ $user->nationality ?? '-'}}</li>
-                                                
-                                                <li><strong>Which way you are invited:</strong> {{ $user->invited_way ?? '-'}}
+                                                <li><strong>Country:</strong> {{ $user->country ?? '-' }}</li>
+                                                <li><strong>Nationality:</strong> {{ $user->nationality ?? '-' }}</li>
+
+                                                <li><strong>Which way you are invited:</strong>
+                                                    {{ $user->invited_way ?? '-' }}
                                                 </li>
-                                                
+
 
                                             </ul>
                                             <hr>
@@ -118,7 +123,8 @@
                                                     </li>
                                                     <li><strong>Company Address:</strong> {{ $user->business->address }}
                                                     </li>
-                                                    <li><strong>Company Email:</strong> {{ $user->business->company_email }}</li>
+                                                    <li><strong>Company Email:</strong>
+                                                        {{ $user->business->company_email }}</li>
                                                     <li><strong>Position:</strong> {{ $user->business->position }}</li>
                                                     <li><strong>Company Phone:</strong>
                                                         {{ $user->business->company_phone }}</li>
@@ -126,7 +132,7 @@
                                                         <li><strong>Company Mobile:</strong>
                                                             {{ $user->business->company_mobile }}</li>
                                                     @endif
-                                                   
+
                                                     <li><strong>Website URL:</strong> <a
                                                             href="{{ $user->business->website_url }}"
                                                             target="_blank">{{ $user->business->website_url }}</a></li>
@@ -136,10 +142,10 @@
                                                         {{ $user->business->main_import_countries }}</li>
                                                     <li><strong>Main Export Countries:</strong>
                                                         {{ $user->business->main_export_countries }}</li>
-                                                   
 
-                                                    {{------------------------ For Exhibitors -----------------}}
-                                                    @if($user->hasRole('exhibitor'))
+
+                                                    {{-- ---------------------- For Exhibitors --------------- --}}
+                                                    @if ($user->hasRole('exhibitor'))
                                                         <li><strong>Chamber/Association Membership:</strong>
                                                             {{ $user->business->chamber_association_membership }}</li>
                                                         <li><strong>Nature of Business:</strong>
@@ -162,30 +168,30 @@
                                                             {{ $user->business->annual_import_export }}</li>
                                                     @endif
 
-                                                    {{------------------------ For International Visitors -----------------}}
-                                                    @if($user->hasRole('international_visitor'))
-                                                    <li><strong>Type of Business:</strong>
-                                                        {{ $user->business->type_of_business }}</li>
-                                                    <li><strong>Main Business Items:</strong>
-                                                        {{ $user->business->main_business_items }}</li>
-                                                    <li><strong>Main Import Items:</strong>
-                                                        {{ $user->business->main_import_items }}</li>
+                                                    {{-- ---------------------- For International Visitors --------------- --}}
+                                                    @if ($user->hasRole('international_visitor'))
+                                                        <li><strong>Type of Business:</strong>
+                                                            {{ $user->business->type_of_business }}</li>
+                                                        <li><strong>Main Business Items:</strong>
+                                                            {{ $user->business->main_business_items }}</li>
+                                                        <li><strong>Main Import Items:</strong>
+                                                            {{ $user->business->main_import_items }}</li>
                                                         <li><strong>Annual Turnover (USD):</strong>
                                                             {{ $user->business->annual_turnover }}</li>
-                                                    <li><strong>Annual Import/Export (USD):</strong>
-                                                        {{ $user->business->annual_import_export }}</li>
-                                                    <li><strong>Annual Import from Pakistan (USD):</strong>
-                                                        {{ $user->business->annual_import_from_pak }}</li>
-                                                    <li><strong>Company Tax Number:</strong>
-                                                        {{ $user->business->vat_tax_number }}</li>
+                                                        <li><strong>Annual Import/Export (USD):</strong>
+                                                            {{ $user->business->annual_import_export }}</li>
+                                                        <li><strong>Annual Import from Pakistan (USD):</strong>
+                                                            {{ $user->business->annual_import_from_pak }}</li>
+                                                        <li><strong>Company Tax Number:</strong>
+                                                            {{ $user->business->vat_tax_number }}</li>
                                                     @endif
 
-                                                    {{------------------------ For Visitors -----------------}}
-                                                    @if($user->hasRole('visitor'))
+                                                    {{-- ---------------------- For Visitors --------------- --}}
+                                                    @if ($user->hasRole('visitor'))
                                                         <li><strong>Main Export Items:</strong>
                                                             {{ $user->business->main_export_items }}</li>
-                                                            <li><strong>Annual Turnover (PKR):</strong>
-                                                                {{ $user->business->annual_turnover }}</li>
+                                                        <li><strong>Annual Turnover (PKR):</strong>
+                                                            {{ $user->business->annual_turnover }}</li>
                                                         <li><strong>Annual National Sales (PKR):</strong>
                                                             {{ $user->business->national_sale }}</li>
                                                         <li><strong>Annual Export (USD):</strong>
@@ -193,10 +199,10 @@
                                                         </li>
                                                     @endif
 
-                                                    {{---------------------------- For Buyers -------------------------}}
-                                                    @if($user->hasRole('buyer'))
-                                                        <li><strong>Company Registration No:</strong> 
-                                                              {{$user->business->company_registered_number }}</li>
+                                                    {{-- -------------------------- For Buyers ----------------------- --}}
+                                                    @if ($user->hasRole('buyer'))
+                                                        <li><strong>Company Registration No:</strong>
+                                                            {{ $user->business->company_registered_number }}</li>
                                                         <li><strong>Company VAT/TAX No:</strong>
                                                             {{ $user->business->vat_tax_number }}</li>
                                                         <li><strong>Chamber/Association Membership Number:</strong>
@@ -222,7 +228,7 @@
                                         </div>
                                     @endif
 
-                                    
+
 
                                 </div>
 
@@ -312,56 +318,59 @@
                                             <hr>
                                         </div>
                                     @endif
-                                    
+
                                     <div class="row mb-4">
                                         @if ($user->hasRole('exhibitor'))
-                                        <div class="col-md-12">
-                                            <h5 class="fw-bold">Exhibitions Attended</h5>
-                                            <ul class="list-unstyled small">
-                                                @if (isset($user->exhibition) && $user->exhibition->count() > 0)
-                                                    <li>
-                                                        <strong>Exhibition Name:</strong>
-                                                        {{ $user->exhibition->exhibition_name }} 
-                                                    </li>
-                                                    <li>
-                                                        <strong>Exhibition Date:</strong>
-                                                        {{ \Carbon\Carbon::parse($user->exhibition->exhibition_date) }}
-                                                    </li>
-                                                    <li>
-                                                        <strong>Exhibition Type:</strong>
-                                                        {{ $user->exhibition->type }}
-                                                    </li>
-                                                    <li>
-                                                        <strong>Country:</strong>
-                                                        {{ $user->exhibition->country }}
-                                                    </li>
-                                                @else
-                                                    <li>Not attended any exhibitions</li>
-                                                @endif
-                                            </ul>
-                                        </div>
+                                            <div class="col-md-12">
+                                                <h5 class="fw-bold">Exhibitions Attended</h5>
+                                                <ul class="list-unstyled small">
+                                                    @if (isset($user->exhibition) && $user->exhibition->count() > 0)
+                                                        <li>
+                                                            <strong>Exhibition Name:</strong>
+                                                            {{ $user->exhibition->exhibition_name }}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Exhibition Date:</strong>
+                                                            {{ \Carbon\Carbon::parse($user->exhibition->exhibition_date) }}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Exhibition Type:</strong>
+                                                            {{ $user->exhibition->type }}
+                                                        </li>
+                                                        <li>
+                                                            <strong>Country:</strong>
+                                                            {{ $user->exhibition->country }}
+                                                        </li>
+                                                    @else
+                                                        <li>Not attended any exhibitions</li>
+                                                    @endif
+                                                </ul>
+                                            </div>
                                         @endif
 
                                         {{-- Stall Information --}}
                                         @if (isset($user->stall))
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h5 class="fw-bold">Stall Information</h5>
-                                                <ul class="list-unstyled small">
-                                                    <li><strong>Stall:</strong> {{ $user->stall->stall }}</li>
-                                                    <li><strong>Stall Products:</strong> {{ $user->stall->stall_products }}
-                                                    </li>
-                                                    {{-- <li><strong>Select Business:</strong> {{ $user->stall->selectbiz }} --}}
-                                                    </li>
-                                                    <li><strong>Booth Type:</strong> {{ $user->stall->booth_type }}</li>
-                                                    <li><strong>Booth Size:</strong> {{ $user->stall->booth_size }}</li>
-                                                    <li><strong>Other Booth Size:</strong>
-                                                        {{ $user->stall->other_booth_size }}</li>
-                                                </ul>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h5 class="fw-bold">Stall Information</h5>
+                                                    <ul class="list-unstyled small">
+                                                        <li><strong>Stall:</strong> {{ $user->stall->stall }}</li>
+                                                        <li><strong>Stall Products:</strong>
+                                                            {{ $user->stall->stall_products }}
+                                                        </li>
+                                                        {{-- <li><strong>Select Business:</strong> {{ $user->stall->selectbiz }} --}}
+                                                        </li>
+                                                        <li><strong>Booth Type:</strong> {{ $user->stall->booth_type }}
+                                                        </li>
+                                                        <li><strong>Booth Size:</strong> {{ $user->stall->booth_size }}
+                                                        </li>
+                                                        <li><strong>Other Booth Size:</strong>
+                                                            {{ $user->stall->other_booth_size }}</li>
+                                                    </ul>
+                                                </div>
+                                                <hr>
                                             </div>
-                                            <hr>
-                                        </div>
-                                    @endif
+                                        @endif
                                         {{-- Social Media Information --}}
 
                                         <div class="col-md-12">
@@ -396,27 +405,36 @@
                                         <hr>
                                     </div>
 
-                                        {{-- Attachments Information --}}
+                                    {{-- Attachments Information --}}
 
                                     <div class="row mb-4">
                                         <div class="col-md-12">
                                             <h5 class="fw-bold">Attachments</h5>
                                             <ul class="list-unstyled small">
 
-                                                    
-                                                    @if($user->hasRole('visitor') || $user->hasRole('international_visitor'))
-                                                        <li><strong>Personal Photo:</strong>
-                                                            @if (isset($user->attachment->personal_photo))
-                                                                <a href="{{ $user->attachment && $user->attachment->personal_photo ? asset('storage/' . $user->attachment->personal_photo) : asset('storage/uploads/photos/avatar.png') }}"
-                                                                    target="_blank" class="btn btn-primary btn-sm">View</a>
-                                                            @else
-                                                                Not uploaded
-                                                            @endif
-                                                        </li>
-                                                        <li>
-                                                            <strong>Passport/CNIC File:</strong>
-                                                            @if (isset($user->attachment->passport_cnic_file))
-                                                                <a href="{{ asset('storage/' . $user->attachment->passport_cnic_file) }}"
+
+                                                @if ($user->hasRole('visitor') || $user->hasRole('international_visitor'))
+                                                    <li><strong>Personal Photo:</strong>
+                                                        @if (isset($user->attachment->personal_photo))
+                                                            <a href="{{ $user->attachment && $user->attachment->personal_photo ? asset('storage/' . $user->attachment->personal_photo) : asset('storage/uploads/photos/avatar.png') }}"
+                                                                target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                        @else
+                                                            Not uploaded
+                                                        @endif
+                                                    </li>
+                                                    <li>
+                                                        <strong>Passport/CNIC File:</strong>
+                                                        @if (isset($user->attachment->passport_cnic_file))
+                                                            <a href="{{ asset('storage/' . $user->attachment->passport_cnic_file) }}"
+                                                                target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                        @else
+                                                            Not uploaded
+                                                        @endif
+                                                    </li>
+                                                    @if ($user->hasRole('international_visitor'))
+                                                        <li><strong>Visa Upload:</strong>
+                                                            @if (isset($user->visa))
+                                                                <a href="{{ asset('storage/' . $user->visa->visa_file) }}"
                                                                     target="_blank" class="btn btn-primary btn-sm">View</a>
                                                             @else
                                                                 Not uploaded
@@ -424,8 +442,10 @@
                                                         </li>
                                                     @endif
 
+                                                @endif
+
                                                 {{-- For Buyers --}}
-                                                    @if($user->hasRole('buyer'))
+                                                @if ($user->hasRole('buyer'))
                                                     <li>
                                                         <strong>Passport/CNIC File:</strong>
                                                         @if (isset($user->attachment->passport_cnic_file))
@@ -484,10 +504,18 @@
                                                         @endif
                                                     </li>
                                                     {{--  --}}
-                                                    @endif
+                                                    <li><strong>Visa Uplaod:</strong>
+                                                        @if (isset($user->visa))
+                                                            <a href="{{ asset('storage/' . $user->visa->visa_file) }}"
+                                                                target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                        @else
+                                                            Not uploaded
+                                                        @endif
+                                                    </li>
+                                                @endif
 
                                                 {{-- For Exhibitors --}}
-                                                    @if($user->hasRole('exhibitor'))
+                                                @if ($user->hasRole('exhibitor'))
                                                     <li><strong>Bank Statement:</strong>
                                                         @if (isset($user->attachment->bank_statement))
                                                             <a href="{{ asset('storage/' . $user->attachment->bank_statement) }}"
@@ -602,7 +630,7 @@
                                                         @endif
                                                     </li>
                                                     {{--  --}}
-                                                    @endif
+                                                @endif
                                             </ul>
                                         </div>
                                         <hr>

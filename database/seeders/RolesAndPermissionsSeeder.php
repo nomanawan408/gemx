@@ -164,6 +164,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'update visa',
                 'delete visa',
                 'view visa',
+                'create flights details',
                 'view flight details',
                 'view accomodation details',
                 'view inivitation letter',

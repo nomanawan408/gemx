@@ -127,10 +127,11 @@ class User extends Authenticatable
          *
          * @return \Illuminate\Database\Eloquent\Relations\HasMany
          */
-        public function flights(): HasMany
+        public function flight()
         {
             return $this->hasOne(Flight::class);
         }
+        
                 
         // relation for visa
         public function visa()

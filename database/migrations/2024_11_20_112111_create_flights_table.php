@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('flights', function (Blueprint $table) {
             $table->id();
+            // $table->foreignId('flight_id')->constrained('flights')->onDelete('cascade')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Relates to users
             $table->string('flight_no')->nullable(); // Flight number
             $table->string('airline_name')->nullable(); // Airline name

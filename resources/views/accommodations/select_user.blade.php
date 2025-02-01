@@ -19,10 +19,14 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <label for="select_user" class="form-label">Select Buyer</label>
-                                    <select class="form-select" id="select_user" name="select_user">
-                                        <option value="">Select user</option>
+                                    <select class="form-select @error('select_user') is-invalid @enderror" id="select_user" name="select_user">
+                                        <option value="">Select User</option>
                                         @foreach($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @if(isset($user->accommodation))
+                                                <option value="{{ $user->id }}" disabled>{{ $user->name }} (Already have accommodations)</option>
+                                            @else
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     @error('select_user')

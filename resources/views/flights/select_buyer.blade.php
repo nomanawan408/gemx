@@ -22,7 +22,11 @@
                                     <select class="form-select @error('select_buyer') is-invalid @enderror" id="select_buyer" name="select_buyer">
                                         <option value="">Select Buyer</option>
                                         @foreach($buyers as $buyer)
-                                            <option value="{{ $buyer->id }}">{{ $buyer->name }}</option>
+                                            @if(isset($buyer->flight))
+                                                <option value="{{ $buyer->id }}" disabled>{{ $buyer->name }} (Already have flights)</option>
+                                            @else
+                                                <option value="{{ $buyer->id }}">{{ $buyer->name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     @error('select_buyer')

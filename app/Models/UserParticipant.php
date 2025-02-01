@@ -41,4 +41,9 @@ class UserParticipant extends Model
         // belongsTo( RelatedModel::class, 'foreign_key', 'owner_key' )
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+    
+    public function flight()
+    {
+        return $this->belongsTo(Flight::class);
+    }
 }

@@ -446,27 +446,27 @@ class WebsiteFormController extends Controller
                 'paid_passport' => 'nullable',
         
                 // Participant Information
-                'paid_participant' => 'nullable',
-                'paid_participant_firstname' => 'nullable|string|max:255',
-                'paid_participant_lastname' => 'nullable|string|max:255',
-                'paid_participant_father_firstname' => 'nullable|string|max:255',
-                'paid_participant_father_lastname' => 'nullable|string|max:255',
-                'paid_participant_gender' => 'nullable',
-                'paid_participant_phone' => 'nullable|string|max:20',
-                'paid_participant_mobile' => 'nullable|string|max:20',
-                'paid_participant_whatsapp' => 'nullable|string|max:20',
-                'paid_participant_email' => 'nullable|email|max:255',
-                'paid_participant_facebook' => 'nullable|max:255',
-                'paid_participant_linkedin' => 'nullable|max:255',
-                'paid_participant_instagram' => 'nullable|string|max:255',
-                'paid_participant_telegram' => 'nullable|string|max:255',
-                'paid_participant_wechat' => 'nullable|string|max:255',
-                'paid_participant_imo' => 'nullable|string|max:255',
-                'paid_participant_passport_no' => 'nullable|string|max:20',
-                'paid_participant_passport_issue' => 'nullable|date',
-                'paid_participant_passport_expiry' => 'nullable|date|after:paid_participant_passport_issue',
-                'paid_participant_passport_type' => 'nullable|string|in:Ordinary,Official',
-                'paid_participant_passport' => 'nullable',
+                // 'paid_participant' => 'nullable',
+                // 'paid_participant_firstname' => 'nullable|string|max:255',
+                // 'paid_participant_lastname' => 'nullable|string|max:255',
+                // 'paid_participant_father_firstname' => 'nullable|string|max:255',
+                // 'paid_participant_father_lastname' => 'nullable|string|max:255',
+                // 'paid_participant_gender' => 'nullable',
+                // 'paid_participant_phone' => 'nullable|string|max:20',
+                // 'paid_participant_mobile' => 'nullable|string|max:20',
+                // 'paid_participant_whatsapp' => 'nullable|string|max:20',
+                // 'paid_participant_email' => 'nullable|email|max:255',
+                // 'paid_participant_facebook' => 'nullable|max:255',
+                // 'paid_participant_linkedin' => 'nullable|max:255',
+                // 'paid_participant_instagram' => 'nullable|string|max:255',
+                // 'paid_participant_telegram' => 'nullable|string|max:255',
+                // 'paid_participant_wechat' => 'nullable|string|max:255',
+                // 'paid_participant_imo' => 'nullable|string|max:255',
+                // 'paid_participant_passport_no' => 'nullable|string|max:20',
+                // 'paid_participant_passport_issue' => 'nullable|date',
+                // 'paid_participant_passport_expiry' => 'nullable|date|after:paid_participant_passport_issue',
+                // 'paid_participant_passport_type' => 'nullable|string|in:Ordinary,Official',
+                // 'paid_participant_passport' => 'nullable',
         
                 // Business Information
                 'paid_company_name' => 'nullable|string|max:255',
@@ -562,34 +562,34 @@ class WebsiteFormController extends Controller
             };
 
             // For Participants
-            $participantPassport = $saveFileFromUrl($request->input('paid_participant_passport'), 'uploads/participants/passports', $user->id);
+            // $participantPassport = $saveFileFromUrl($request->input('paid_participant_passport'), 'uploads/participants/passports', $user->id);
             
-            if ($request->filled('paid_participant_firstname')) {
-                UserParticipant::create([
-                    'user_id' => $user->id, // ID of the main user
-                    'firstname' => $request->input('paid_participant_firstname'),
-                    'lastname' => $request->input('paid_participant_lastname'),
-                    'father_firstname' => $request->input('paid_participant_father_firstname'),
-                    'father_lastname' => $request->input('paid_participant_father_lastname'),
-                    'gender' => $request->input('paid_participant_gender'),
-                    'phone' => $request->input('paid_participant_phone'),
-                    'mobile' => $request->input('paid_participant_mobile'),
-                    'whatsapp' => $request->input('paid_participant_whatsapp'),
-                    'email' => $request->input('paid_participant_email'),
-                    'facebook' => $request->input('paid_participant_facebook'),
-                    'linkedin' => $request->input('paid_participant_linkedin'),
-                    'instagram' => $request->input('paid_participant_instagram'),
-                    'telegram' => $request->input('paid_participant_telegram'),
-                    'wechat' => $request->input('paid_participant_wechat'),
-                    'imo' => $request->input('paid_participant_imo'),
-                    'passport_no' => $request->input('paid_participant_passport_no'),
-                    'passport_issue' => $request->input('paid_participant_passport_issue'),
-                    'passport_expiry' => $request->input('paid_participant_passport_expiry'),
-                    'passport_type' => $request->input('paid_participant_passport_type'),
-                    'previous_trips' => $request->input('paid_participant_previous_trips'),
-                    // 'passport_file' => $participantPassport,
-                ]);        
-            }
+            // if ($request->filled('paid_participant_firstname')) {
+            //     UserParticipant::create([
+            //         'user_id' => $user->id, // ID of the main user
+            //         'firstname' => $request->input('paid_participant_firstname'),
+            //         'lastname' => $request->input('paid_participant_lastname'),
+            //         'father_firstname' => $request->input('paid_participant_father_firstname'),
+            //         'father_lastname' => $request->input('paid_participant_father_lastname'),
+            //         'gender' => $request->input('paid_participant_gender'),
+            //         'phone' => $request->input('paid_participant_phone'),
+            //         'mobile' => $request->input('paid_participant_mobile'),
+            //         'whatsapp' => $request->input('paid_participant_whatsapp'),
+            //         'email' => $request->input('paid_participant_email'),
+            //         'facebook' => $request->input('paid_participant_facebook'),
+            //         'linkedin' => $request->input('paid_participant_linkedin'),
+            //         'instagram' => $request->input('paid_participant_instagram'),
+            //         'telegram' => $request->input('paid_participant_telegram'),
+            //         'wechat' => $request->input('paid_participant_wechat'),
+            //         'imo' => $request->input('paid_participant_imo'),
+            //         'passport_no' => $request->input('paid_participant_passport_no'),
+            //         'passport_issue' => $request->input('paid_participant_passport_issue'),
+            //         'passport_expiry' => $request->input('paid_participant_passport_expiry'),
+            //         'passport_type' => $request->input('paid_participant_passport_type'),
+            //         'previous_trips' => $request->input('paid_participant_previous_trips'),
+            //         // 'passport_file' => $participantPassport,
+            //     ]);        
+            // }
 
             // Step 3: Insert Business Details
             Business::create([
