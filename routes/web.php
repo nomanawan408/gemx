@@ -23,6 +23,8 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\SalePurchaseController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\OnspotEntryController;
+use App\Http\Controllers\EntryPassController;
+
 
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Middleware\CheckPendingStatus;
@@ -33,6 +35,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/mypass', function () {
+    return view('entrypass.entrypass_templete');
+});
 Route::middleware(['auth', CheckPendingStatus::class])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard.index');
 
@@ -159,6 +164,11 @@ Route::middleware(['auth', CheckPendingStatus::class])->group(function () {
         $pdf = Pdf::loadView('invitation.index'); // 'invitation' is your Blade file
         return $pdf->download('invitation.pdf');
     })->name('invitation.download');
+
+    Route::get('/entry-pass/download/{user_id}', [EntryPassController::class, 'generatePDF'])->name('entry-pass.download');
+
+
+
 
     Route::get('/pending', function () {
         return view('auth.pending'); // Create this view file

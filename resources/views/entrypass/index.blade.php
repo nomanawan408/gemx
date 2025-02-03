@@ -34,12 +34,13 @@
                             For any issues, contact us at <strong>info@pkgjs.com</strong> or call <strong>+92 307 1356666</strong>.
                         </p>
                     </div>
-                    <a href="{{ route('invitation.download') }}" class="btn btn-success mt-4" style="border-radius: 10px; padding: 15px 30px; font-size: 1rem;">
-                        Download Pass
+                    <a href="{{ route('entry-pass.download', $user->id) }}" class="btn btn-primary">
+                        Download Entry Pass PDF
                     </a>
                 </div>
             </div>
         </div>
+     
     </div>
 </div>
 @endsection
