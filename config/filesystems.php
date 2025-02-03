@@ -29,7 +29,11 @@ return [
     */
 
     'disks' => [
-
+        'mpdf' => [
+            'driver' => 'local',
+            'root' => storage_path('mpdf'),
+        ],
+        
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
