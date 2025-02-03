@@ -63,7 +63,7 @@
     <div class="card-container">
         <div class="overlay d-flex flex-column align-items-center justify-content-around">
             <div class="d-flex w-100 justify-content-between align-items-center">
-                {{-- <img src="{{ public_path('assets/img/gemx-logo1.png') }}" width="90px" alt=""> --}}
+                <img src="{{ public_path('assets/img/gemx-logo1.png') }}" width="90px" alt="">
                 {{-- <img src="{{ public_path('assets/img/gemx-logo2.png') }}" width="90px" alt="">     --}}
             </div>
             <span class="p-0 m-0">ID:02345</span>

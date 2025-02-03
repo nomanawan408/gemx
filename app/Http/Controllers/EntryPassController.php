@@ -25,7 +25,7 @@ class EntryPassController extends Controller
             $html = View::make('entrypass.entrypass_templete', compact('data'))->render();
 
             // Create MPDF instance
-            $mpdf = new \Mpdf\Mpdf([
+            $mpdf = new Mpdf([
                 'tempDir' => storage_path('mpdf'), // Prevent temp directory errors
                 'mode' => 'utf-8', // Ensure UTF-8 support
                 'format' => 'A4', // Adjust page format
