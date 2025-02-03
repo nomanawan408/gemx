@@ -67,17 +67,18 @@
         .header {
             font-size: 54px;
             font-weight: 900;
-            margin-top: 16px;
+            margin-top: 22px;
+            line-height: 58px;
         }
 
         .info p {
-            line-height: 32px;
+            line-height: 34px;
         }
 
         .user_name {
             font-size: 30px;
             font-weight: 560;
-            margin-top: 16px;
+            margin-top: 10px;
         }
 
         .business_name {
@@ -86,17 +87,9 @@
             font-weight: 500;
             margin-top: 16px;
         }
-
-        .qr-code {
-            text-align: center;
-            background: rgb(206, 206, 206);
-            border-radius: 16px;
-            width: 120px;
-            height: 120px;
-        }
-
         .overlay {
             width: 100%;
+            height: 100%;
             /* height: 100%; */
         }
     </style>
@@ -114,9 +107,13 @@
             <div class="container">
                 <div class="page-inner">
                     <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                        <div>
+                        <div> 
                             <h3 class="fw-bold mb-3">Entry Pass</h3>
                         </div>
+                        <div class="ms-md-auto py-2 py-md-0">
+                            <button id="downloadButton" class="btn btn-info btn-round me-2">Download Entry Pass</button>
+                            {{-- <a href="#" class="btn btn-primary btn-round">Add Buyers</a> --}}
+                          </div>
                     </div>
                     <div class="card-container" id="entry-pass">
                         <div class="overlay d-flex flex-column align-items-center justify-content-around">
@@ -124,20 +121,27 @@
                                 <img src="{{ asset('assets/img/gemx-logo1.png') }}" width="90px" alt="">
                                 <img src="{{ asset('assets/img/gemx-logo2.png') }}" width="90px" alt="">
                             </div>
+                           <div>
                             <span class="p-0 m-0" style="font-size: 20px">ID: 0{{ $user->id }}</span>
-                             <div class="header p-0 m-0 ">{{ strtoupper($user->roles->first()->name) }}</div>
+                            <div class="header p-0 m-0 ">
+                                {{ strtoupper($user->roles->first()->name == 'international_visitor' ? 'VISITOR' : $user->roles->first()->name) }}
+                            </div>
                             <div class="info p-0 m-0">
                                 <p class="user_name p-0 m-0">{{ strtoupper($user->name) }}</p>
                                 <p class="business_name m-0 p-0">{{ strtoupper($user->business->company_name) }}</p>
                             </div>
-                            {{-- <div class="qr-code"> --}}
+                           </div>
                             {{-- {!! QrCode::size(100)->generate($user->id) !!} --}}
-                            {{-- </div> --}}
+                          <div class="m-2 d-flex align-items-center justify-content-center" style="background: white ; padding: 16px;border-radius: 6px">
+                           
+                           {{$qrCode}}
+
+                          </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <button id="downloadButton">Download</button>
+           
             @include('layouts.footer')
 
         </div>
@@ -197,19 +201,19 @@
                     console.log(invoice);
                     console.log(window);
                     var opt = {
-                        margin: 1,
+                        margin: .5,
                         filename: 'myfile.pdf',
                         image: {
                             type: 'jpeg',
                             quality: 0.98
                         },
                         html2canvas: {
-                            scale: 2
+                            scale: 1
                         },
                         jsPDF: {
                             unit: 'in',
-                            format: 'b5',
-                            orientation: 'portrait'
+                            format: 'a4',
+                            orientation: 'landscape'
                         }
                     };
                     html2pdf().from(invoice).set(opt).save();

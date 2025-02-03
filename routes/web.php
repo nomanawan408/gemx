@@ -110,7 +110,7 @@ Route::middleware(['auth', CheckPendingStatus::class])->group(function () {
     Route::get('/entry-pass', [InvitationController::class, 'entryPass'])->name('entry-pass.index');
     Route::get('/entry-pass/create', [InvitationController::class, 'entryPassCreate'])->name('entry-pass.create');
     Route::post('/entry-pass', [InvitationController::class, 'entryPassStore'])->name('entry-pass.store');
-    Route::get('/entry-pass/{id}', [InvitationController::class, 'entryPassShow'])->name('entry-pass.show');
+    Route::get('/entry-pass/{uuid}', [InvitationController::class, 'entryPassShow'])->name('entry-pass.show');
     Route::delete('/entry-pass/{id}', [InvitationController::class, 'entryPassDestroy'])->name('entry-pass.destroy');
 
     // PKGJS routes

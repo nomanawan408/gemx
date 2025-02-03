@@ -17,17 +17,19 @@
                     <div class="row">
                         <!-- Profile Picture Section -->
                         <div class="col-md-3 bg-dark pt-4 text-light" style="border-radius: 10px">
-                            @if ($user->attachment && $user->attachment->personal_photo)
-                                <img src="{{ asset('storage/' . $user->attachment->personal_photo) }}"
-                                    style="height: 200px;width:200px;border-radius: 10px" alt="Profile Picture"
-                                    class="img-fluid rounded-circle mb-3 border border-3 border-primary">
-                            @else
-                                <div class="d-flex justify-content-center align-items-center rounded-circle bg-primary"
-                                    style="height: 200px; width: 200px;">
-                                    <span class="h1 text-white mb-0">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
-                                </div>
-                            @endif
-                            <h3 class=" text-center pt-3 fw-bold text-light">{{ strtoupper($user->name) }}</h3>
+                            <div class="w-100 text-center">
+                                @if ($user->attachment && $user->attachment->personal_photo)
+                                    <img src="{{ asset('storage/' . $user->attachment->personal_photo) }}"
+                                        style="height: 200px;width:200px;border-radius: 10px" alt="Profile Picture"
+                                        class="img-fluid rounded-circle mb-3 border border-3 border-primary">
+                                @else
+                                    <div class="d-flex justify-content-center align-items-center rounded-circle bg-primary"
+                                        style="height: 200px; width: 200px;">
+                                        <span class="h1 text-white mb-0">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                                    </div>
+                                @endif
+                                <h3 class=" text-center pt-3 fw-bold text-light">{{ strtoupper($user->name) }}</h3>
+                            </div>
                             <hr>
 
 
