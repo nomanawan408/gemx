@@ -128,7 +128,7 @@
                             </div>
                             <div class="info p-0 m-0">
                                 <p class="user_name p-0 m-0">{{ strtoupper($user->name) }}</p>
-                                <p class="business_name m-0 p-0">{{ strtoupper($user->business->company_name) }}</p>
+                                {{-- <p class="business_name m-0 p-0">{{ strtoupper($user->business->company_name) }}</p> --}}
                             </div>
                            </div>
                             {{-- {!! QrCode::size(100)->generate($user->id) !!} --}}
