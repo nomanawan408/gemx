@@ -380,6 +380,7 @@
                     auth()->user()->hasRole('exhibitor_admin') ||
                     auth()->user()->hasRole('visitor_admin') ||
                     auth()->user()->hasRole('sale_purchase_admin') ||
+                    auth()->user()->hasRole('onspot_admin') ||
                     auth()->user()->hasRole('transport'))
                 <div
                     style="with:100%; height: 350px; background-color: #f4f4f9; color: #333; line-height: 1.6; margin: 0; padding: 0;">

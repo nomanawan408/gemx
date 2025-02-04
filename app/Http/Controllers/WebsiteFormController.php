@@ -532,6 +532,7 @@ class WebsiteFormController extends Controller
                 'passport_type' => $validated['paid_passport_type'],
                 'date_of_issue' => $validated['paid_passport_issue'],
                 'date_of_expiry' => $validated['paid_passport_expiry'],
+                'invited_way' => $validated['paid_invited_by'] == 'Others' ? $validated['paid_invited_by_other'] : $validated['paid_invited_by'],
                 'status' => 'pending',
                 'declaration' => true,
             ]);        

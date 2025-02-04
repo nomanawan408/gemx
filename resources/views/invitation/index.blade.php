@@ -1,3 +1,21 @@
+<head>
+    <style>
+        .letter{
+            box-shadow:  ;
+            /* background: red; */
+            background-image: url("{{ url('assets/img/Invitation-Letter-PKGJS.png') }}");
+            /* max-height: 1440px;  */
+            height: 1440px; 
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: top center;
+            width: 100%;
+            font-size: calc(1em + 0.5vw);
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+
+</head>
 @extends('layouts.app')
 
 @section('content')
@@ -7,42 +25,47 @@
             <div>
               <h3 class="fw-bold mb-3">Invitation Letter</h3>
             </div>
+            <div class="ms-md-auto py-2 py-md-0">
+                <button id="downloadButton" class="btn btn-info btn-round me-2">Download Invitation Letter</button>
+                {{-- <a href="#" class="btn btn-primary btn-round">Add Buyers</a> --}}
+              </div>
         </div>
-        <div class="card shadow-sm">
-            <div class="card">
-                <div class="card-body text-center" style="background: linear-gradient(to right, #e0f7e9, #a8d5ba); border-radius: 15px; padding: 30px; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);">
-                    <h1 class="fw-bold" style="color: #2e7d32;">{{ Auth::user()->name }}</h1>
-                    <p class="mt-3" style="color: #1b5e20; font-size: 1.1rem; line-height: 1.6;">
-                        Join us for an unforgettable celebration of creativity, innovation, and connection in a vibrant atmosphere.
-                    </p>
-                    <div class="mt-4">
-                        <h2 style="color: #2e7d32;">Event Details</h2>
-                        <p style="font-size: 1rem; color: #1b5e20;">
-                            <strong>Date:</strong> 02-04 May, 2025<br>
-                            <strong>Time:</strong> 9:30 AM<br>
-                            <strong>Venue:</strong> Sareena Hotel
-                        </p>
-                    </div>
-
-                    <div class="mt-4" style="border-top: 2px dashed #2e7d32; padding-top: 20px;">
-                        <h2 style="color: #2e7d32;">Dress Code</h2>
-                        <p style="font-size: 0.9rem; color: #1b5e20;">Formal Attire</p>
-                    </div>
-
-                    <div class="mt-4" style="border-top: 2px dashed #2e7d32; padding-top: 20px;">
-                        <h2 style="color: #2e7d32;">RSVP</h2>
-                        <p style="font-size: 0.9rem; color: #1b5e20;">
-                          
-                            Contact us at <strong style="color: #2e7d32;">info@pkgjs.com</strong> or call <strong style="color: #2e7d32;">+92 307 1356666</strong>.
-                        </p>
-                    </div>
-
-                    <a href="{{ route('invitation.download') }}" class="btn btn-success mt-4" style="border-radius: 30px; padding: 10px 20px; font-size: 1rem;">
-                        Download Invitation
-                    </a>
+        <section id="invitation_letter">
+            <div class="letter">
+                <div style="padding: 200px 70px; ">
+                    <h1 style="text-align: center;font-size: 50px; color: black; font-weight: bold;">Invitation Letter</h1>
+                    <p style="font-size: 20px; color: black; margin-top: 20px;">We are inviting you to participate in our event.</p>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 </div>
+<script>
+    window.onload = function() {
+        document.getElementById("downloadButton")
+            .addEventListener("click", () => {
+                const invoice = this.document.getElementById("invitation_letter");
+                console.log(invoice);
+                console.log(window);
+                var opt = {
+                    // margin: ,
+                    filename: 'Invitational-letter.pdf',
+                    image: {
+                        type: 'jpeg',
+                        quality: 1,
+                    },
+                    html2canvas: {
+                        scale: 1
+                    },
+                    jsPDF: {
+                        unit: 'in',
+                        format: 'a4',
+                        orientation: 'portrait'
+                    }
+                };
+                html2pdf().from(invoice).set(opt).save();
+            })
+    }
+</script>
 @endsection
+

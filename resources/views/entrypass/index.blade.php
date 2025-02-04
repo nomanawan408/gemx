@@ -202,10 +202,10 @@
                     console.log(window);
                     var opt = {
                         margin: .5,
-                        filename: 'myfile.pdf',
+                        filename: 'Entry-pass.pdf',
                         image: {
                             type: 'jpeg',
-                            quality: 0.98
+                            quality: 1
                         },
                         html2canvas: {
                             scale: 1

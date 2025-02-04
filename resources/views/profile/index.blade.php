@@ -624,11 +624,11 @@
                                                     </li>
 
                                                     <li><strong>Recommendation:</strong>
+                                                        {{ $user->attachment->recommendation }}
                                                         @if (isset($user->attachment->recommendation))
-                                                            <a href="{{ asset('storage/' . $user->attachment->recommendation) }}"
-                                                                target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                            {{ $user->attachment->recommendation }}
                                                         @else
-                                                            Not uploaded
+                                                            Not Mentioned
                                                         @endif
                                                     </li>
                                                     {{--  --}}
