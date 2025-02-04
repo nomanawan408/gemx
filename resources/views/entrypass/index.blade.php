@@ -134,7 +134,8 @@
                             {{-- {!! QrCode::size(100)->generate($user->id) !!} --}}
                           <div class="m-2 d-flex align-items-center justify-content-center" style="background: white ; padding: 16px;border-radius: 6px">
                            
-                           {{$qrCode}}
+                            <img src="{{  }}" alt="">
+                           {{-- {{$qrCode}} --}}
 
                           </div>
                         </div>

@@ -624,7 +624,7 @@
                                                     </li>
 
                                                     <li><strong>Recommendation:</strong>
-                                                        {{ $user->attachment->recommendation }}
+                                                        
                                                         @if (isset($user->attachment->recommendation))
                                                             {{ $user->attachment->recommendation }}
                                                         @else

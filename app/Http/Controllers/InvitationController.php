@@ -19,8 +19,7 @@ class InvitationController extends Controller
 
     public function entryPass(){
         $user = Auth::user();
-        
-        $qrCode = QrCode::size(100)->generate(url('/entry-pass/' . $user->uuid));
+        // $qrCode = QrCode::size(100)->generate(url('/entry-pass/' . $user->uuid));
 
         return view('entrypass.index', compact('user','qrCode'));
     }
