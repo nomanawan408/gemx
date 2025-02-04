@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\User;
 
@@ -19,9 +18,11 @@ class InvitationController extends Controller
 
     public function entryPass(){
         $user = Auth::user();
+        
         // $qrCode = QrCode::size(100)->generate(url('/entry-pass/' . $user->uuid));
 
-        return view('entrypass.index', compact('user','qrCode'));
+        // return view('entrypass.index', compact('user','qrCode'));
+        return view('entrypass.index', compact('user'));
     }
 
     public function entryPassShow($uuid)

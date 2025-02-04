@@ -32,9 +32,25 @@
         </div>
         <section id="invitation_letter">
             <div class="letter">
-                <div style="padding: 200px 70px; ">
-                    <h1 style="text-align: center;font-size: 50px; color: black; font-weight: bold;">Invitation Letter</h1>
-                    <p style="font-size: 20px; color: black; margin-top: 20px;">We are inviting you to participate in our event.</p>
+                <div style="padding: 180px 70px; ">
+                    <h1 style="text-align: center;font-size: 46px; color: black; font-weight: bold;">Invitation Letter</h1>
+                    <p style="text-align: justify;line-height: 1.5; font-size: 16px; color: black;">
+                        On behalf of PKGJS, we are pleased to extend a formal invitation to you to attend the Gems and Jewellery Show Pakistan 2025, which will take place from 02 to 04 MAY at the Serena Hotel, Islamabad, Pakistan. This prestigious event brings together the finest jewelry designers, manufacturers, and suppliers from around the world, offering a unique opportunity to explore the latest trends, technologies, and innovations in the gems and jewelry industry. 
+                        <br><br>
+                        We believe your participation in this event would be a valuable addition, allowing you to meet with key industry professionals, explore new business opportunities, and showcase your company’s expertise in this exciting sector. 
+                        <br><br>
+                        We are confident that your presence at this distinguished event will help foster meaningful connections and enable you to gain valuable insights into the evolving trends in the global gems and jewelry market. 
+                        <br><br>
+                        Thank you for considering our invitation, and we look forward to your positive response.
+                        <br><br>
+                        <br><br>
+                        <br><br>
+                        Warm regards,
+                        <br>
+                        Farukh Sajjad Alvi
+                        <br>
+                        President PGMA
+                    </p>
                 </div>
             </div>
         </section>
