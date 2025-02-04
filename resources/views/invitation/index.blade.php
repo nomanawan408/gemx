@@ -9,7 +9,7 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: top center;
-            width: 100%;
+            width: 800px;
             font-size: calc(1em + 0.5vw);
         }
     </style>
@@ -30,11 +30,11 @@
                 {{-- <a href="#" class="btn btn-primary btn-round">Add Buyers</a> --}}
               </div>
         </div>
-        <section id="invitation_letter">
+        <section id="invitation_letter" class="d-flex justify-content-center">
             <div class="letter">
                 <div style="padding: 180px 70px; ">
                     <h1 style="text-align: center;font-size: 46px; color: black; font-weight: bold;">Invitation Letter</h1>
-                    <p style="text-align: justify;line-height: 1.5; font-size: 16px; color: black;">
+                    <p style="text-align: justify;line-height: 1.5; font-size: 15px; color: black;">
                         On behalf of PKGJS, we are pleased to extend a formal invitation to you to attend the Gems and Jewellery Show Pakistan 2025, which will take place from 02 to 04 MAY at the Serena Hotel, Islamabad, Pakistan. This prestigious event brings together the finest jewelry designers, manufacturers, and suppliers from around the world, offering a unique opportunity to explore the latest trends, technologies, and innovations in the gems and jewelry industry. 
                         <br><br>
                         We believe your participation in this event would be a valuable addition, allowing you to meet with key industry professionals, explore new business opportunities, and showcase your company’s expertise in this exciting sector. 
