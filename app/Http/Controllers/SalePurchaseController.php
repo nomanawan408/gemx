@@ -16,9 +16,13 @@ class SalePurchaseController extends Controller
     }
     public function viewSales()
     {
-        $users = User::role('exhibitor')->whereHas('attachment', function($query) {
-            $query->whereNotNull('sale_purchase');
-        })->get();
+        if (auth()->user()->can('admin')) {
+            $users = User::role('exhibitor')->whereHas('attachment', function($query) {
+                $query->whereNotNull('sale_purchase');
+            })->get();
+        } else {
+            $users = User::where('id', auth()->user()->id)->get();
+        }
         return view('sale_purchase.view-sale', compact('users'));
     }
     public function viewPurchase()
