@@ -312,8 +312,8 @@
               </li>
             @endcan
             @can('pkgjs purchase')
-              <li class="nav-item {{ request()->routeIs('pkgjs-purchase.index') ? 'active' : '' }}">
-                <a href="{{ route('pkgjs-purchase.index') }}">
+              <li class="nav-item {{ request()->routeIs('sale-purchase.purchase') ? 'active' : '' }}">
+                <a href="{{ route('sale-purchase.purchase') }}">
                   <i class="fas fa-file-alt"></i>
                   <p>PKGJS Purchase</p>
                 </a>

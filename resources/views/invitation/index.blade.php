@@ -41,7 +41,7 @@
                         <br><br>
                         We are confident that your presence at this distinguished event will help foster meaningful connections and enable you to gain valuable insights into the evolving trends in the global gems and jewelry market. 
                         <br><br>
-                        Thank you for considering our invitation, and we look forward to your positive response.
+                        Thank you for considering our invitation, and we look forward to your positive response. 
                         <br><br>
                         <br><br>
                         <br><br>
