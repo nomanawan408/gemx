@@ -6,8 +6,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "bacon/bacon-qr-code": "^2.0",
         "barryvdh/laravel-dompdf": "^3.1",
         "barryvdh/laravel-snappy": "^1.0",
+        "chillerlan/php-qrcode": "^5.0",
         "dompdf/dompdf": "^3.1",
         "endroid/qr-code": "^5.0",
         "laravel/framework": "^11.9",

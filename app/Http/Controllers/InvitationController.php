@@ -4,8 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+// use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Crypt;
+// use Endroid\QrCode\QrCode;
+use BaconQrCode\Writer;
+use Endroid\QrCode\Writer\PngWriter;
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
+
 use App\Models\User;
 
 
@@ -16,13 +22,25 @@ class InvitationController extends Controller
         return view('invitation.index');
     }
 
-    public function entryPass(){
+    public function entryPass()
+    {
         $user = Auth::user();
-        
-        // $qrCode = QrCode::size(100)->generate(url('/entry-pass/' . $user->uuid));
-
-        // return view('entrypass.index', compact('user','qrCode'));
-        return view('entrypass.index', compact('user'));
+    
+        // Ensure user has a UUID
+        if (!$user->uuid) {
+            $user->uuid = \Illuminate\Support\Str::uuid(); // Generate UUID if missing
+            $user->save();
+        }
+    
+        $options = new QROptions([
+            'eccLevel' => QRCode::ECC_L,  // Low error correction level
+            'outputType' => QRCode::OUTPUT_IMAGE_PNG, // Generate PNG output
+            'imageBase64' => true // Convert to Base64 string
+        ]);
+    
+        $qrCode = (new QRCode($options))->render(url('/entry-pass/' . $user->uuid));
+    
+        return view('entrypass.index', compact('user', 'qrCode'));
     }
 
     public function entryPassShow($uuid)

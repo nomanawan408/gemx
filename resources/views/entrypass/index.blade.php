@@ -132,12 +132,8 @@
                             </div>
                            </div>
                             {{-- {!! QrCode::size(100)->generate($user->id) !!} --}}
-                          <div class="m-2 d-flex align-items-center justify-content-center" style=" padding: 16px;border-radius: 6px">
-                           
-                            {{-- <img src="{{  }}" alt=""> --}}
-                           {{-- {{$qrCode}} --}}
-                            {{-- {!! QrCode::size(100)->generate(url('/entry-pass/' . $user->uuid)) !!} --}}
-
+                          <div class="m-2 d-flex align-items-center justify-content-center" style="background:#fff;width:120px; height:120px;border-radius: 6px; overflow:hidden;">
+                            <img src="{{ $qrCode }}" width="100%" height="100%" alt="QR Code">
                           </div>
                         </div>
                     </div>
