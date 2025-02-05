@@ -54,13 +54,7 @@ class InvitationController extends Controller
             $role = $user->roles->first()->name ?? 'N/A'; // Handle if there's no role assigned
     
             // Just show the user details for testing
-            return "
-                User ID: {$user->id} <br>
-                UUID: {$user->uuid} <br>
-                Role: $role <br>
-                Email: {$user->email} <br>
-                Company Name: $company_name <br>
-            ";
+            return view('entrypass.verification', compact('user', 'company_name', 'role'));
     
         } catch (\Exception $e) {
             // Handle user not found or other errors
