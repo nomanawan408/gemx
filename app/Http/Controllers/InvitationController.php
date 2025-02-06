@@ -19,7 +19,9 @@ class InvitationController extends Controller
 {
     //
     public function index(){
-        return view('invitation.index');
+        $user = Auth::user();
+
+        return view('invitation.index', compact('user'));
     }
 
     public function entryPass()

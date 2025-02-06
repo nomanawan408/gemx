@@ -3,7 +3,7 @@
         .letter{
             box-shadow:  ;
             /* background: red; */
-            background-image: url("{{ url('assets/img/Invitation-Letter-PKGJS.png') }}");
+            background-image: url("{{ url('assets/img/invitation_letter.png') }}");
             /* max-height: 1440px;  */
             height: 1440px; 
             background-size: contain;
@@ -11,6 +11,10 @@
             background-position: top center;
             width: 800px;
             font-size: calc(1em + 0.5vw);
+        }
+        .letter{
+            max-width: 210mm;
+            overflow: hidden;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
@@ -33,8 +37,10 @@
         <section id="invitation_letter" class="d-flex justify-content-center">
             <div class="letter">
                 <div style="padding: 180px 70px; ">
-                    <h1 style="text-align: center;font-size: 46px; color: black; font-weight: bold;">Invitation Letter</h1>
+                    <h1 style="text-align: center;font-size: 32px; color: black; font-weight: bold;">Invitation Letter</h1>
                     <p style="text-align: justify;line-height: 1.5; font-size: 15px; color: black;">
+                        Dear Mr. {{ $user->name }},
+                        <br><br>
                         On behalf of PKGJS, we are pleased to extend a formal invitation to you to attend the Gems and Jewellery Show Pakistan 2025, which will take place from 02 to 04 MAY at the Serena Hotel, Islamabad, Pakistan. This prestigious event brings together the finest jewelry designers, manufacturers, and suppliers from around the world, offering a unique opportunity to explore the latest trends, technologies, and innovations in the gems and jewelry industry. 
                         <br><br>
                         We believe your participation in this event would be a valuable addition, allowing you to meet with key industry professionals, explore new business opportunities, and showcase your company’s expertise in this exciting sector. 
@@ -45,7 +51,8 @@
                         <br><br>
                         <br><br>
                         <br><br>
-                        Warm regards,
+                        Best Regards,
+                        <br>
                         <br>
                         Farukh Sajjad Alvi
                         <br>
