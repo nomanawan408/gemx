@@ -757,7 +757,8 @@ class WebsiteFormController extends Controller
                 // 'term_conditions' => 'nullable|string',
                 'field_0863cce' => 'nullable',
                 'field_eac81b5' => 'nullable',
-                'field_13750aa' => 'nullable',           
+                'field_13750aa' => 'nullable',    
+                'import_countries',       
              ]);   
              
 
@@ -865,6 +866,7 @@ class WebsiteFormController extends Controller
                 'nature_of_business' => $validated['business_nature'] ?? null,
                 'type_of_business' => json_encode($validated['business_type']) ?? null,
                 'main_export_items' => $validated['export_items'] ?? null,
+                'main_import_countries' => $validated['import_countries'] ?? null,
                 'main_export_countries' => $validated['export_countries'] ?? null,
                 'annual_turnover' => $validated['annual_turnover'] ?? null,
                 'annual_import_export' => $validated['annual_export'] ?? null,

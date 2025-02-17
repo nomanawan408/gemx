@@ -8,13 +8,15 @@
             >
               <div>
               @if(auth()->user()->hasRole('international_visitor'))
-              <h4 style="text-align: center; color: #d90000">
-                <strong>Please Provide us your flight details, so that we can facilitate you in terms of providing Transportation from Airport the Expo.</strong>
-              </h4>
+                @if(!auth()->user()->flight)
+                  <h4 style="text-align: center; color: #d90000">
+                    <strong>Please Provide us your flight details, so that we can facilitate you in terms of providing Transportation from Airport the Expo.</strong>
+                  </h4>
+                @endif
               @endif
                 <h3 class="fw-bold mb-3">Fights Details</h3>
                 {{-- <h6 class="op-7 mb-2">All visitors are here</h6> --}}
-              </div>
+              </div> 
             
             </div>
             @if(session('success'))
@@ -43,8 +45,8 @@
                             <th>Flight Number</th>
                             <th>Airline Name</th>
                             <th>Number of Persons</th>
-                            <th>Departure Date & Time</th>
-                            <th>Arrival Date & Time</th>
+                            <th>Departure from your Country</th>
+                            <th>Departure from Pakistan</th>
                             <th>Pickup Terminal</th>
                             <th>Dropoff Terminal</th>
                             <th>Ticket File</th>
