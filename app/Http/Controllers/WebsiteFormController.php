@@ -758,7 +758,7 @@ class WebsiteFormController extends Controller
                 'field_0863cce' => 'nullable',
                 'field_eac81b5' => 'nullable',
                 'field_13750aa' => 'nullable',    
-                'import_countries',       
+                'import_countries' => 'nullable',      
              ]);   
              
 
