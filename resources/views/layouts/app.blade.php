@@ -194,6 +194,67 @@
           $("#addRowModal").modal("hide");
         });
       });
+
+      //Notify
+      @if(session('success'))
+      $.notify({
+        icon: 'fa fa-check-circle',
+        title: 'Success!',
+        message: '{{ session("success") }}',
+      },{
+        type: 'success',
+        placement: {
+          from: "bottom",
+          align: "left"
+        },
+        time: 3000,
+      });
+      @endif
+
+      @if(session('error'))
+      $.notify({
+        icon: 'fa fa-times-circle',
+        title: 'Error!',
+        message: '{{ session("error") }}',
+      },{
+        type: 'danger',
+        placement: {
+          from: "bottom",
+          align: "left"
+        },
+        time: 3000,
+      });
+      @endif
+
+      @if(session('info'))
+      $.notify({
+        icon: 'fa fa-info-circle',
+        title: 'Info!',
+        message: '{{ session("info") }}',
+      },{
+        type: 'info',
+        placement: {
+          from: "bottom",
+          align: "left"
+        },
+        time: 3000,
+      });
+      @endif
+
+      @if(session('warning'))
+      $.notify({
+        icon: 'fa fa-exclamation-triangle',
+        title: 'Warning!',
+        message: '{{ session("warning") }}',  
+      },{
+        type: 'warning',
+        placement: {
+          from: "bottom",
+          align: "left"
+        },
+        time: 3000,
+      });
+      @endif
     </script>
 </body>
 </html>

@@ -21,10 +21,16 @@ class AdminController extends Controller
         $usersByCountry = User::select('country')
             ->selectRaw('COUNT(*) as count')
             ->whereHas('roles', function($query) {
-            $query->whereNotIn('name', ['superadmin', 'hospitality', 'transport']);
+                $query->whereNotIn('name', ['superadmin', 'hospitality', 'transport']);
             })
             ->groupBy('country')
-            ->get();
+            ->get()
+            ->map(function($item) {
+                $item->country_code = $this->getCountryCode($item->country);
+                return $item;
+            })
+            ->sortByDesc('count')
+            ->values();
 
             $recentUsers = User::whereDoesntHave('roles', function ($query) {
                 $query->whereIn('name', ['superadmin', 'hospitality', 'transport','buyer_admin', 'exhibitor_admin', 'visitor_admin','sale_purchase_admin','onspot_admin']);
@@ -40,17 +46,31 @@ class AdminController extends Controller
     function getCountryCode($countryName)
     {
         $countries = [
-            'United States' => 'us',
-            'United Kingdom' => 'gb',
-            'Pakistan' => 'pk',
-            'France' => 'fr',
-            'Germany' => 'de',
-            'China' => 'cn',
-            'India' => 'in',
-            // Add other countries as needed
+            'United States' => 'US',
+            'United Kingdom' => 'GB',
+            'Pakistan' => 'PK',
+            'France' => 'FR',
+            'Germany' => 'DE',
+            'China' => 'CN',
+            'India' => 'IN',
+            'United Arab Emirates' => 'AE',
+            'Saudi Arabia' => 'SA',
+            'Malaysia' => 'MY',
+            'Italy' => 'IT',
+            'Japan' => 'JP',
+            'South Korea' => 'KR',
+            'Russia' => 'RU',
+            'Australia' => 'AU',
+            'Canada' => 'CA',
+            'Brazil' => 'BR',
+            'South Africa' => 'ZA',
+            'Singapore' => 'SG',
+            'Thailand' => 'TH',
+            'Turkey' => 'TR',
         ];
 
-        return $countries[$countryName] ?? null; // Return null if country not found
+        // Convert to uppercase for compatibility with jVectorMap
+        return $countries[$countryName] ?? 'PK'; // Default to Pakistan if country code not found
     }
 
     /**
