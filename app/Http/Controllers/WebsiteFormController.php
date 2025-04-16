@@ -48,6 +48,7 @@ class WebsiteFormController extends Controller
             'gender' => 'nullable|string|max:255',
             'address' => 'nullable|string',
             'profession' => 'nullable|string|max:255',
+
             'phone' => 'nullable|string|max:20',
             'mobile' => 'nullable|string|max:20',
             'whatsapp' => 'nullable|string|max:20',
@@ -78,7 +79,9 @@ class WebsiteFormController extends Controller
             'export_country' => 'nullable|string',
             'annual_turnover' => 'nullable|string',
             'national_sale' => 'nullable|numeric',
-            'annual_export' => 'nullable|numeric',        
+            'annual_export' => 'nullable|numeric',    
+            'other_profession' => 'nullable|string',    
+            'shoowothers' => 'nullable|string',
         ]);        
         
         // Step 2: Create User
@@ -95,7 +98,7 @@ class WebsiteFormController extends Controller
             'country' => 'Pakistan', 
             'nationality' => 'Pakistani', 
             'address' => $validated['address'], 
-            'profession' => $validated['profession'],
+            'profession' => $validated['profession'] != 'Others' ? $validated['profession'] : $validated['other_professtion'],
             'phone' => $validated['phone'],
             'mobile' => $validated['mobile'],
             'whatsapp' => $validated['whatsapp'],
@@ -108,7 +111,7 @@ class WebsiteFormController extends Controller
             'cnic_passport_no' => $validated['cnic_no'],
             'date_of_issue' => $validated['cnic_issue'],
             'date_of_expiry' => $validated['cnic_expiry'],
-            'invited_way' => $validated['invited_way'],
+            'invited_way' => $validated['invited_way'] != 'Others' ? $validated['invited_way'] : $validated['shoowothers'],
             'declaration' => true,
         ]);
 
@@ -287,6 +290,7 @@ class WebsiteFormController extends Controller
             'int_annual_import_pakistan' => 'nullable|string',
             'int_company_tax_number' => 'nullable|string',
             'field_eac81b5' => 'nullable|string',
+            'field_df21b13' => 'nullable|string',
         ]);
 
         // Step 1: Create User
@@ -302,7 +306,7 @@ class WebsiteFormController extends Controller
             'gender' => $validated['int_gender'],
             'country' => $validated['int_country'],
             'nationality' => $validated['int_nationality'],
-            'profession' => $validated['int_profession'],
+            'profession' => $validated['int_profession'] != 'Other' ? $validated['int_profession'] : $validated['field_df21b13'],
             'address' => $validated['int_address'],
             'phone' => $validated['int_phone'],
             'mobile' => $validated['int_mobile'],
@@ -318,8 +322,7 @@ class WebsiteFormController extends Controller
             'date_of_issue' => $validated['int_passport_issue'],
             'date_of_expiry' => $validated['int_passort_expiry'],
             'trip_to_pak' => $validated['int_privous_trips'],
-            'invited_way' => $validated['invited_way'],
-            // 'describe_way' => $validated['describe_way'],
+            'invited_way' => $validated['invited_way'] != 'Others' ? $validated['invited_way'] : $validated['describe_way'],
             'declaration' => true,
             'status' => 'pending'
         ]);        
@@ -758,7 +761,13 @@ class WebsiteFormController extends Controller
                 'field_0863cce' => 'nullable',
                 'field_eac81b5' => 'nullable',
                 'field_13750aa' => 'nullable',    
-                'import_countries' => 'nullable',      
+                'import_countries' => 'nullable',    
+                'other_turnover' => 'nullable|string',
+                'invited_by_other' => 'nullable|string',
+                'field_7fbc2d7' => 'nullable|string',  
+                'field_6c3a5cd' => 'nullable|string',
+                
+
              ]);   
              
 
@@ -791,7 +800,7 @@ class WebsiteFormController extends Controller
             'passport_type' => null,
             'date_of_issue' => $validated['cnic_issue'],
             'date_of_expiry' => $validated['cnic_expiry'],
-            'invited_way' => $validated['invited_way'],
+            'invited_way' => $validated['invited_way'] != 'Others' ? $validated['invited_way'] : $validated['invited_by_other'] ?? null,
             'declaration' => true,
             'status' => 'pending'        
         ]);        
@@ -861,14 +870,15 @@ class WebsiteFormController extends Controller
                 'company_email' => $validated['company_email'] ?? null,
                 'website_url' => $validated['url'] ?? null,
                 'position' => $validated['position'] ?? null,
-                'company_registered_number' => $validated['business_registered'] ?? null,
+                'company_registered_number' => $validated['business_registered'] != 'Others' ? $validated['business_registered'] : $validated['field_7fbc2d7'] ?? null,
                 'chamber_association_member' => $validated['chamber_number'] ? json_encode($validated['chamber_number']) : null,
                 'nature_of_business' => $validated['business_nature'] ?? null,
-                'type_of_business' => json_encode($validated['business_type']) ?? null,
+                'type_of_business' => $validated['business_type'] != 'Others' ? $validated['business_type'] : $validated['field_6c3a5cd'] ?? null,
+
                 'main_export_items' => $validated['export_items'] ?? null,
                 'main_import_countries' => $validated['import_countries'] ?? null,
                 'main_export_countries' => $validated['export_countries'] ?? null,
-                'annual_turnover' => $validated['annual_turnover'] ?? null,
+                'annual_turnover' => $validated['annual_turnover'] != 'Others' ? $validated['annual_turnover'] : $validated['other_turnover'] ?? null,
                 'annual_import_export' => $validated['annual_export'] ?? null,
                 'ntn' => $validated['ntn'] ?? null,
                 'gst' => $validated['gst'] ?? null,
