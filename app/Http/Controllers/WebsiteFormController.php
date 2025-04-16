@@ -80,7 +80,7 @@ class WebsiteFormController extends Controller
             'annual_turnover' => 'nullable|string',
             'national_sale' => 'nullable|numeric',
             'annual_export' => 'nullable|numeric',    
-            'other_profession' => 'nullable|string',    
+            'other_professtion' => 'nullable|string',    
             'shoowothers' => 'nullable|string',
         ]);        
         
@@ -766,7 +766,7 @@ class WebsiteFormController extends Controller
                 'invited_by_other' => 'nullable|string',
                 'field_7fbc2d7' => 'nullable|string',  
                 'field_6c3a5cd' => 'nullable|string',
-                
+
 
              ]);   
              
