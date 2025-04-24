@@ -873,7 +873,7 @@ class WebsiteFormController extends Controller
                 'company_registered_number' => $validated['business_registered'] != 'Others' ? $validated['business_registered'] : ($validated['field_7fbc2d7'] ?? null),
                 'chamber_association_member' => $validated['chamber_number'] ? json_encode($validated['chamber_number']) : null,
                 'nature_of_business' => $validated['business_nature'] ?? null,
-                'type_of_business' => json_encode(is_array($validated['business_type'] ?? '') ? array_merge($validated['business_type'], $validated['business_type'] == 'Others' ? [$validated['field_6c3a5cd']] : []) : [$validated['business_type'] ?? '', ($validated['business_type'] == 'Others' ? $validated['field_6c3a5cd'] : '')]),
+                'type_of_business' => json_encode(is_array($validated['business_type'] ?? []) ? array_merge($validated['business_type'], $validated['business_type'] == 'Others' ? [$validated['field_6c3a5cd'] ?? ''] : []) : [$validated['business_type'] ?? '', ($validated['business_type'] == 'Others' ? $validated['field_6c3a5cd'] ?? '' : '')]),
                 'main_export_items' => $validated['export_items'] ?? null,
                 'main_import_countries' => $validated['import_countries'] ?? null,
                 'main_export_countries' => $validated['export_countries'] ?? null,
