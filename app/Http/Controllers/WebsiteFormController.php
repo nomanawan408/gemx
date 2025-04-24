@@ -428,9 +428,9 @@ class WebsiteFormController extends Controller
                 'paid_nationality' => 'nullable|string|max:255',
                 'paid_address' => 'nullable|string|max:255',
 
-                'paid_phone' => 'nullable|string|max:20',
-                'paid_mobile' => 'nullable|string|max:20',
-                'paid_whatsapp' => 'nullable|string|max:20',
+                'paid_phone' => 'nullable|string',
+                'paid_mobile' => 'nullable|string',
+                'paid_whatsapp' => 'nullable|string',
                 'paid_email' => 'nullable|email|max:255',
                 'paid_facebook' => 'nullable|max:255',
                 'paid_linkedin' => 'nullable|max:255',
@@ -873,8 +873,7 @@ class WebsiteFormController extends Controller
                 'company_registered_number' => $validated['business_registered'] != 'Others' ? $validated['business_registered'] : $validated['field_7fbc2d7'] ?? null,
                 'chamber_association_member' => $validated['chamber_number'] ? json_encode($validated['chamber_number']) : null,
                 'nature_of_business' => $validated['business_nature'] ?? null,
-                'type_of_business' => $validated['business_type'] != 'Others' ? $validated['business_type'] : $validated['field_6c3a5cd'] ?? null,
-
+                'type_of_business' => json_encode($validated['business_type']) != 'Others' ? json_encode($validated['business_type']) : json_encode($validated['field_6c3a5cd']) ?? null,
                 'main_export_items' => $validated['export_items'] ?? null,
                 'main_import_countries' => $validated['import_countries'] ?? null,
                 'main_export_countries' => $validated['export_countries'] ?? null,
