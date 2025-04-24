@@ -428,7 +428,7 @@ class WebsiteFormController extends Controller
                 'paid_nationality' => 'nullable|string|max:255',
                 'paid_address' => 'nullable|string|max:255',
 
-                'paid_phone' => 'nullable|string',
+                // 'paid_phone' => 'nullable|string',
                 'paid_mobile' => 'nullable|string',
                 'paid_whatsapp' => 'nullable|string',
                 'paid_email' => 'nullable|email|max:255',
@@ -522,7 +522,7 @@ class WebsiteFormController extends Controller
                 'address' => $validated['paid_address'],
                 'gender' => $validated['paid_gender'],
                 'mobile' => $validated['paid_mobile'],
-                'phone' => $validated['paid_phone'],
+                'phone' => $request->input('paid_phone'),
                 'whatsapp' => $validated['paid_whatsapp'],
                 'fb_url' => $validated['paid_facebook'],
                 'linkedin' => $validated['paid_linkedin'],
