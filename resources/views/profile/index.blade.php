@@ -148,8 +148,8 @@
 
                                                     {{-- ---------------------- For Exhibitors --------------- --}}
                                                     @if ($user->hasRole('exhibitor'))
-                                                        <li><strong>Chamber/Asssssssssssssssssssociation Membership:</strong>
-                                                            {{ $user->business->chamber_association_membership }}</li>
+                                                        <li><strong>Chamber/Association Membership:</strong>
+                                                            @json($user->business->chamber_association_membership)</li>
                                                         <li><strong>Nature of Business:</strong>
                                                             {{ $user->business->nature_of_business }}</li>
                                                         <li><strong>Type of Business:</strong>
