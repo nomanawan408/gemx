@@ -899,7 +899,7 @@ class WebsiteFormController extends Controller
                 'selectbiz' => json_encode($validated['selectbiz']),
                 'booth_type' => $validated['booth_type'] ?? null,
                 'booth_size' => $validated['booth_size'] ?? null,
-                'other_booth_size' => $validated['other_booth_size'] ?? null,
+                'other_booth_size' => $request->input('other_booth_size'),
             ]);
 
 
