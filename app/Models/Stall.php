@@ -13,7 +13,8 @@ class Stall extends Model
             'stall_products',
             'selectbiz',
             'booth_type',
-            'booth_size'
+            'booth_size',
+            'other_booth_size',
         ];
    
     

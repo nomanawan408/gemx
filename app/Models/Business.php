@@ -34,7 +34,8 @@ class Business extends Model
         'amount',
         'ntn',
         'gst',
-        'chamber_association_no'
+        'chamber_association_no',
+        'field_6c3a5cd',
     ];
     // make relation with user 
     public function user()
