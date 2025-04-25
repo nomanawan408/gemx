@@ -364,7 +364,7 @@
                                                         </li>
                                                         <li><strong>Booth Type:</strong> {{ $user->stall->booth_type }}
                                                         </li>
-                                                        <li><strong>Booth Size:</strong> {{ $user->stall->booth_size == 'Other' ? $user->stall->other_booth_size : $user->stall->booth_size }}
+                                                        <li><strong>Booth Size:</strong> {{ $user->stall->booth_size == 'Any Special Request' ? $user->stall->other_booth_size : $user->stall->booth_size }}
                                                         </li>
                                                     </ul>
                                                 </div>
