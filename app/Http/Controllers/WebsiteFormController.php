@@ -856,7 +856,7 @@ class WebsiteFormController extends Controller
                 'pay_order_amount' => $validated['amount'] ?? null,
                 'pay_order_date' => $validated['pay_date'] ?? null,
                 'pay_order_bank_name' => $validated['bank_name'] ?? null,
-                'recommendation' => $validated['recommendation'],
+                'recommendation' => $request->recommendation,
                 ]);
 
             // Step 4: Save Business Details
