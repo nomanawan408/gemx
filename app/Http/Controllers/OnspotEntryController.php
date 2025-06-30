@@ -44,9 +44,17 @@ class OnspotEntryController extends Controller
             'user_type' => 'required|in:visitor,international_visitor',
         ]);
 
+        // Check for unique username
+        $username = $validated['first_name'] . '_' . $validated['last_name'];
+        if (User::where('username', $username)->exists()) {
+            return redirect()->back()
+                ->withErrors(['first_name' => 'A user with this first and last name already exists, resulting in a duplicate username. Please modify the name.'])
+                ->withInput();
+        }
+
         // Create a new user
         $user = User::create([
-            'username' => $validated['first_name'] . '_' . $validated['last_name'],
+            'username' => $username,
             'name' => $validated['first_name'] . ' ' . $validated['last_name'],
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
@@ -71,7 +79,7 @@ class OnspotEntryController extends Controller
         // Assign the user_type role
         $user->assignRole($validated['user_type']);
         // Send the email
-        Mail::to($user->email)->send(new OnSpotUserRegistration($user));
+        // Mail::to($user->email)->send(new OnSpotUserRegistration($user));
         // Redirect with success message
         return redirect()->route('onspot-entry.index')->with('success', 'User created and role assigned successfully.');
     }

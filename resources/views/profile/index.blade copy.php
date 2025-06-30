@@ -12,6 +12,7 @@
                 </div>
             </div>
             <div class="card shadow-sm">
+
                 <div class="card-body">
                     <div class="row">
                         <!-- Profile Picture Section -->
@@ -27,9 +28,10 @@
                                         <span class="h1 text-white mb-0">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                                     </div>
                                 @endif
-                                <h3 class="text-center pt-3 fw-bold text-light">{{ strtoupper($user->name) }}</h3>
+                                <h3 class=" text-center pt-3 fw-bold text-light">{{ strtoupper($user->name) }}</h3>
                             </div>
                             <hr>
+
 
                             <div class="p-0 m-0">
                                 <p class="p-0 m-0 font-monospace text-decoration-underline">Email:</p>
@@ -61,199 +63,170 @@
                                     <p class="ps-2 m-0 font-monospace">{{ $user->profession }}</p>
                                 </div>
                             @endif
+
                             <hr>
                         </div>
 
-                        <!-- Tabbed Profile Information Section -->
-                        <div class="col-md-9 pt-3">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs nav-tabs-custom" id="profileTabs" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic"
-                                        type="button" role="tab" aria-controls="basic" aria-selected="true">
-                                        <i class="fas fa-user-circle me-1"></i> Basic Information
-                                    </button>
-                                </li>
-                                @if ($user->business && $user->business->company_name != null)
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="business-tab" data-bs-toggle="tab" data-bs-target="#business"
-                                        type="button" role="tab" aria-controls="business" aria-selected="false">
-                                        <i class="fas fa-building me-1"></i> Business Details
-                                    </button>
-                                </li>
-                                @endif
-                                @if ($user->hasRole('exhibitor'))
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="exhibitor-tab" data-bs-toggle="tab" data-bs-target="#exhibitor"
-                                        type="button" role="tab" aria-controls="exhibitor" aria-selected="false">
-                                        <i class="fas fa-store me-1"></i> Exhibitor Details
-                                    </button>
-                                </li>
-                                @endif
-                                @if ($user->hasRole('international_visitor'))
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="international-tab" data-bs-toggle="tab" data-bs-target="#international"
-                                        type="button" role="tab" aria-controls="international" aria-selected="false">
-                                        <i class="fas fa-globe me-1"></i> International Details
-                                    </button>
-                                </li>
-                                @endif
-                                @if ($user->hasRole('visitor'))
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="visitor-tab" data-bs-toggle="tab" data-bs-target="#visitor"
-                                        type="button" role="tab" aria-controls="visitor" aria-selected="false">
-                                        <i class="fas fa-user-tag me-1"></i> Visitor Details
-                                    </button>
-                                </li>
-                                @endif
-                                @if ($user->hasRole('buyer'))
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="buyer-tab" data-bs-toggle="tab" data-bs-target="#buyer"
-                                        type="button" role="tab" aria-controls="buyer" aria-selected="false">
-                                        <i class="fas fa-shopping-cart me-1"></i> Buyer Details
-                                    </button>
-                                </li>
-                                @endif
-                            </ul>
-                            
-                            <!-- Tab content -->
-                            <div class="tab-content pt-4" id="profileTabsContent">
-                                <!-- Basic Information Tab -->
-                                <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
-                                    <div class="card border-0 shadow-sm">
-                                        <div class="card-body">
-                                            <h5 class="fw-bold mb-3">Basic Information</h5>
-                                            <ul class="list-unstyled">
-                                                <li class="mb-2"><strong>Father Name:</strong> <span>{{ $user->father_first_name }}
-                                                        {{ $user->father_last_name }}</span></li>
-                                                <li class="mb-2"><strong>Passport/CNIC No:</strong> {{ $user->cnic_passport_no ?? '-' }}</li>
-                                                <li class="mb-2"><strong>Date of issue:</strong> {{ $user->date_of_issue ?? '-' }}</li>
-                                                <li class="mb-2"><strong>Date of Expiry:</strong> {{ $user->date_of_expiry ?? '-' }}</li>
-                                                @if ($user->hasRole('buyer') || $user->hasRole('international_visitor'))
-                                                    <li class="mb-2"><strong>Any Previous Trips to Pakistan:</strong>
-                                                        {{ $user->trip_to_pak == 0 ? 'No' : 'Yes' }}</li>
-                                                    <li class="mb-2"><strong>Type of Passport:</strong>
-                                                        {{ $user->passport_type ?? '-' }}</li>
-                                                    <li class="mb-2"><strong>Product Interest:</strong>
-                                                        {{ isset($user->business->product_interest) ? $user->business->product_interest : 'Not Set' }}</li>
-                                                    <li class="mb-2"><strong>Expected Budget for PKGJS 2025:</strong>
-                                                        {{ $user->business->amount ?? '-' }}</li>
-                                                @endif
-                                                <li class="mb-2"><strong>Country:</strong> {{ $user->country ?? '-' }}</li>
-                                                <li class="mb-2"><strong>Nationality:</strong> {{ $user->nationality ?? '-' }}</li>
-                                                <li class="mb-2"><strong>Which way you are invited:</strong>
-                                                    {{ $user->invited_way ?? '-' }}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Business Details Tab -->
-                                @if ($user->business && $user->business->company_name != null)
-                                <div class="tab-pane fade" id="business" role="tabpanel" aria-labelledby="business-tab">
-                                    <div class="card border-0 shadow-sm">
-                                        <div class="card-body">
-                                            <h5 class="fw-bold mb-3">Business Details</h5>
-                                            <ul class="list-unstyled">
-                                                <li class="mb-2"><strong>Company Name:</strong> {{ $user->business->company_name }}</li>
-                                                <li class="mb-2"><strong>Company Address:</strong> {{ $user->business->address }}</li>
-                                                <li class="mb-2"><strong>Company Email:</strong> {{ $user->business->company_email }}</li>
-                                                <li class="mb-2"><strong>Position:</strong> {{ $user->business->position }}</li>
-                                                <li class="mb-2"><strong>Company Phone:</strong> {{ $user->business->company_phone }}</li>
-                                                @if (!$user->hasRole('exhibitor'))
-                                                    <li class="mb-2"><strong>Company Mobile:</strong> {{ $user->business->company_mobile }}</li>
-                                                @endif
-                                                <li class="mb-2"><strong>Website URL:</strong> 
-                                                    <a href="{{ $user->business->website_url }}" target="_blank">{{ $user->business->website_url }}</a>
+                        <!-- Profile Information Section -->
+                        <div class="col-md-9">
+                            <div class="row pt-5">
+                                <div class="col-md-6">
+                                    <div class="row mb-4">
+                                        <div class="col-md-12">
+                                            <h5 class="fw-bold">Basic Information</h5>
+
+                                            <ul class="list-unstyled small">
+                                                <li><strong>Father Name:</strong> <span>{{ $user->father_first_name }}
+                                                        {{ $user->father_last_name }}</span> </li>
+
+                                                <li><strong>Passport/CNIC No:</strong> {{ $user->cnic_passport_no ?? '-' }}
                                                 </li>
-                                                <li class="mb-2"><strong>Main Import Countries:</strong> {{ $user->business->main_import_countries }}</li>
-                                                <li class="mb-2"><strong>Main Export Countries:</strong> {{ $user->business->main_export_countries }}</li>
+                                                <li><strong>Date of issue:</strong> {{ $user->date_of_issue ?? '-' }}</li>
+                                                <li><strong>Date of Expiry:</strong> {{ $user->date_of_expiry ?? '-' }}
+                                                </li>
+                                                @if ($user->hasRole('buyer') || $user->hasRole('international_visitor'))
+                                                    <li><strong>Any Prevoius Trips to Pakistan:</strong>
+                                                        {{ $user->trip_to_pak == 0 ? 'No' : 'Yes' }}</li>
+                                                    <li><strong>Type of Passport:</strong>
+                                                        {{ $user->passport_type ?? '-' }}</li>
+                                                    <li><strong>Product Interest:</strong>
+                                                        {{ isset($user->business->product_interest) ? $user->business->product_interest : 'Not Set' }}
+                                                    </li>
+                                                    <li><strong>Expected Budget for PKGJS 2025:</strong>
+                                                        {{ $user->business->amount ?? '-' }}
+                                                    </li>
+                                                @endif
+                                                {{-- <li><strong>View Passport:</strong>
+                                                    @if ($user->attachment->passport_cnic_file)
+                                                        <a href="{{ asset('storage/' . $user->attachment->passport_cnic_file) }}"
+                                                            target="_blank" class="btn btn-primary btn-sm">View</a>
+                                                    @else
+                                                        Not uploaded
+                                                    @endif
+                                                </li> --}}
+                                                <li><strong>Country:</strong> {{ $user->country ?? '-' }}</li>
+                                                <li><strong>Nationality:</strong> {{ $user->nationality ?? '-' }}</li>
+
+                                                <li><strong>Which way you are invited:</strong>
+                                                    {{ $user->invited_way ?? '-' }}
+                                                </li>
+
+
                                             </ul>
+                                            <hr>
                                         </div>
                                     </div>
-                                </div>
-                                @endif
-                                
-                                <!-- Exhibitor Details Tab -->
-                                @if ($user->hasRole('exhibitor'))
-                                <div class="tab-pane fade" id="exhibitor" role="tabpanel" aria-labelledby="exhibitor-tab">
-                                    <div class="card border-0 shadow-sm">
-                                        <div class="card-body">
-                                            <h5 class="fw-bold mb-3">Exhibitor Specific Details</h5>
-                                            <ul class="list-unstyled">
-                                                <li class="mb-2"><strong>Chamber/Association Membership:</strong> {{ $user->business->chamber_association_member }}</li>
-                                                <li class="mb-2"><strong>Nature of Business:</strong> {{ $user->business->nature_of_business }}</li>
-                                                <li class="mb-2"><strong>Type of Business:</strong> {{ $user->business->type_of_business }}</li>
-                                                <li class="mb-2"><strong>Main Export Items:</strong> {{ $user->business->main_export_items }}</li>
-                                                <li class="mb-2"><strong>Business Registered:</strong> {{ $user->business->company_registered_number }}</li>
-                                                <li class="mb-2"><strong>NTN:</strong> {{ $user->business->ntn }}</li>
-                                                <li class="mb-2"><strong>GST:</strong> {{ $user->business->gst }}</li>
-                                                <li class="mb-2"><strong>Chamber/Association Membership No:</strong> {{ $user->business->chamber_association_no }}</li>
-                                                <li class="mb-2"><strong>Annual Turnover (PKR):</strong> {{ $user->business->annual_turnover }}</li>
-                                                <li class="mb-2"><strong>Annual Export (USD):</strong> {{ $user->business->annual_import_export }}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                                
-                                <!-- International Visitor Tab -->
-                                @if ($user->hasRole('international_visitor'))
-                                <div class="tab-pane fade" id="international" role="tabpanel" aria-labelledby="international-tab">
-                                    <div class="card border-0 shadow-sm">
-                                        <div class="card-body">
-                                            <h5 class="fw-bold mb-3">International Visitor Details</h5>
-                                            <ul class="list-unstyled">
-                                                <li class="mb-2"><strong>Type of Business:</strong> {{ $user->business->type_of_business }}</li>
-                                                <li class="mb-2"><strong>Main Business Items:</strong> {{ $user->business->main_business_items }}</li>
-                                                <li class="mb-2"><strong>Main Import Items:</strong> {{ $user->business->main_import_items }}</li>
-                                                <li class="mb-2"><strong>Annual Turnover (USD):</strong> {{ $user->business->annual_turnover }}</li>
-                                                <li class="mb-2"><strong>Annual Import/Export (USD):</strong> {{ $user->business->annual_import_export }}</li>
-                                                <li class="mb-2"><strong>Annual Import from Pakistan (USD):</strong> {{ $user->business->annual_import_from_pak }}</li>
-                                                <li class="mb-2"><strong>Company Tax Number:</strong> {{ $user->business->vat_tax_number }}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                                
-                                <!-- Visitor Tab -->
-                                @if ($user->hasRole('visitor'))
-                                <div class="tab-pane fade" id="visitor" role="tabpanel" aria-labelledby="visitor-tab">
-                                    <div class="card border-0 shadow-sm">
-                                        <div class="card-body">
-                                            <h5 class="fw-bold mb-3">Visitor Details</h5>
-                                            <ul class="list-unstyled">
-                                                <li class="mb-2"><strong>Main Export Items:</strong> {{ $user->business->main_export_items }}</li>
-                                                <li class="mb-2"><strong>Annual Turnover (PKR):</strong> {{ $user->business->annual_turnover }}</li>
-                                                <li class="mb-2"><strong>Annual National Sales (PKR):</strong> {{ $user->business->national_sale }}</li>
-                                                <li class="mb-2"><strong>Annual Export (USD):</strong> {{ number_format($user->business->annual_import_export, 2) }}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                                
-                                <!-- Buyer Tab -->
-                                @if ($user->hasRole('buyer'))
-                                <div class="tab-pane fade" id="buyer" role="tabpanel" aria-labelledby="buyer-tab">
-                                    <div class="card border-0 shadow-sm">
-                                        <div class="card-body">
-                                            <h5 class="fw-bold mb-3">Buyer Details</h5>
-                                            <ul class="list-unstyled">
-                                                <li class="mb-2"><strong>Company Registration No:</strong> {{ $user->business->company_registered_number }}</li>
-                                                <li class="mb-2"><strong>Company VAT/TAX No:</strong> {{ $user->business->vat_tax_number }}</li>
-                                                <li class="mb-2"><strong>Chamber/Association Membership Number:</strong> {{ $user->business->chamber_association_no }}</li>
-                                                <li class="mb-2"><strong>Type of Business:</strong> {{ $user->business->type_of_business }}</li>
-                                                <li class="mb-2"><strong>Main Business Items:</strong> {{ $user->business->main_business_items }}</li>
-                                                <li class="mb-2"><strong>Main Import Items:</strong> {{ $user->business->main_import_items }}</li>
-                                                <li class="mb-2"><strong>Annual Turnover (USD):</strong> {{ $user->business->annual_turnover }}</li>
-                                                <li class="mb-2"><strong>Annual Import (USD):</strong> {{ number_format($user->business->annual_import_export, 2) }}</li>
-                                                <li class="mb-2"><strong>Annual Import From Pakistan (USD):</strong> {{ number_format($user->business->annual_import_from_pak, 2) }}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                    @if ($user->business && $user->business->company_name != null)
+                                        <div class="row mb-4">
+                                            <div class="col-md-12">
+                                                <h5 class="fw-bold">Business Details</h5>
+                                                <ul class="list-unstyled small">
+                                                    <li><strong>Company Name:</strong> {{ $user->business->company_name }}
+                                                    </li>
+                                                    <li><strong>Company Address:</strong> {{ $user->business->address }}
+                                                    </li>
+                                                    <li><strong>Company Email:</strong>
+                                                        {{ $user->business->company_email }}</li>
+                                                    <li><strong>Position:</strong> {{ $user->business->position }}</li>
+                                                    <li><strong>Company Phone:</strong>
+                                                        {{ $user->business->company_phone }}</li>
+                                                    @if (!$user->hasRole('exhibitor'))
+                                                        <li><strong>Company Mobile:</strong>
+                                                            {{ $user->business->company_mobile }}</li>
+                                                    @endif
+
+                                                    <li><strong>Website URL:</strong> <a
+                                                            href="{{ $user->business->website_url }}"
+                                                            target="_blank">{{ $user->business->website_url }}</a></li>
+
+                                                    {{-- Generic --}}
+                                                    <li><strong>Main Import Countries:</strong>
+                                                        {{ $user->business->main_import_countries }}</li>
+                                                    <li><strong>Main Export Countries:</strong>
+                                                        {{ $user->business->main_export_countries }}</li>
+
+
+                                                    {{-- ---------------------- For Exhibitors --------------- --}}
+                                                    @if ($user->hasRole('exhibitor'))
+                                                        <li><strong>Chamber/Association Membership:</strong>
+                                                            {{ $user->business->chamber_association_member }}</li>
+                                                        <li><strong>Nature of Business:</strong>
+                                                            {{ $user->business->nature_of_business }}</li>
+                                                        <li><strong>Type of Business:</strong>
+                                                            {{ $user->business->type_of_business }}</li>
+                                                        <li><strong>Main Export Items:</strong>
+                                                            {{ $user->business->main_export_items }}</li>
+                                                        <li><strong>Business Registered:</strong>
+                                                            {{ $user->business->company_registered_number }}</li>
+                                                        <li><strong>NTN:</strong>
+                                                            {{ $user->business->ntn }}</li>
+                                                        <li><strong>GST:</strong>
+                                                            {{ $user->business->gst }}</li>
+                                                        <li><strong>Chamber/Association Membership No:</strong>
+                                                            {{ $user->business->chamber_association_no }}</li>
+                                                        <li><strong>Annual Turnover (PKR):</strong>
+                                                            {{ $user->business->annual_turnover }}</li>
+                                                        <li><strong>Annual Export (USD):</strong>
+                                                            {{ $user->business->annual_import_export }}</li>
+                                                    @endif
+
+                                                    {{-- ---------------------- For International Visitors --------------- --}}
+                                                    @if ($user->hasRole('international_visitor'))
+                                                        <li><strong>Type of Business:</strong>
+                                                            {{ $user->business->type_of_business }}</li>
+                                                        <li><strong>Main Business Items:</strong>
+                                                            {{ $user->business->main_business_items }}</li>
+                                                        <li><strong>Main Import Items:</strong>
+                                                            {{ $user->business->main_import_items }}</li>
+                                                        <li><strong>Annual Turnover (USD):</strong>
+                                                            {{ $user->business->annual_turnover }}</li>
+                                                        <li><strong>Annual Import/Export (USD):</strong>
+                                                            {{ $user->business->annual_import_export }}</li>
+                                                        <li><strong>Annual Import from Pakistan (USD):</strong>
+                                                            {{ $user->business->annual_import_from_pak }}</li>
+                                                        <li><strong>Company Tax Number:</strong>
+                                                            {{ $user->business->vat_tax_number }}</li>
+                                                    @endif
+
+                                                    {{-- ---------------------- For Visitors --------------- --}}
+                                                    @if ($user->hasRole('visitor'))
+                                                        <li><strong>Main Export Items:</strong>
+                                                            {{ $user->business->main_export_items }}</li>
+                                                        <li><strong>Annual Turnover (PKR):</strong>
+                                                            {{ $user->business->annual_turnover }}</li>
+                                                        <li><strong>Annual National Sales (PKR):</strong>
+                                                            {{ $user->business->national_sale }}</li>
+                                                        <li><strong>Annual Export (USD):</strong>
+                                                            {{ number_format($user->business->annual_import_export, 2) }}
+                                                        </li>
+                                                    @endif
+
+                                                    {{-- -------------------------- For Buyers ----------------------- --}}
+                                                    @if ($user->hasRole('buyer'))
+                                                        <li><strong>Company Registration No:</strong>
+                                                            {{ $user->business->company_registered_number }}</li>
+                                                        <li><strong>Company VAT/TAX No:</strong>
+                                                            {{ $user->business->vat_tax_number }}</li>
+                                                        <li><strong>Chamber/Association Membership Number:</strong>
+                                                            {{ $user->business->chamber_association_no }}</li>
+                                                        <li><strong>Type of Business:</strong>
+                                                            {{ $user->business->type_of_business }}</li>
+                                                        <li><strong>Main Bussiness Items:</strong>
+                                                            {{ $user->business->main_business_items }}</li>
+                                                        <li><strong>Main Import Items:</strong>
+                                                            {{ $user->business->main_import_items }}</li>
+                                                        <li><strong>Annual Turnover (USD):</strong>
+                                                            {{ $user->business->annual_turnover }}</li>
+                                                        <li><strong>Annual Import (USD):</strong>
+                                                            {{ number_format($user->business->annual_import_export, 2) }}
+                                                        </li>
+                                                        <li><strong>Annual Import From Pakistan (USD):</strong>
+                                                            {{ number_format($user->business->annual_import_from_pak, 2) }}
+                                                        </li>
+                                                    @endif
+                                                </ul>
+                                            </div>
+                                            <hr>
                                         </div>
                                     @endif
 
