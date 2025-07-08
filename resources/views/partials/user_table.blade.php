@@ -56,7 +56,7 @@
                             @can('can approve')
                                 <td>
                                     @if ($user->status == 'pending')
-                                        <div>
+                                        {{-- <div>
                                             <form action="{{ route('users.approve', $user->id) }}" method="POST"
                                                 style="display:inline;">
                                                 @csrf
@@ -67,7 +67,10 @@
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm">Reject</button>
                                             </form>
-                                        </div>
+                                        </div> --}}
+                                         <span class="badge bg-warning">
+                                            {{ ucfirst($user->status) }}
+                                        </span>
                                     @else
                                         <span class="badge bg-{{ $user->status == 'approved' ? 'success' : 'danger' }}">
                                             {{ ucfirst($user->status) }}

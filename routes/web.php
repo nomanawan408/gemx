@@ -31,9 +31,7 @@ use App\Http\Middleware\CheckPendingStatus;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/login');
 
 Route::get('/mypass', function () {
     return view('entrypass.entrypass_templete');

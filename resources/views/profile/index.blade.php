@@ -4,10 +4,47 @@
     <div class="container">
         <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                <div>
+                <div class="d-flex gap-2 align-items-center">
                     <h3 class="fw-bold mb-3">Profile</h3>
+                     @if ($user->status == 'pending')
+                        <span class="badge bg-warning">
+                            {{ ucfirst($user->status) }}
+                        </span>
+                    @else
+                        <span class="badge bg-{{ $user->status == 'approved' ? 'success' : 'danger' }}">
+                            {{ ucfirst($user->status) }}
+                        </span>
+                    @endif
                 </div>
                 <div class="ms-md-auto py-2 py-md-0">
+                   @can('can approve')
+                                    <form action="{{ route('users.approve', $user->id) }}" method="POST"
+                                                style="display:inline;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                            </form>
+                                            <form action="{{ route('users.reject', $user->id) }}" method="POST"
+                                                style="display:inline;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                    </form>
+                                <td>
+                                    @if ($user->status == 'pending')
+                                        <div>
+                                            <form action="{{ route('users.approve', $user->id) }}" method="POST"
+                                                style="display:inline;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                            </form>
+                                            <form action="{{ route('users.reject', $user->id) }}" method="POST"
+                                                style="display:inline;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                </td>
+                                @endcan
                     <a href="{{ url()->previous() }}" class="btn btn-label-info btn-round me-2">Go Back</a>
                 </div>
             </div>
