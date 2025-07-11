@@ -28,22 +28,6 @@
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger btn-sm">Reject</button>
                                     </form>
-                                <td>
-                                    @if ($user->status == 'pending')
-                                        <div>
-                                            <form action="{{ route('users.approve', $user->id) }}" method="POST"
-                                                style="display:inline;">
-                                                @csrf
-                                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                            </form>
-                                            <form action="{{ route('users.reject', $user->id) }}" method="POST"
-                                                style="display:inline;">
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger btn-sm">Reject</button>
-                                            </form>
-                                        </div>
-                                    @endif
-                                </td>
                                 @endcan
                     <a href="{{ url()->previous() }}" class="btn btn-label-info btn-round me-2">Go Back</a>
                 </div>

@@ -99,20 +99,23 @@
                                                     <td>
                                                         @can('can approve')
                                                             @if ($user->status == 'pending')
-                                                                <div>
-                                                                    <form action="{{ route('users.approve', $user->id) }}"
-                                                                        method="POST" style="display:inline;">
-                                                                        @csrf
-                                                                        <button type="submit"
-                                                                            class="btn btn-success btn-sm">Approve</button>
-                                                                    </form>
-                                                                    <form action="{{ route('users.reject', $user->id) }}"
-                                                                        method="POST" style="display:inline;">
-                                                                        @csrf
-                                                                        <button type="submit"
-                                                                            class="btn btn-danger btn-sm">Reject</button>
-                                                                    </form>
-                                                                </div>
+                                                                <span class="badge bg-warning">
+                                                                    {{ ucfirst($user->status) }}
+                                                                </span>
+                                                           
+                                                               
+                                                               
+                                                               
+                                                               
+                                                               
+                                                               
+                                                               
+                                                               
+                                                               
+                                                               
+                                                               
+                                                               
+                                                               
                                                             @else
                                                                 <span
                                                                     class="badge bg-{{ $user->status == 'approved' ? 'success' : 'danger' }}">
@@ -162,7 +165,7 @@
                                         </thead>
 
                                         <tbody>
-                                            @foreach ($users as $user)
+                                            @foreach ($users->where('status', 'approved') as $user)
                                                 <tr>
                                                     <!-- Name Column with Avatar -->
                                                     <td>
@@ -269,7 +272,7 @@
                                             </thead>
 
                                             <tbody>
-                                                @foreach ($users as $user)
+                                                @foreach ($users->where('status', 'rejected') as $user)
                                                     <tr>
                                                         <!-- Name Column with Avatar -->
                                                         <td>
