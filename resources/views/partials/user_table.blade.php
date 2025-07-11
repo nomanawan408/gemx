@@ -1,7 +1,7 @@
 <div class="card mt-4">
     <div class="card-body">
         <div class="table-responsive" style="font-size: 10px !important;">
-            <table id="multi-filter-select" class="display table table-striped table-hover">
+            <table id="{{ $tableId }}" class="display table table-striped table-hover datatable">
                 <thead>
                     <tr>
                         <th>Name</th>

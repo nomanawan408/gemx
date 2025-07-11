@@ -16,8 +16,8 @@
               </ul>
             </nav>
             <div class="copyright">
-              2024, Developed by <i class="fa fa-heart heart text-danger"></i> 
-              <a href="http://www.genixstack.com">GenixStack</a>
+              2025, Developed by <i class="fa fa-heart heart text-danger"></i> 
+              <a href="https://trc.com.pk/">TRC Malysia</a>
             </div>
             {{-- <div>
               Distributed by

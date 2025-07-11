@@ -62,14 +62,9 @@
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
   <script>
     $(document).ready(function() {
-      $('#allusersTable').DataTable({
-        order: [[6, 'desc']]
-      });
-      $('#approvedusersTable').DataTable({
-        order: [[6, 'desc']]
-      });
-      $('#rejectedusersTable').DataTable({
-        order: [[6, 'desc']]
+      var sortColumn = @can('admin') 6 @else 5 @endcan;
+      $('.datatable').DataTable({
+        order: [[sortColumn, 'desc']]
       });
     });
   </script>
