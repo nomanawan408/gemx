@@ -18,8 +18,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
 
 
-
-
 class WebsiteFormController extends Controller
 {
     //

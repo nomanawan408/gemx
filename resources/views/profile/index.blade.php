@@ -49,7 +49,10 @@
                                         <span class="h1 text-white mb-0">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                                     </div>
                                 @endif
-                                <h3 class=" text-center pt-3 fw-bold text-light">{{ strtoupper($user->name) }}</h3>
+                                <h3 class="text-center pt-3 fw-bold text-light">{{ strtoupper($user->name) }}</h3>
+                                <p class="text-center text-info mb-2" style="font-size: 1.1rem;">
+                                    {{ $user->roles->first()->display_name ?? 'No Role Assigned' }}
+                                </p>
                             </div>
                             <hr>
 
